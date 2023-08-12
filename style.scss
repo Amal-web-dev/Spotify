@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    transition: .3s;
+}
+
+body {
+    background-color: #000000;
+}
+
+aside {
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    left: 5px;
+    top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.aside-top {
+    height: 12%;
+    width: 100%;
+    background-color: #121212;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 10px 0 10px 15px;
+    justify-content: center;
+
+    img  {
+        width: 15px;
+        filter: invert(50%);
+    }
+
+    span {
+        font-size: 10px;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 10px;
+        cursor: pointer;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        color: #B3B3B3;
+
+       img {
+        filter: invert(50%);
+       }
+    }
+
+    div:hover {
+        background-color: #2B2A30;
+        color: white;
+
+        img  {
+            filter: invert(0%);
+        }
+    }
+
+    .active-main {
+        color: white;
+    }
+}
+
+.aside-bottom {
+    height: 87%;
+    width: 100%;
+    background-color: #121212;
+    border-radius: 5px;
+}
+
+.aside-bottom  {
+    padding: 10px 0 10px 15px;
+
+    .mediaTeka-block{
+        display: flex;
+        align-items: center;
+        color: #B3B3B3;
+
+        .left-mediateka {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+
+    span {
+        font-size: 10px;
+    }
+
+    svg,
+    img {
+        filter: invert(50%);
+    }
+    }
+  
+}
