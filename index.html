@@ -11,11 +11,11 @@
 
     <aside>
     <div class="aside-top">
-      <div class="home-block active-main">
+      <div class="home-block active-main hovered_block">
         <img src="/public/icons/home-main.svg">
         <span>Главная</span>
       </div>
-      <div class="search-block">
+      <div class="search-block hovered_block">
         <img src="/public/icons/search-icon.svg">
         <span>Поиск</span>
       </div>
@@ -27,10 +27,40 @@
           <span>Моя медиатека</span>
         </div>
         <div class="rightmedia-teka">
-          <div class="plus-block"></div>
-          .
+          <div class="plus-block hovered_block"><img src="/public/icons/plus-icon.svg" alt=""></div>
+          <div class="arrow-block hovered_block"><img src="/public/icons/right-arrow.svg" alt=""></div>
         </div>
+
     </div>
+
+    <div class="categories-block">
+    <button>Playlists</button>
+    <button>Artists</button>
+    <button>Albums</button>
+    </div>
+    
+    <div class="search_mediateka_block">
+      <button><img src="/public/icons/search-icon.svg" alt=""></button>
+      <div class="filter_recent_block">
+        <span>Recents</span>
+        <img src="/public/icons/arrow-bottom.svg">
+      </div>
+    </div>
+
+    <div class="mediate_song_block">
+     <div class="mediateka_song">
+       <div class="song_poster"></div>
+       <div class="media_song_descr">
+        <p>Liked Songs</p>
+        <span>Плейлист х 47 треков</span>
+       </div>
+     </div>
+     <a href="" class="login-a">
+      <button>login</button>
+    </a>
+    </div>
+
+    
     </div>
     </aside>
 
@@ -38,6 +68,10 @@
 
     </main>
 
+
+    <div class="audio-cont">
+
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
