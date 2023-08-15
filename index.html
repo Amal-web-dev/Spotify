@@ -9,7 +9,7 @@
   </head>
   <body>
 
-    <aside>
+    <aside class="aside">
     <div class="aside-top">
       <div class="home-block active-main hovered_block">
         <img src="/public/icons/home-main.svg">
@@ -65,12 +65,49 @@
     </aside>
 
     <main>
+      <div class="main-cont">
 
+      </div>
     </main>
 
 
     <div class="audio-cont">
-
+      <div class="left_audio"></div>
+      <div class="center_audio">
+              <div class="audio-player">
+                <div class="audio-info">
+                  <div class="play-pause">
+                    <button class="next-song"><img src="/public/icons/mix-icon.svg"></button>
+                    <button class="next-song"><img src="/public/icons/previeus-song.svg" alt=""></button>
+                    <button class="sec-btn five-minus-sec"><img src="/public/icons/-5sec-icon.svg" alt=""></button>
+                    <button class="play-button">
+                      <img src="/public/icons/start-audio.svg">
+                    </button>
+                    <button class="sec-btn five-plus-sec"><img src="/public/icons/+5sec-icon.svg" alt=""></button>
+                    <button class="next-song"><img src="/public/icons/next-song.svg" alt=""></button>
+                    <button class="next-song"><img src="/public/icons/repeat_icon.svg"></button>
+                  </div>
+                </div>
+                <div class="audio-controls">
+                  <span class="current-time">0:00</span>
+                  <div class="progress-bar">
+                    <div class="progress">
+                    <div class="progress-btn"></div> 
+                    </div>
+                  </div>
+                  <span class="duration"></span>
+                  
+                </div>
+              </div>
+              <audio id="audio-1" src="/public/img/passion-127011.mp3"></audio>
+      </div>
+      <div class="right_audio">
+        <div class="volume">
+          <button class="volume-button"></button>
+          <input type="range" class="volume-slider" min="0" max="100" value="100">
+        </div>
+      </div>
+      
     </div>
     <script type="module" src="/main.js"></script>
   </body>

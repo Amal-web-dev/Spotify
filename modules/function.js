@@ -26,3 +26,6 @@ export function ReloadMediatekaSong(arr, place) {
 
     }
 }
+
+let aside = document.querySelector('.aside')
+let main = document.querySelector('main')
