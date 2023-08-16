@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/public/icons/spotify-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.scss">
-    <title>Spotify</title>
+    <title>Spotify - Web Player</title>
   </head>
   <body>
 
@@ -66,13 +66,28 @@
 
     <main>
       <div class="main-cont">
-
+      <div class="header-main">
+        <div class="header-left">
+          <button><img src="/public/icons/arrow-left.svg" alt=""></button>
+          <button><img src="/public/icons/arrow-right.svg" alt=""></button>
+        </div>
+      </div>
+      <h1>awdawd</h1>
       </div>
     </main>
 
 
     <div class="audio-cont">
-      <div class="left_audio"></div>
+      <div class="left_audio">
+        <div class="song-poster"></div>
+        <div class="song-name">
+          <a href="#">Spotifysrttrrthr</a>
+          <p>Spotify</p>
+        </div>
+        <div class="song-like">
+          <img class="favorite" src="/public/icons/favorite-icon.svg">
+        </div>
+      </div>
       <div class="center_audio">
               <div class="audio-player">
                 <div class="audio-info">
@@ -103,9 +118,14 @@
       </div>
       <div class="right_audio">
         <div class="volume">
-          <button class="volume-button"></button>
-          <input type="range" class="volume-slider" min="0" max="100" value="100">
+          <button class="volume-button"><img class="volume-icon" src="/public/icons/volume-up.svg"></button>
+          <div class="volume-slider">
+            <div class="volume-dinamic">
+              <div class="volume-btn" draggable="true"></div>
+            </div>
+          </div>
         </div>
+        
       </div>
       
     </div>

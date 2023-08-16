@@ -14,22 +14,21 @@ img {
 
 ::-webkit-scrollbar {
     width: 10px;
-    background-color: transparent;
+    background-color: transition; 
     border-radius: 10px;
     transition: .4s;
-  }
+    display: none;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background-color:#2B2A30;
+::-webkit-scrollbar-thumb {
+    background-color: #2B2A30;
     border-radius: 10px;
-  }
-  
-  
-  ::-webkit-calendar-picker-indicator {
+}
+
+::-webkit-calendar-picker-indicator {
     color: transparent;
-    opacity: 1;
     background-size: contain;
-  }
+}
 
 body {
     background-color: #000000;
@@ -281,26 +280,7 @@ aside {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-
-main {
-    position: absolute;
-    top: 5px;
-    left: calc(20% + 10px);
-    width: calc(80% - 10px);
-    padding: 15px 20px;
-    transition: left 0.3s; 
-    background-color: #121212;
-    height: calc(100% - 75px);
-    border-radius: 5px;
-    overflow-y: scroll;
-
-    .main-cont {
-        width: 100%;
-        height: 200%;
-        background-color: #232323;
-    }
+    padding: 10px 20px;
 }
 
 .audio-player {
@@ -382,12 +362,46 @@ main {
     align-items: center;
     gap: 7px;
   }
+
+  .left_audio {
+    display: flex;
+    align-items: center;
+    color: white;
+    gap: 10px;
+
+    .song-poster {
+        width: 40px;
+        height: 40px;
+        background-color: #A2A2A2;
+        border-radius: 5px;
+    }
+
+    a {
+        font-size: 10px;
+        text-decoration: none;
+        color: white;
+    }
+
+    p {
+        font-size: 8px;
+        color: #B3B3B3;
+    }
+
+    img {
+        cursor: pointer;
+    }
+  }
   
   .progress-bar {
     height: 4px;
     background-color: #535353;
     width: 100%;
     border-radius: 2px;
+  }
+
+  .right-audio {
+    display: flex;
+    align-items: center;
   }
   
   .progress {
@@ -431,6 +445,7 @@ main {
   .volume {
     display: flex;
     align-items: center;
+
   }
   
   .volume-button {
@@ -438,15 +453,109 @@ main {
     height: 30px;
     background-color: transparent;
     border: none;
-  }
-  
-  .volume-button:after {
-    content: "\1F50A"; /* Unicode speaker symbol */
-    font-size: 20px;
-    color: white;
+
+    img {
+        width: 18px;
+        filter: invert(30%);
+    }
+
+    img:hover {
+        filter: invert(0%);
+    }
   }
   
   .volume-slider {
-    width: 60px;
-    margin-left: 5px;
+    background-color: #4D4D4D;
+    width: 100px;
+    height: 3px;
+    border-radius: 5px;
+    position: relative;
+
+   
+
+    .volume-dinamic {
+        height: 100%;
+        width: 100%;
+        background-color: white;
+        border-radius: 5px;
+        position: relative;
+
+        .volume-btn {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            background-color: white;
+            opacity: 0;
+            cursor: pointer;
+
+    
+        }
+    }
   }
+
+  .volume-slider:hover   {
+    .volume-dinamic {
+        background-color: #1ED760;
+
+        .volume-btn {
+            opacity: 1;
+        }
+    }
+  }
+
+  main {
+    position: absolute;
+    top: 5px;
+    left: calc(20% + 10px);
+    width: calc(80% - 10px);
+    padding: 0px 0px;
+    transition: left 0.3s; 
+    background-color: #121212;
+    height: calc(100% - 75px);
+    border-radius: 5px;
+    overflow-y: scroll;
+
+    .main-cont {
+        width: 100%;
+        height: 200%;
+        background-color: #232323;
+
+        
+    }
+
+    .header-main {
+        height: 40px;
+        position: sticky;
+        width: 100%;
+        top: 0;
+        background-color: #1ED760;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        opacity: .2;
+
+        .header-left{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 1;
+            button {
+                border-radius: 100%;
+                background-color: #090414;
+                border: none;
+                padding: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                img {
+                    width: 16px;
+                }
+            }
+        } 
+    }
+}

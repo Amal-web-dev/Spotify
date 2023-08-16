@@ -24,8 +24,7 @@ export function ReloadMediatekaSong(arr, place) {
         mediateka_song.append(song_poster, media_song_descr)
         media_song_descr.append(p,  span)
 
+
     }
 }
 
-let aside = document.querySelector('.aside')
-let main = document.querySelector('main')

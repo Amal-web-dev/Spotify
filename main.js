@@ -2,24 +2,33 @@ import axios from 'axios'
 import { ReloadMediatekaSong } from "./modules/function";
 
 
+let token = location.href.split('=').at(-3)
 let login_a = document.querySelector('.login-a')
+localStorage.setItem("myId", token);
 const client_id = '48294f2378014a3d9d49e49477694d79';
 const REDIRECT_URI = 'http://localhost:5173/';
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = 'token'
-let token = location.href.split('=').at(-3)
 let mediate_song_block = document.querySelector('.mediate_song_block')
 const players = document.querySelectorAll('.audio-player');
-
-
-
-
-login_a.href = `${AUTH_ENDPOINT}?client_id=${client_id}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&score=user-library-read`
-
-localStorage.setItem("myId", token);
+let playButton = document.querySelector('.play-button');
+let playButtonIcon = document.querySelector('.play-button img');
+let progressBar = document.querySelector('.progress-bar .progress');
+let progressBarOne = document.querySelector('.progress-bar');
+let currentTimeDisplay = document.querySelector('.current-time');
+let durationDisplay = document.querySelector('.duration');
+let secBtn5Plus = document.querySelector('.five-plus-sec');
+let secBtn5Minus = document.querySelector('.five-minus-sec');
+let volumeSlider = document.querySelector('.volume-slider');
+let volumeIcon = document.querySelector('.volume-icon')
+let volumeBtn = document.querySelector('.volume-btn'); 
+let volumeDinamic = document.querySelector('.volume-dinamic'); 
+let favouriteIcon = document.querySelector('.favorite')
 
 const myId = localStorage.getItem("myId");
-
+let favTru = false
+let isMuted = false; 
+login_a.href = `${AUTH_ENDPOINT}?client_id=${client_id}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&score=user-library-read`
 
 
 
@@ -32,49 +41,40 @@ axios.get("https://api.spotify.com/v1/albums?ids=382ObEPsp2rxGrnsizN5TX%2C1A2GTW
 })
 
 
-axios.get("https://api.spotify.com/v1/browse/featured-playlists", {
-    headers: {
-        Authorization: `Bearer ${myId}`
-    }
-}).then(res => {
+// axios.get("https://api.spotify.com/v1/browse/featured-playlists", {
+//     headers: {
+//         Authorization: `Bearer ${myId}`
+//     }
+// }).then(res => {
     players.forEach((player, index) => {
         let audio = document.getElementById(`audio-${index + 1}`);
-        let playButton = player.querySelector('.play-button');
-        let playButtonIcon = player.querySelector('.play-button img');
-        let progressBar = player.querySelector('.progress-bar .progress');
-        let progressBarOne = document.querySelector('.progress-bar');
-        let currentTimeDisplay = player.querySelector('.current-time');
-        let durationDisplay = player.querySelector('.duration');
-        let secBtn5Plus = player.querySelector('.five-plus-sec');
-        let secBtn5Minus = player.querySelector('.five-minus-sec');
-
         function formatTime(seconds) {
-            let minutes = Math.floor(seconds / 60);
-            let remainingSeconds = Math.floor(seconds % 60);
-            return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+          let minutes = Math.floor(seconds / 60);
+          let remainingSeconds = Math.floor(seconds % 60);
+          return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
         }
-
+      
         function updateProgress() {
-            let progress = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = `${progress}%`;
-            currentTimeDisplay.textContent = formatTime(audio.currentTime);
-
-            if (audio.currentTime >= audio.duration) {
-                playButtonIcon.src = '/public/icons/start-audio.svg';
-            }
+          let progress = (audio.currentTime / audio.duration) * 100;
+          progressBar.style.width = `${progress}%`;
+          currentTimeDisplay.textContent = formatTime(audio.currentTime);
+      
+          if (audio.currentTime >= audio.duration) {
+            playButtonIcon.src = '/public/icons/start-audio.svg';
+          }
         }
-
+      
         function togglePlay() {
-            if (audio.paused) {
-                audio.play();
-                playButtonIcon.src = '/public/icons/pause-audio.svg';
-            } else {
-                audio.pause();
-                playButtonIcon.src = '/public/icons/start-audio.svg';
-            }
+          if (audio.paused) {
+            audio.play();
+            playButtonIcon.src = '/public/icons/pause-audio.svg';
+          } else {
+            audio.pause();
+            playButtonIcon.src = '/public/icons/start-audio.svg';
+          }
         }
-
-        function seek(event) {
+      
+        progressBarOne.onclick = () => {
             let progressRect = progressBarOne.getBoundingClientRect();
             let clickX = event.clientX - progressRect.left;
             let progressWidth = progressRect.width;
@@ -83,30 +83,81 @@ axios.get("https://api.spotify.com/v1/browse/featured-playlists", {
             audio.currentTime = seekTime;
         }
 
+        playButton.onclick = () => {
+            togglePlay()
+        }
+      
         function rewind(seconds) {
-            let newTime = Math.max(audio.currentTime - seconds, 0);
-            audio.currentTime = newTime;
+          let newTime = Math.max(audio.currentTime - seconds, 0);
+          audio.currentTime = newTime;
         }
-
+      
         function forward(seconds) {
-            let newTime = Math.min(audio.currentTime + seconds, audio.duration);
-            audio.currentTime = newTime;
+          let newTime = Math.min(audio.currentTime + seconds, audio.duration);
+          audio.currentTime = newTime;
+        }
+      
+        function updateVolume(event) {
+            let volumePercentage = event.layerX / 100
+            volumePercentage = Math.max(0, Math.min(1, volumePercentage));
+            
+            audio.volume = volumePercentage;
+            volumeBtn.style.bottom = `${volumePercentage * 100}%`;
+            volumeDinamic.style.width = `${volumePercentage * 100}%`; 
+
+            if(volumePercentage == 0) {
+              volumeIcon.src = '/public/icons/volume-mute.svg'
+            }else if(volumePercentage >= 0.3) {
+                volumeIcon.src = '/public/icons/volume-up.svg'
+            } else if(volumePercentage >= 0.01) {
+                volumeIcon.src = '/public/icons/volume-low.svg'
+            }
         }
 
+        function updateVolumeMute() {
+            if (isMuted) {
+                audio.volume = 1; 
+                volumeBtn.style.bottom = '0%'; 
+                volumeDinamic.style.width = '100%'; 
+                isMuted = false; 
+            } else {
+                audio.volume = 0; 
+                volumeBtn.style.bottom = '100%';
+                volumeDinamic.style.width = '0%'; 
+                isMuted = true; 
+            }
+        
+            if (isMuted) {
+                volumeIcon.src = '/public/icons/volume-mute.svg';
+            } else {
+                volumeIcon.src = '/public/icons/volume-up.svg';
+            }
+        }
+      
         secBtn5Plus.addEventListener('click', () => forward(5));
         secBtn5Minus.addEventListener('click', () => rewind(5));
-
+      
+        volumeSlider.addEventListener('click', updateVolume);
+        volumeIcon.addEventListener('click', updateVolumeMute);
+      
         durationDisplay.textContent = formatTime(audio.duration);
-
-        playButton.addEventListener('click', togglePlay);
-        progressBarOne.addEventListener('click', seek);
+      
         audio.addEventListener('timeupdate', updateProgress);
-    });
+      });
 
-
-})
+// })
 
 
 let main = document.querySelector('main')
 
 console.log(main.style.width);
+
+favouriteIcon.onclick = () => {
+    if(!favTru) {
+        favouriteIcon.src = '/public/icons/favorite-full.svg'
+        favTru = true
+    } else  {
+        favouriteIcon.src = '/public/icons/favorite-icon.svg'
+        favTru = false
+    }
+}
