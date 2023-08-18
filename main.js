@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { ReloadMediatekaSong } from "./modules/function";
+import { ReloadMediatekaSong, welcomeSong } from "./modules/function";
 
-
-let token = location.href.split('=').at(-3)
+let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
 localStorage.setItem("myId", token);
 const client_id = '48294f2378014a3d9d49e49477694d79';
@@ -24,6 +23,9 @@ let volumeIcon = document.querySelector('.volume-icon')
 let volumeBtn = document.querySelector('.volume-btn'); 
 let volumeDinamic = document.querySelector('.volume-dinamic'); 
 let favouriteIcon = document.querySelector('.favorite')
+let headerMain = document.querySelector('.header-main')
+let main = document.querySelector('main')
+let  welcomeBlock = document.querySelector('.welcome-block')
 
 const myId = localStorage.getItem("myId");
 let favTru = false
@@ -31,21 +33,27 @@ let isMuted = false;
 login_a.href = `${AUTH_ENDPOINT}?client_id=${client_id}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&score=user-library-read`
 
 
+// header-main становитья не прозрачным
+main.onscroll = () => {
+  if (main.scrollTop >= 100) {
+      headerMain.style.backgroundColor = '#1C0E40';
+  } else {
+      headerMain.style.backgroundColor = '#1C0E4020'; 
+  }
+};
+// header-main становитья не прозрачным
 
+// появление песен
 axios.get("https://api.spotify.com/v1/albums?ids=382ObEPsp2rxGrnsizN5TX%2C1A2GTWGtFfWp7KSQTwWOyo%2C2noRn2Aes5aoNVsU6iWThc", {
     headers: {
         Authorization: `Bearer ${myId}`
     }
 }).then(res => {
     ReloadMediatekaSong(res.data.albums, mediate_song_block)
+    welcomeSong(res.data.albums, welcomeBlock)
 })
-
-
-// axios.get("https://api.spotify.com/v1/browse/featured-playlists", {
-//     headers: {
-//         Authorization: `Bearer ${myId}`
-//     }
-// }).then(res => {
+// появление песен конец
+// функционал audio
     players.forEach((player, index) => {
         let audio = document.getElementById(`audio-${index + 1}`);
         function formatTime(seconds) {
@@ -140,18 +148,18 @@ axios.get("https://api.spotify.com/v1/albums?ids=382ObEPsp2rxGrnsizN5TX%2C1A2GTW
         volumeSlider.addEventListener('click', updateVolume);
         volumeIcon.addEventListener('click', updateVolumeMute);
       
-        durationDisplay.textContent = formatTime(audio.duration);
+        if(audio.duration) {
+          durationDisplay.innerHTML = formatTime(audio.duration);
+        } else {
+          durationDisplay.innerHTML = '0:00';
+        }
       
         audio.addEventListener('timeupdate', updateProgress);
       });
+      
+// функционал audio конец
 
-// })
-
-
-let main = document.querySelector('main')
-
-console.log(main.style.width);
-
+// добавление любимой песни
 favouriteIcon.onclick = () => {
     if(!favTru) {
         favouriteIcon.src = '/public/icons/favorite-full.svg'
@@ -161,3 +169,4 @@ favouriteIcon.onclick = () => {
         favTru = false
     }
 }
+// добавление любимой песни конец

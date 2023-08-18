@@ -14,10 +14,8 @@ img {
 
 ::-webkit-scrollbar {
     width: 10px;
-    background-color: transition; 
     border-radius: 10px;
     transition: .4s;
-    display: none;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -506,6 +504,17 @@ aside {
     }
   }
 
+  main::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    top: 0px;
+    z-index: 0;
+    background: linear-gradient(#1D0E45 40%, transparent);
+}
+
   main {
     position: absolute;
     top: 5px;
@@ -517,26 +526,112 @@ aside {
     height: calc(100% - 75px);
     border-radius: 5px;
     overflow-y: scroll;
+    z-index: -2;
 
     .main-cont {
         width: 100%;
         height: 200%;
-        background-color: #232323;
+        background-color: transparent;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        color: white;
+        padding: 50px 20px;
 
-        
+        .welcome-cont {
+            margin-top: 10px;
+
+            h1 {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+
+            .welcome-block {
+                display: grid;
+                gap: 10px;
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 60px;
+
+                .welcome_song_block:hover {
+                    background-color: #454057;
+
+                    button {
+                        opacity: 1;
+                    }
+                }
+
+                .welcome_song_block {
+                    background-color: #2F2841;
+                    border-radius: 3px;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    .song_poster {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        height: 100%;
+                        width: 20%;
+                        background-color: white;
+                        border-top-left-radius: 3px;
+                        border-bottom-left-radius: 3px;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size: cover;
+                    }
+
+                    button {
+                        position: absolute;
+                        right: 10px;
+                        border-radius: 100%;
+                        background-color: #1ED760;
+                        border: none;
+                        padding: 5px;
+                        display: flex;
+                        align-items: center;
+                        opacity: 0;
+
+                        img {
+                            width: 18px;
+                        }
+                    }
+
+                    button:hover {
+                        scale: 1.05;
+
+                        img {
+                            scale: 1.05;
+                        }
+                    }
+
+                    .song_name {
+                        margin-left: 75px;
+
+                        p  {
+                            font-size: 10px;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
     }
+
+   
 
     .header-main {
         height: 40px;
         position: sticky;
         width: 100%;
         top: 0;
-        background-color: #1ED760;
+        background-color: #1C0E4030;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 20px;
-        opacity: .2;
+        z-index: 6;
 
         .header-left{
             display: flex;
@@ -557,5 +652,53 @@ aside {
                 }
             }
         } 
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            a {
+                text-decoration: none;
+            }
+
+            button:hover {
+                scale: 1.05;
+            }
+
+            button {
+                border-radius: 15px;
+                border: none;
+                color: white;
+                padding: 5px 8px;
+                font-size: 10px;
+                background-color: #0D061C;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-weight: 600;
+
+                img {
+                    width: 12px;
+                }
+            }
+
+            .user-btn {
+                border-radius: 100%;
+                padding: 5px;
+
+                img {
+                    width: 16px;
+                }
+                
+            }
+
+            .btn-premium {
+                background-color: white;
+                color: #0D061C;
+            }
+
+        }
+
     }
 }

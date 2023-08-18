@@ -28,3 +28,30 @@ export function ReloadMediatekaSong(arr, place) {
     }
 }
 
+export function welcomeSong(arr, place) {
+    place.innerHTML = ''
+
+    for (const song of arr) {
+        let welcome_song_block = document.createElement('div')
+        let song_poster = document.createElement('div')
+        let song_name = document.createElement('div')
+        let song_button = document.createElement('button')
+        let song_p = document.createElement('p')
+        let buttonImg = document.createElement('img')
+
+        welcome_song_block.classList.add('welcome_song_block')
+        song_poster.classList.add('song_poster')
+        song_name.classList.add('song_name')
+
+        song_p.innerHTML = song.name
+        song_poster.style.backgroundImage =  `url(${song.images[0].url})`
+        buttonImg.src = '/public/icons/start-audio.svg'
+
+        place.append(welcome_song_block)
+        welcome_song_block.append(song_poster, song_name, song_button)
+        song_name.append(song_p)
+        song_button.append(buttonImg)
+        
+    }
+    
+}
