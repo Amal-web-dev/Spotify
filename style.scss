@@ -528,6 +528,116 @@ aside {
     overflow-y: scroll;
     z-index: -2;
 
+    .song_cont {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 30px;
+
+        .song_top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h1 {
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        h1:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            font-size: 10px;
+            cursor: pointer;
+            color: #B3B3B3;
+        }
+
+        p:hover {
+            text-decoration: underline;
+        }
+        }
+
+        .song_bottom {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(5, 1fr);
+
+            .song_block:hover {
+                .song_poster {
+                    button {
+                        opacity: 1;
+                        bottom: 5px;
+                    }
+                }
+            }
+
+            .song_block {
+                height: 160px;
+                width: 115px;
+                background-color: #141414;
+                border-radius: 5px;
+                padding: 10px;
+                cursor: pointer;
+
+                .song_poster {
+                    height: 60%;
+                    width: 100%;
+                    background-color: white;
+                    border-radius: 3px;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                    position: relative;
+
+                    button {
+                        position: absolute;
+                        border-radius: 100%;
+                        padding: 5px;
+                        background-color: #1ED760;
+                        border: none;
+                        bottom: 0px;
+                        right: 5px;
+                        display: flex;
+                        align-items: center;
+                        opacity: 0;
+
+                        img {
+                            width: 20px;
+                        }
+                    }
+
+                    button:hover {
+                        scale: 1.05;
+                    }
+                }
+
+
+                .song_description {
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 10px;
+                    gap: 5px;
+
+                    p {
+                        font-size: 10px;
+                        font-weight: 700;
+                    }
+
+                    span {
+                        font-size: 8px;
+                        color: #B3B3B3;
+                    }
+                }
+            }
+
+            .song_block:hover {
+                background-color: #252525;
+            }
+        }
+    } 
+
     .main-cont {
         width: 100%;
         height: 200%;
@@ -702,3 +812,4 @@ aside {
 
     }
 }
+

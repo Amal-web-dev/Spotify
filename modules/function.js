@@ -55,3 +55,65 @@ export function welcomeSong(arr, place) {
     }
     
 }
+
+export function createSongCont(arr, place, info) {
+
+    for (const item of arr) {
+        let song_cont = document.createElement('div')
+        let song_top = document.createElement('div')
+        let song_bottom = document.createElement('div')
+        let h1Title = document.createElement('h1')
+
+        if(info.length >= 6) {
+            let pAll = document.createElement('p')
+
+        pAll.innerHTML = 'Показать все'
+
+        song_top.append(pAll)
+        }
+
+        for (const song of info) {
+            let song_block = document.createElement('div')
+            let song_poster = document.createElement('div')
+            let song_description = document.createElement('div')
+            let pNameSong = document.createElement('p')
+            let pPLayer = document.createElement('span')
+            let button = document.createElement('button')
+            let buttonImg = document.createElement('img')
+
+            
+        song_block.classList.add('song_block')
+        song_poster.classList.add('song_poster')
+        song_description.classList.add('song_description')
+            
+        if(song.name.length >= 15) {
+            pNameSong.innerHTML = song.name.slice(0, 15) + '...'
+        } else {
+            pNameSong.innerHTML = song.name
+        }
+        pPLayer.innerHTML =  'amal, asdnahsd, ashd'
+        buttonImg.src = '/public/icons/start-audio.svg'
+        song_poster.style.backgroundImage =  `url(${song.images[0].url})`
+
+        
+        button.append(buttonImg)
+        song_bottom.append(song_block)
+        song_block.append(song_poster, song_description)
+        song_description.append(pNameSong, pPLayer)
+        song_poster.append(button)
+        }
+
+        h1Title.innerHTML = item
+
+        song_cont.classList.add('song_cont')
+        song_top.classList.add('song_top')
+        song_bottom.classList.add('song_bottom')
+
+
+        song_top.prepend(h1Title)
+        place.append(song_cont)
+        song_cont.append(song_top, song_bottom)
+        
+        
+    }
+}
