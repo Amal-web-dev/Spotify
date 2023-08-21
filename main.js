@@ -28,7 +28,11 @@ let main = document.querySelector('main')
 let  welcomeBlock = document.querySelector('.welcome-block')
 let welcome_h1 = document.querySelector('.welcome_h1')
 let all_cont =  document.querySelector('.all_cont')
+let downloadApp = document.querySelector('.download-app')
 
+  downloadApp.onclick = () => {
+    location.assign('/pages/searchPage');
+  };
 let currentTime = new Date().getHours();
 let allTitle =  ['Твои лучшие миксы', 'Только для тебя', 'Недавно прослушано', 'Выпуски для тебя', 'Популярные радиостанции', 'Discover picks for you', '#SpotifyWrarpped', 'Сегодняшние хиты', 'Похоже на:MRL', 'Похожее на недавно прослушиваемое', 'Рекомендованные исполнители', 'Персональные подборки', 'Тренировка', 'Популярные альбомы', 'Новые  релизы для тебя', 'Послушай сегодня', 'Похоже на:',  'Похоже на:DTF', 'Только новинки']
 const myId = localStorage.getItem("myId");
