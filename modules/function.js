@@ -17,7 +17,12 @@ export function ReloadMediatekaSong(arr, place) {
         media_song_descr.classList.add('media_song_descr')
 
         p.innerHTML = media.name
-        span.innerHTML = media.album_type + " x " + media.artists[0].name
+        
+        if(media.artists) {
+            span.innerHTML = media.album_type + " x " + media.artists[0].name
+        } else  {
+            span.innerHTML = media.type + " • " + media.owner.display_name
+        }
         song_poster.style.backgroundImage =  `url(${media.images[0].url})`
 
         place.append(mediateka_song)
@@ -64,7 +69,7 @@ export function createSongCont(arr, place, info) {
         let song_bottom = document.createElement('div')
         let h1Title = document.createElement('h1')
 
-        if(info.length >= 6) {
+        if(info.length <= 9) {
             let pAll = document.createElement('p')
 
         pAll.innerHTML = 'Показать все'
