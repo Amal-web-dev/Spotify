@@ -43,7 +43,8 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
         playButtonIcon.src = '/public/icons/start-audio.svg';
       }
     }
-  
+    
+
     progressBarOne.onclick = () => {
         let progressRect = progressBarOne.getBoundingClientRect();
         let clickX = event.clientX - progressRect.left;
@@ -52,6 +53,7 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
         let seekTime = (audio.duration * seekPercentage) / 100;
         audio.currentTime = seekTime;
     }
+
 
     playButton.onclick = () => {
         togglePlay()
@@ -102,7 +104,6 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
             volumeIcon.src = '/public/icons/volume-up.svg';
         }
     }
-  
     secBtn5Plus.addEventListener('click', () => forward(5));
     secBtn5Minus.addEventListener('click', () => rewind(5));
     volumeSlider.addEventListener('click', updateVolume);

@@ -2,13 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/icons/spotify-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/public/icons/spotify-icon.png"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.scss">
     <script src="/modules/guard.js"></script>
     <link rel="icon" sizes="32x32" type="image/png" href="https://open.spotifycdn.com/cdn/images/favicon32.b64ecc03.png">
     <link rel="icon" sizes="16x16" type="image/png" href="https://open.spotifycdn.com/cdn/images/favicon16.1c487bff.png">
     <link rel="icon" href="https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico">
+    <link rel="stylesheet" href="/styles/aside.scss">
+    <link rel="stylesheet" href="/styles/audio.scss">
     <title>Spotify - Web Player</title>
   </head>
   <body>
@@ -64,7 +66,7 @@
     </div> -->
     </aside>
 
-    <main>
+    <main id="main">
       <div class="header-main">
         <div class="header-left">
           <button><img src="/public/icons/arrow-left.svg" alt=""></button>
@@ -118,7 +120,7 @@
     </main>
 
 
-    <div class="audio-cont">
+    <!-- <div class="audio-cont">
       <div class="left_audio">
         <div class="song-poster"></div>
         <div class="song-name">
@@ -169,7 +171,7 @@
         
       </div>
       
-    </div>
+    </div> -->
     <script type="module" src="/main.js"></script>
   </body>
 </html>

@@ -1,5 +1,6 @@
 let favTru = false
-
+import axios from 'axios'
+const myId = localStorage.getItem("myId");
 
 export function asideAuth(place) {
 
@@ -131,7 +132,7 @@ export function asideAuth(place) {
 
 
 
-export function audioLoyal(place) {
+export function audioLoyal(place, arr) {
   let audioCont = document.createElement('div')
   let leftAudio = document.createElement('div')
   let centerAudio = document.createElement('div')
@@ -207,13 +208,27 @@ export function audioLoyal(place) {
   playPause.classList.add('play-pause')
   audioPlayer.classList.add('audio-player')
   audioInfo.classList.add('audio-info')
-
-  aName.innerHTML = 'asasdasds'
-  songArt.innerHTML = 'asads'
+  axios.get(`https://api.spotify.com/v1/tracks/11dFghVXANMlKmJXsNCbNl`, {
+    headers: {
+        Authorization: `Bearer ${myId}`
+    }
+}).then(res => {
+  axios.get(`https://api.spotify.com/v1/audio-features/${res.data.id}`, {
+    headers: {
+        Authorization: `Bearer ${myId}`
+    }
+}).then(res => {
+console.log(res);
+})
+  
+})
+  aName.innerHTML = arr.name
+  songArt.innerHTML = arr.artists[0].name
   likeIcon.src = '/public/icons/favorite-icon.svg'
   currentTimeSpan.textContent = '0:00';
   audio.src = '/public/img/passion-127011.mp3'
   volumeIcon.src = '/public/icons/volume-up.svg';
+  songPoster.style.backgroundImage = `url(${arr.album.images[0].url})`
 
   audioCont.append(leftAudio, centerAudio, rightAudio);
 
@@ -256,3 +271,4 @@ export function audioLoyal(place) {
     }
 }
 }
+

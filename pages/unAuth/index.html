@@ -4,10 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>spotify</title>
+    <link rel="stylesheet" href="/style.scss">
+    <link rel="stylesheet" href="./auth.scss">
+    <link rel="icon" type="image/svg+xml" href="/public/icons/spotify-icon.png" />
+    <link rel="stylesheet" href="/styles/audio.scss">
+    <link rel="stylesheet" href="/styles/aside.scss">
 </head>
 <body>
-    <h1>wadwaa</h1>
 
-    <script src="./auth.js"></script>
+    <aside>
+    <div class="aside-top">
+      <div class="home-block active-main hovered_block">
+        <img src="/public/icons/home_icon_active.svg">
+        <span>Главная</span>
+      </div>
+      <div class="search-block hovered_block">
+        <img src="/public/icons/search-icon.svg">
+        <span>Поиск</span>
+      </div>
+    </div>
+    <div class="aside-bottom">
+      <div class="mediaTeka-block">
+        <div class="left-mediateka">
+          <img src="/public/icons/library_icon.svg" alt="">
+          <span>Моя медиатека</span>
+        </div>
+        <div class="rightmedia-teka">
+          <div class="plus-block hovered_block"><img src="/public/icons/plus-icon.svg" alt=""></div>
+          <div class="arrow-block hovered_block"><img src="/public/icons/right-arrow.svg" alt=""></div>
+        </div>
+    </div>
+
+    <div class="create-playlist-cont">
+        <p>Создай свой первый плейлист</p>
+        <h6>Это совсем не сложно! Мы поможем.</h6>
+        <button>Создать плелист</button>
+    </div>
+
+    <div class="create-playlist-cont">
+        <p>Подпишись на интересные подкасты</p>
+        <h6>Ты будешь узнавать о новых выпусках</h6>
+        <button>Обзор</button>
+    </div>
+    </div>
+    </aside>
+
+    <main>
+        <div class="header-main">
+            <div class="header-left">
+              <button><img src="/public/icons/arrow-left.svg" alt=""></button>
+              <button><img src="/public/icons/arrow-right.svg" alt=""></button>
+            </div>
+            <div class="header-right">
+              <button>Зарегистрироваться</button>
+              <a href="" class="login-a"><button class="log-in">Войти</button></a>
+             
+            </div>
+          </div>
+    </main>
+
+    <div class="audio-cont">
+        <div class="audio-block">
+            <div class="left-audio-block">
+                <h3>Предварительный Просмотр Spotify</h3>
+                <p>Зарегистрируйся, чтобы слушать музыку и подкасты юез ограничении. Иногда мы будем показывать рекламу, но ты сможешь пользоваться сервисом бесплатно</p>
+            </div>
+            <div class="right-audiok-block">
+                <button>Зарегистрироваться</button>
+            </div>
+        </div>
+    </div>
+    <script src="./auth.js" type="module"></script>
 </body>
 </html>

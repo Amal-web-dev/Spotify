@@ -1,0 +1,227 @@
+aside {
+    min-width: 300px;
+    height: calc(100% - 75px);
+    position: fixed;
+    left: 5px;
+    top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.aside-top {
+    height: 80px;
+    width: 100%;
+    background-color: #121212;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 10px 0 10px 15px;
+    justify-content: center;
+
+    img  {
+        width: 15px;
+        filter: invert(50%);
+    }
+
+    span {
+        font-size: 10px;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 10px;
+        cursor: pointer;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        color: #B3B3B3;
+
+       img {
+        filter: invert(50%);
+       }
+    }
+
+    
+
+    .active-main {
+        color: white;
+
+        img  {
+            filter: invert(0%);
+        }
+    }
+}
+
+.aside-bottom {
+    height: 100%;
+    width: 100%;
+    background-color: #121212;
+    border-radius: 5px;
+}
+
+.aside-bottom  {
+    padding: 10px 15px;
+
+    .mediaTeka-block{
+        display: flex;
+        align-items: center;
+        color: #B3B3B3;
+
+        justify-content: space-between;
+
+
+        .rightmedia-teka,
+        .left-mediateka {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rightmedia-teka {
+
+            div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 100%;
+                padding: 3px;
+                cursor: pointer;
+            }
+        }
+
+
+
+    span {
+        font-size: 10px;
+    }
+
+    svg,
+    img {
+        filter: invert(50%);
+    }
+    }
+
+    .categories-block  {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+
+
+        button {
+            padding: 5px 8px;
+            color: white;
+            background-color: #232323;
+            border: none;
+            border-radius: 15px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2B2A30;
+        }
+
+        margin-top: 15px;
+    }
+
+    .search_mediateka_block {
+        margin: 10px 0;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+        position: relative;
+        margin: 18px 0;
+
+
+        .filter_recent_block {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            position: absolute;
+            right: 5px;
+        }
+
+        button {
+            border-radius: 100%;
+            background-color: transparent;
+            border: none;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0px;
+
+            img {
+                width: 12px;
+                filter: invert(50%);
+            }
+
+        }
+
+    }
+
+.hovered:hover {
+    background-color: #2B2A30;
+
+    img {
+        filter: invert(0%);
+    }
+}
+    
+    .mediate_song_block {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        overflow-y: scroll;
+        height: 73%;
+        overflow-x: hidden;
+
+        .mediateka_song {
+            width: 100%;
+            border-radius: 5px;
+            height: 50px;
+            padding: 5px;
+            display: flex;
+            gap: 10px;
+            cursor: pointer;
+            color: white;
+
+            .media_song_descr {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            p {
+                font-size: 10px;
+            }
+
+            span {
+                font-size: 10px;
+                color: #A2A2A2;
+            }
+
+            .song_poster {
+                width: 40px;
+                height: 40px;
+                background-color: white;
+                border-radius: 5px;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+            }
+        }
+
+        .mediateka_song:hover  {
+            background-color: #2B2A30;
+        }
+    }
+  
+}

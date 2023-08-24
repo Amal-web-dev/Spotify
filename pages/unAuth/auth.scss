@@ -1,0 +1,126 @@
+.create-playlist-cont {
+    background-color: #242424;
+    margin-top: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+
+    p {
+        font-size: 10px;
+        color: white;
+        font-weight: 600;
+    }
+
+    h6 {
+        font-size: 8px;
+        color: white;
+        font-weight: 600;
+    }
+
+    button  {
+        border-radius: 15px;
+        border: none;
+        padding: 5px 10px;
+        width: fit-content;
+        font-size: 10px;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+
+    button:hover  {
+        scale: 1.05;
+    }
+}
+
+.audio-cont {
+    .audio-block {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,#af2896,#509bf5);
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .left-audio-block  {
+            color: white;
+         h3 {
+            font-size: 10px;
+            font-weight: 400;
+         }   
+
+         p {
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 5px;
+         }
+        }
+
+        .right-audiok-block {
+            button {
+                border: none;
+                background-color: white;
+                color: black;
+                padding: 10px 15px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 700;
+                margin-right: 10px;
+            }
+
+            button:hover {
+                scale: 1.05;
+            }
+        }
+    }
+}
+
+main::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    top: 0px;
+    z-index: 0;
+    background: linear-gradient(#1D1D1D 40%, transparent);
+}
+
+main {
+    
+
+    .header-main {
+        background-color: #121212;
+
+        .header-left  {
+            button {
+                background-color: #0A0A0A;
+            }
+        }  
+
+
+        .header-right {
+            button {
+                background-color: transparent;
+                color: #A2A2A2;
+            }
+
+            .log-in {
+                background-color: white;
+                color: #242424;
+                padding: 10px 20px;
+                font-weight: 700;
+            }
+
+            .log-in:hover {
+                color: #242424;
+            }
+
+            button:hover {
+                color: white;
+            }
+        }
+    }
+}
