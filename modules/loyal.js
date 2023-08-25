@@ -1,6 +1,7 @@
 let favTru = false
 import axios from 'axios'
 const myId = localStorage.getItem("myId");
+let userBul = false
 
 export function asideAuth(place) {
 
@@ -199,7 +200,6 @@ export function audioLoyal(place, arr) {
   currentTimeSpan.classList.add('current-time');
   audio.id = 'audio-1'
   volumeBtnDiv.classList.add('volume-btn');
-  volumeBtnDiv.setAttribute('draggable', 'true');
   volumeDynamicDiv.classList.add('volume-dinamic');
   volumeSliderDiv.classList.add('volume-slider');
   volumeIcon.classList.add('volume-icon');
@@ -208,25 +208,12 @@ export function audioLoyal(place, arr) {
   playPause.classList.add('play-pause')
   audioPlayer.classList.add('audio-player')
   audioInfo.classList.add('audio-info')
-  axios.get(`https://api.spotify.com/v1/tracks/11dFghVXANMlKmJXsNCbNl`, {
-    headers: {
-        Authorization: `Bearer ${myId}`
-    }
-}).then(res => {
-  axios.get(`https://api.spotify.com/v1/audio-features/${res.data.id}`, {
-    headers: {
-        Authorization: `Bearer ${myId}`
-    }
-}).then(res => {
-console.log(res);
-})
-  
-})
+
   aName.innerHTML = arr.name
   songArt.innerHTML = arr.artists[0].name
   likeIcon.src = '/public/icons/favorite-icon.svg'
   currentTimeSpan.textContent = '0:00';
-  audio.src = '/public/img/passion-127011.mp3'
+  audio.src = '/public/img/Automotivo Infernal 1.0.mp3'
   volumeIcon.src = '/public/icons/volume-up.svg';
   songPoster.style.backgroundImage = `url(${arr.album.images[0].url})`
 
@@ -272,3 +259,103 @@ console.log(res);
 }
 }
 
+export function headerMain(place) {
+  let headerMain = document.createElement('div')
+  let headerLeft = document.createElement('div')
+  let headerRight = document.createElement('div')
+  let btnLeft = document.createElement('button')
+  let btnRight = document.createElement('button')
+  let iconLeft = document.createElement('img')
+  let iconRight = document.createElement('img')
+  let aPremium = document.createElement('a')
+  let btnPremium = document.createElement('button')
+  let btnDownload = document.createElement('button')
+  let iconDownload = document.createElement('img')
+  let userBtn = document.createElement('button')
+  let userIcon = document.createElement('img')
+  let userSetting = document.createElement('div')
+  let aAcc = document.createElement('a')
+  let aPremiumUpgrade = document.createElement('a')
+  let aLog_out = document.createElement('a')
+  let acc = document.createElement('div')
+  let profile = document.createElement('div')
+  let goPremium = document.createElement('div')
+  let settings = document.createElement('div')
+  let log_out = document.createElement('div')
+  let accP = document.createElement('p')
+  let profileP = document.createElement('p')
+  let goPremiumP = document.createElement('p')
+  let settingsP = document.createElement('p')
+  let log_outP = document.createElement('p')
+  let linkIconTwo = document.createElement('img')
+  let linkIcon = document.createElement('img')
+  
+
+  headerMain.classList.add('header-main')
+  headerLeft.classList.add('header-left')
+  headerRight.classList.add('header-right')
+  btnPremium.classList.add('btn-premium')
+  btnDownload.classList.add('download-app')
+  userBtn.classList.add('user-btn')
+  userSetting.classList.add('user-setting-block')
+  acc.classList.add('p-block')
+  profile.classList.add('p-block')
+  goPremium.classList.add('p-block')
+  settings.classList.add('p-block')
+  log_out.classList.add('p-block')
+  log_out.classList.add('log-out')
+  
+
+  btnPremium.innerHTML = 'Узнать больше о Premium'
+  aPremium.href = 'https://www.spotify.com/uz/premium/?utm_source=app&utm_medium=desktop&utm_campaign=upgrade&ref=web_loggedin_upgrade_button'
+  iconLeft.src = '/public/icons/arrow-left.svg'
+  iconRight.src = '/public/icons/arrow-right.svg'
+  iconDownload.src = '/public/icons/download-icon.svg'
+  btnDownload.innerHTML = 'Установить приложение'
+  userIcon.src = '/public/icons/user.svg'
+  aAcc.href = 'https://www.spotify.com/uz/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account'
+  aPremiumUpgrade.href = 'https://www.spotify.com/uz/premium/?ref=web_loggedin_upgrade_menu'
+  accP.innerHTML =  'Аккаунт'
+  goPremiumP.innerHTML= 'Переход на Premium'
+  profileP.innerHTML = 'Профиль'
+  settingsP.innerHTML =  'Настройки'
+  log_outP.innerHTML = 'Выйти'
+  linkIconTwo.src = '/public/icons/link-icon.svg'
+  linkIcon.src = '/public/icons/link-icon.svg'
+
+  place.append(headerMain)
+
+  headerMain.append(headerLeft, headerRight)
+
+  headerLeft.append(btnLeft, btnRight)
+  btnLeft.append(iconLeft)
+  btnRight.append(iconRight)
+
+  headerRight.append(aPremium, btnDownload, userBtn, userSetting)
+  aPremium.append(btnPremium)
+  btnDownload.prepend(iconDownload)
+  userBtn.append(userIcon)
+
+  userSetting.append(aAcc, profile, aPremiumUpgrade, settings, aLog_out)
+  aAcc.append(acc)
+  aPremiumUpgrade.append(goPremium)
+  aLog_out.append(log_out)
+  acc.append(accP, linkIcon)
+  goPremium.append(goPremiumP, linkIconTwo)
+  profile.append(profileP)
+  settings.append(settingsP)
+  log_out.append(log_outP)
+
+  userBtn.onclick = () => {
+    if(!userBul) {
+      userSetting.classList.add('user-setting-active')
+      userBul = true
+      userIcon.src = '/public/icons/user-full.svg'
+    } else {
+    userSetting.classList.remove('user-setting-active')
+    userBul = false
+    userIcon.src = '/public/icons/user.svg'
+    }
+  }
+
+}

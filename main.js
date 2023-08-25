@@ -1,27 +1,33 @@
 import axios from 'axios'
 import { ReloadMediatekaSong, welcomeSong, createSongCont } from "./modules/function";
-import { asideAuth, audioLoyal } from "./modules/loyal";
+import { asideAuth, audioLoyal, headerMain } from "./modules/loyal";
 import { audioFunc } from "./modules/audio";
+
+let main = document.querySelector('main')
+
+headerMain(main)
 
 let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
 localStorage.setItem("myId", token);
 let aside = document.querySelector('.aside')
 asideAuth(aside)
-
 let mediate_song_block = document.querySelector('.mediate_song_block')
-let favouriteIcon = document.querySelector('.favorite')
-let headerMain = document.querySelector('.header-main')
-let main = document.querySelector('main')
 let welcomeBlock = document.querySelector('.welcome-block')
 let welcome_h1 = document.querySelector('.welcome_h1')
 let all_cont =  document.querySelector('.all_cont')
-let downloadApp = document.querySelector('.download-app')
-  downloadApp.onclick = () => {
-  };
+let headerMainBlock = document.querySelector('.header-main')
+let log_out = document.querySelector('.log-out')
+
 let currentTime = new Date().getHours();
 let allTitle =  ['Твои лучшие миксы', 'Только для тебя', 'Недавно прослушано', 'Выпуски для тебя', 'Популярные радиостанции', 'Discover picks for you', '#SpotifyWrarpped', 'Сегодняшние хиты', 'Похоже на:MRL', 'Похожее на недавно прослушиваемое', 'Рекомендованные исполнители', 'Персональные подборки', 'Тренировка', 'Популярные альбомы', 'Новые  релизы для тебя', 'Послушай сегодня', 'Похоже на:',  'Похоже на:DTF', 'Только новинки']
 const myId = localStorage.getItem("myId");
+
+log_out.onclick = () => {
+  localStorage.setItem("myId", '');
+  location.assign('/pages/unAuth/')
+}
+
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
   welcome_h1.innerHTML = 'Доброе утро';
@@ -35,9 +41,9 @@ if (currentTime >= 5 && currentTime < 12) {
 // header-main становитья не прозрачным
 main.onscroll = () => {
   if (main.scrollTop >= 100) {
-      headerMain.style.backgroundColor = '#1C0E40';
+    headerMainBlock.style.backgroundColor = '#1C0E40';
   } else {
-      headerMain.style.backgroundColor = '#1C0E4020'; 
+    headerMainBlock.style.backgroundColor = '#1C0E4020'; 
   }
 };
 // header-main становитья не прозрачным

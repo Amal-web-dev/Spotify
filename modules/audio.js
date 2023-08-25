@@ -3,6 +3,8 @@ let isMuted = false;
 
 
 export function audioFunc() {
+let audio = document.getElementById(`audio-1`);
+
     let playButton = document.querySelector('.play-button');
 let playButtonIcon = document.querySelector('.play-button img');
 let progressBar = document.querySelector('.progress-bar .progress');
@@ -17,13 +19,20 @@ let volumeBtn = document.querySelector('.volume-btn');
 let volumeButton = document.querySelector('.volume-button'); 
 let volumeDinamic = document.querySelector('.volume-dinamic'); 
 
-    let audio = document.getElementById(`audio-1`);
+setTimeout(() => {
+  if(audio.duration) {
+    durationDisplay.innerHTML = formatTime(audio.duration)
+  } else {
+    durationDisplay.innerHTML = '?:??'
+  }
+
+}, 100);
     function formatTime(seconds) {
       let minutes = Math.floor(seconds / 60);
       let remainingSeconds = Math.floor(seconds % 60);
       return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
     }
-  
+
     function updateProgress() {
       let progress = (audio.currentTime / audio.duration) * 100;
       progressBar.style.width = `${progress}%`;
@@ -109,11 +118,7 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
     volumeSlider.addEventListener('click', updateVolume);
     volumeButton.addEventListener('click', updateVolumeMute);
 
-    if(audio.duration) {
-      durationDisplay.innerHTML = formatTime(audio.duration);
-    } else {
-      durationDisplay.innerHTML = '0:00';
-    }
+    
   
     audio.addEventListener('timeupdate', updateProgress);
   }    
