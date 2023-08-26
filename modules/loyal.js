@@ -129,6 +129,10 @@ export function asideAuth(place) {
     }
   });
 
+
+  homeBlock.onclick = () => {
+    location.assign('/');
+  }
 }
 
 

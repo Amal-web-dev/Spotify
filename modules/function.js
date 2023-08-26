@@ -69,7 +69,8 @@ export function createSongCont(arr, place, info) {
         let song_bottom = document.createElement('div')
         let h1Title = document.createElement('h1')
 
-        if(info.length <= 9) {
+        console.log(info);
+        if(info.length >= 9) {
             let pAll = document.createElement('p')
 
         pAll.innerHTML = 'Показать все'
@@ -96,7 +97,11 @@ export function createSongCont(arr, place, info) {
         } else {
             pNameSong.innerHTML = song.name
         }
-        pPLayer.innerHTML =  'amal, asdnahsd, ashd'
+        if(song.description) {
+            pPLayer.innerHTML =  song.description.slice(0, 49)
+        } else {
+            pPLayer.innerHTML =  '???'
+        }
         buttonImg.src = '/public/icons/start-audio.svg'
         song_poster.style.backgroundImage =  `url(${song.images[0].url})`
 

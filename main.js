@@ -9,7 +9,6 @@ headerMain(main)
 
 let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
-localStorage.setItem("myId", token);
 let aside = document.querySelector('.aside')
 asideAuth(aside)
 let mediate_song_block = document.querySelector('.mediate_song_block')
@@ -19,6 +18,10 @@ let all_cont =  document.querySelector('.all_cont')
 let headerMainBlock = document.querySelector('.header-main')
 let log_out = document.querySelector('.log-out')
 
+if(!token && token !== 'http://localhost:5173/pages/unAuth/#') {
+  localStorage.setItem("myId", token);
+}
+
 let currentTime = new Date().getHours();
 let allTitle =  ['Твои лучшие миксы', 'Только для тебя', 'Недавно прослушано', 'Выпуски для тебя', 'Популярные радиостанции', 'Discover picks for you', '#SpotifyWrarpped', 'Сегодняшние хиты', 'Похоже на:MRL', 'Похожее на недавно прослушиваемое', 'Рекомендованные исполнители', 'Персональные подборки', 'Тренировка', 'Популярные альбомы', 'Новые  релизы для тебя', 'Послушай сегодня', 'Похоже на:',  'Похоже на:DTF', 'Только новинки']
 const myId = localStorage.getItem("myId");
@@ -27,6 +30,8 @@ log_out.onclick = () => {
   localStorage.setItem("myId", '');
   location.assign('/pages/unAuth/')
 }
+
+
 
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {

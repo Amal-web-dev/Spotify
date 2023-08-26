@@ -10,8 +10,8 @@ import {
        rollupOptions: {
           input: {
              main: resolve(__dirname, 'index.html'),
-             unAuth: resolve(__dirname, 'pages/unAuthPage/index.html'),
-             search: resolve(__dirname, 'pages/searchPage/index.html'),
+             unAuth: resolve(__dirname, 'pages/unAuth/index.html'),
+             search: resolve(__dirname, 'pages/search/index.html'),
           },
        },
     },

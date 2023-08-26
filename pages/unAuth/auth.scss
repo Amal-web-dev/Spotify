@@ -34,6 +34,52 @@
     }
 }
 
+
+.bottom-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 0;
+    height: 95%;
+
+    .other-block {
+        .other-cont {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 100%;
+        
+        
+                a {
+                    color:  #A7A7A7;
+                    font-size: 8px;
+                    text-decoration: none;
+                }
+
+                a:active {
+                    border-bottom: 3px solid #A7A7A7;
+                }
+    
+        }
+
+        button {
+            background-color: transparent;
+            border: 1px solid white;
+            border-radius: 15px;
+            color: white;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    }
+    
+}
+
+
 .audio-cont {
     .audio-block {
         width: 100%;
@@ -84,12 +130,12 @@ main::after {
     height: 200px;
     position: absolute;
     top: 0px;
-    z-index: 0;
+    z-index: -1;
     background: linear-gradient(#1D1D1D 40%, transparent);
 }
 
 main {
-    
+    color: white;
 
     .header-main {
         background-color: #121212;
@@ -122,5 +168,9 @@ main {
                 color: white;
             }
         }
+    }
+
+    .song_cont {
+        margin-left: 20px;
     }
 }
