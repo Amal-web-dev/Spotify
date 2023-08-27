@@ -23,7 +23,7 @@ export let getDetails = async (path) => {
     try {
         const res = await axios.get(baseURL + path, {
             headers: {
-                Authorization: `Bearer BQCEMS56OR1_KBuAT2Jr4UMzJd5r-f8wUFOQZQdOi-GxqSxZwDPkVhZqG98jTvSYAFjU1f-FpJt86rl3wIOBvKxl2W7Oit6eIADoNY8AQ2LZUMZzuv2hsa9ufveRGH3LBGNOENqbd3p_QOV1yDTj4njOueuuFQj0ioAjPfRo68dytnQg6gc8d-2wuG6mDGSYZa4&token_type=Bearer&expires_in=3600`
+                Authorization: `Bearer BQBYH5GuF0LSOjCpyOsCo3nUQgS20HbgJdgrsfU5nNW1TseWrQRj1k9dk-gwohAiZ_s_oDjzOiQ2y_j5DCGOrBCFF36ziwEBAXBFJY2W81X-GtYa5OUMVHVhFEpZGZ5j1k_v_qkRbEgpUythKn1U29oympf0PiUVybilM9kkXONpqqkP6Qa3jSkJu9Ovm1q9GCI&token_type=Bearer&expires_in=3600`
             }
         })
 

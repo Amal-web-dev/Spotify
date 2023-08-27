@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { ReloadMediatekaSong, welcomeSong, createSongCont } from "./modules/function";
-import { asideAuth, audioLoyal, headerMain } from "./modules/loyal";
+import { asideAuth, audioLoyal, headerMain, footer } from "./modules/loyal";
 import { audioFunc } from "./modules/audio";
 
 let main = document.querySelector('main')
+let mainBottom = document.querySelector('.main_bottom')
 
 headerMain(main)
+
 
 let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
@@ -18,7 +20,7 @@ let all_cont =  document.querySelector('.all_cont')
 let headerMainBlock = document.querySelector('.header-main')
 let log_out = document.querySelector('.log-out')
 
-if(!token && token !== 'http://localhost:5173/pages/unAuth/#') {
+if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http://localhost:5173/pages/unAuth/') {
   localStorage.setItem("myId", token);
 }
 
@@ -102,3 +104,7 @@ axios.get("https://api.spotify.com/v1/tracks/11dFghVXANMlKmJXsNCbNl", {
 // добавление любимой песни
 
 // добавление любимой песни конец
+
+setTimeout(() => {
+  footer(all_cont)
+  }, 1000);

@@ -253,14 +253,14 @@ export function audioLoyal(place, arr) {
 
 
   songLike.onclick = () => {
-    if(!favTru) {
-        likeIcon.src = '/public/icons/favorite-full.svg'
-        favTru = true
-    } else  {
-        likeIcon.src = '/public/icons/favorite-icon.svg'
-        favTru = false
+    if (!favTru) {
+      likeIcon.src = '/public/icons/favorite-full.svg'
+      favTru = true
+    } else {
+      likeIcon.src = '/public/icons/favorite-icon.svg'
+      favTru = false
     }
-}
+  }
 }
 
 export function headerMain(place) {
@@ -293,7 +293,7 @@ export function headerMain(place) {
   let log_outP = document.createElement('p')
   let linkIconTwo = document.createElement('img')
   let linkIcon = document.createElement('img')
-  
+
 
   headerMain.classList.add('header-main')
   headerLeft.classList.add('header-left')
@@ -308,7 +308,7 @@ export function headerMain(place) {
   settings.classList.add('p-block')
   log_out.classList.add('p-block')
   log_out.classList.add('log-out')
-  
+
 
   btnPremium.innerHTML = 'Узнать больше о Premium'
   aPremium.href = 'https://www.spotify.com/uz/premium/?utm_source=app&utm_medium=desktop&utm_campaign=upgrade&ref=web_loggedin_upgrade_button'
@@ -319,15 +319,15 @@ export function headerMain(place) {
   userIcon.src = '/public/icons/user.svg'
   aAcc.href = 'https://www.spotify.com/uz/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account'
   aPremiumUpgrade.href = 'https://www.spotify.com/uz/premium/?ref=web_loggedin_upgrade_menu'
-  accP.innerHTML =  'Аккаунт'
-  goPremiumP.innerHTML= 'Переход на Premium'
+  accP.innerHTML = 'Аккаунт'
+  goPremiumP.innerHTML = 'Переход на Premium'
   profileP.innerHTML = 'Профиль'
-  settingsP.innerHTML =  'Настройки'
+  settingsP.innerHTML = 'Настройки'
   log_outP.innerHTML = 'Выйти'
   linkIconTwo.src = '/public/icons/link-icon.svg'
   linkIcon.src = '/public/icons/link-icon.svg'
 
-  place.append(headerMain)
+  place.prepend(headerMain)
 
   headerMain.append(headerLeft, headerRight)
 
@@ -351,15 +351,157 @@ export function headerMain(place) {
   log_out.append(log_outP)
 
   userBtn.onclick = () => {
-    if(!userBul) {
+    if (!userBul) {
       userSetting.classList.add('user-setting-active')
       userBul = true
       userIcon.src = '/public/icons/user-full.svg'
     } else {
-    userSetting.classList.remove('user-setting-active')
-    userBul = false
-    userIcon.src = '/public/icons/user.svg'
+      userSetting.classList.remove('user-setting-active')
+      userBul = false
+      userIcon.src = '/public/icons/user.svg'
     }
   }
+
+}
+
+export function footer(place) {
+  let mainBottomDiv = document.createElement('div');
+  let mainLinkTopDiv = document.createElement('div');
+  let mainLinksDiv = document.createElement('div');
+  let companyLinksDiv = document.createElement('div');
+  let companyLinksTitle = document.createElement('h4');
+  let communityLinksTitle = document.createElement('h4');
+  let communityLinksDiv = document.createElement('div');
+  let helpfulLinksTitle = document.createElement('h4');
+  let helpfulLinksDiv = document.createElement('div');
+  let networkBlockDiv = document.createElement('div');
+  let instagramBtn = document.createElement('button');
+  let instagramIcon = document.createElement('img');
+  let twitterBtn = document.createElement('button');
+  let twitterIcon = document.createElement('img');
+  let facebookBtn = document.createElement('button');
+  let facebookIcon = document.createElement('img');
+  let hrElement = document.createElement('hr');
+  let mainLinkBottomDiv = document.createElement('div');
+  let mainLinkBottomLeftDiv = document.createElement('div');
+  let mainLinkBottomRightDiv = document.createElement('div');
+  let copyRightParagraph = document.createElement('p');
+
+  mainLinksDiv.classList.add('main-links');
+  companyLinksDiv.classList.add('company-links');
+  mainLinkTopDiv.classList.add('main-link-top');
+  mainBottomDiv.classList.add('main-bottom');
+  communityLinksDiv.classList.add('community-links');
+  helpfulLinksDiv.classList.add('helpful-links');
+  networkBlockDiv.classList.add('network_block');
+  mainLinkBottomDiv.classList.add('main-link-bottom');
+  mainLinkBottomRightDiv.classList.add('main-link-bottom-right');
+  mainLinkBottomLeftDiv.classList.add('main-link-bottom-left');
+
+  companyLinksTitle.innerHTML = 'Компания';
+  communityLinksTitle.innerHTML = 'Сообщества';
+  helpfulLinksTitle.innerHTML = 'Полезные ссылки';
+  instagramIcon.src = '/public/icons/instagram.svg';
+  facebookIcon.src = '/public/icons/facebook.svg';
+  twitterIcon.src = '/public/icons/twitter.svg';
+  copyRightParagraph.textContent = '© 2023 Spotify AB';
+
+
+  let aboutLink = document.createElement('a');
+  aboutLink.innerHTML = 'О нас';
+  aboutLink.href = 'https://www.spotify.com/uz/about-us/contact/';
+
+  let vacanciesLink = document.createElement('a');
+  vacanciesLink.innerHTML = 'Вакансии';
+  vacanciesLink.href = 'https://www.lifeatspotify.com/';
+
+  let forTheRecordLink = document.createElement('a');
+  forTheRecordLink.innerHTML = 'For the Record';
+  forTheRecordLink.href = 'https://newsroom.spotify.com/';
+
+
+  let performerLink = document.createElement('a');
+  performerLink.innerHTML = 'Для исполнителей';
+  performerLink.href = 'https://artists.spotify.com/ru/home';
+
+  let developersLink = document.createElement('a');
+  developersLink.innerHTML = 'Для разработчиков';
+  developersLink.href = 'https://developer.spotify.com/';
+
+  let advertisingLink = document.createElement('a');
+  advertisingLink.innerHTML = 'Реклама';
+  advertisingLink.href = 'https://ads.spotify.com/en-US/';
+
+  let investorsLink = document.createElement('a');
+  investorsLink.innerHTML = 'Для инвесторов';
+  investorsLink.href = 'https://investors.spotify.com/home/default.aspx';
+
+  let vendorsLink = document.createElement('a');
+  vendorsLink.innerHTML = 'Для вендоров';
+  vendorsLink.href = 'https://spotifyforvendors.com/';
+
+  let helpLink = document.createElement('a');
+    helpLink.innerHTML = 'Справка';
+    helpLink.href = 'https://support.spotify.com/uz/';
+  
+    let mobileAppLink = document.createElement('a');
+    mobileAppLink.innerHTML = 'Бесплатное мобильное приложение';
+    mobileAppLink.href = 'https://www.spotify.com/uz/free/';
+
+  if(location.href !== 'http://localhost:5173/pages/unAuth/#' && location.href !== 'http://localhost:5173/pages/unAuth/') {
+    let legalInfoLink = document.createElement('a');
+    legalInfoLink.innerHTML = 'Юридическая информация';
+    legalInfoLink.href = 'https://www.spotify.com/uz/legal/end-user-agreement/';
+  
+    let privacyCenterLink = document.createElement('a');
+    privacyCenterLink.innerHTML = 'Центр конфиденциальности';
+    privacyCenterLink.href = 'https://www.spotify.com/uz/privacy';
+  
+    let privacyPolicyLink = document.createElement('a');
+    privacyPolicyLink.innerHTML = 'Политика конфиденциальности';
+    privacyPolicyLink.href = 'https://www.spotify.com/uz/legal/privacy-policy/';
+  
+    let cookieFilesLink = document.createElement('a');
+    cookieFilesLink.innerHTML = 'Файлы сookie';
+    cookieFilesLink.href = 'https://www.spotify.com/uz/legal/cookies-policy/';
+  
+    let aboutAdvertisingLink = document.createElement('a');
+    aboutAdvertisingLink.innerHTML = 'О рекламе';
+    aboutAdvertisingLink.href = 'https://www.spotify.com/uz/legal/privacy-policy/#s3';
+  
+    let specialFeaturesLink = document.createElement('a');
+    specialFeaturesLink.innerHTML = 'Специальные возможности';
+    specialFeaturesLink.href = 'https://www.spotify.com/uz/accessibility';
+
+  mainLinkBottomLeftDiv.append(legalInfoLink, privacyCenterLink, privacyPolicyLink, cookieFilesLink, aboutAdvertisingLink, specialFeaturesLink);
+
+  }
+  
+
+
+  place.append(mainBottomDiv)
+
+  companyLinksDiv.append(companyLinksTitle, aboutLink, vacanciesLink, forTheRecordLink);
+
+  communityLinksDiv.append(communityLinksTitle, performerLink, developersLink, advertisingLink, investorsLink, vendorsLink);
+
+  helpfulLinksDiv.append(helpfulLinksTitle, helpLink, mobileAppLink);
+
+  mainLinksDiv.append(companyLinksDiv, communityLinksDiv, helpfulLinksDiv);
+
+  networkBlockDiv.append(instagramBtn, twitterBtn, facebookBtn);
+
+  mainLinkTopDiv.append(mainLinksDiv, networkBlockDiv);
+
+
+  mainLinkBottomDiv.append(mainLinkBottomLeftDiv, mainLinkBottomRightDiv);
+
+  mainBottomDiv.append(mainLinkTopDiv, hrElement, mainLinkBottomDiv);
+
+  mainLinkBottomRightDiv.append(copyRightParagraph);
+
+  facebookBtn.append(facebookIcon);
+  twitterBtn.append(twitterIcon);
+  instagramBtn.append(instagramIcon);
 
 }

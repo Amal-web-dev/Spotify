@@ -69,7 +69,6 @@ export function createSongCont(arr, place, info) {
         let song_bottom = document.createElement('div')
         let h1Title = document.createElement('h1')
 
-        console.log(info);
         if(info.length >= 9) {
             let pAll = document.createElement('p')
 
