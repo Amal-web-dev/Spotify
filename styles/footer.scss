@@ -14,6 +14,12 @@
         align-items: center;
         margin-right: 40px;
 
+        .main-link-bottom-right  {
+            p {
+                font-size: 10px;
+            }
+        }
+
         .main-link-bottom-left  {
             display: flex;
             gap: 10px;
@@ -22,6 +28,7 @@
         a  {
             color: #A7A799;
             text-decoration: none;
+            font-size: 10px;
         }
     }
 
@@ -33,12 +40,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 40px;
-            width: 40px;
+            height: 30px;
+            width: 30px;
             border-radius: 100%;
             background-color: #292929;
             border: none;
             cursor: default;
+
+            img {
+                width: 12px;
+            }
         }
 
         button:hover  {
@@ -59,6 +70,9 @@
             gap: 50px;
             width: 100%;
 
+            h4 {
+                font-size: 14px;
+            }
 
             div    {
                 display: flex;
@@ -68,6 +82,7 @@
                 a {
                     text-decoration: none;
                     color: #A7A799;
+                    font-size: 10px;
                 }
 
                 a:hover  {

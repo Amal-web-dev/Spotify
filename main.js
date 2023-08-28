@@ -2,12 +2,11 @@ import axios from 'axios'
 import { ReloadMediatekaSong, welcomeSong, createSongCont } from "./modules/function";
 import { asideAuth, audioLoyal, headerMain, footer } from "./modules/loyal";
 import { audioFunc } from "./modules/audio";
+import { getSong } from "./modules/http.request.js";
 
 let main = document.querySelector('main')
 let mainBottom = document.querySelector('.main_bottom')
-
 headerMain(main)
-
 
 let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
@@ -22,18 +21,15 @@ let log_out = document.querySelector('.log-out')
 
 if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http://localhost:5173/pages/unAuth/') {
   localStorage.setItem("myId", token);
-}
-
+} 
 let currentTime = new Date().getHours();
-let allTitle =  ['Твои лучшие миксы', 'Только для тебя', 'Недавно прослушано', 'Выпуски для тебя', 'Популярные радиостанции', 'Discover picks for you', '#SpotifyWrarpped', 'Сегодняшние хиты', 'Похоже на:MRL', 'Похожее на недавно прослушиваемое', 'Рекомендованные исполнители', 'Персональные подборки', 'Тренировка', 'Популярные альбомы', 'Новые  релизы для тебя', 'Послушай сегодня', 'Похоже на:',  'Похоже на:DTF', 'Только новинки']
+let allTitle =  ['Твои плейлисты']
 const myId = localStorage.getItem("myId");
 
 log_out.onclick = () => {
   localStorage.setItem("myId", '');
   location.assign('/pages/unAuth/')
 }
-
-
 
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
@@ -56,55 +52,74 @@ main.onscroll = () => {
 // header-main становитья не прозрачным
 
 // появление песен
-axios.get("https://api.spotify.com/v1/albums?ids=382ObEPsp2rxGrnsizN5TX%2C1A2GTWGtFfWp7KSQTwWOyo%2C2noRn2Aes5aoNVsU6iWThc", {
-    headers: {
-        Authorization: `Bearer ${myId}`
-    }
-}).then(res => {
-  setTimeout(() => {
-    welcomeSong(res.data.albums, welcomeBlock)
-  }, 0);
+getSong('/me/tracks')
+.then(res => {
+  // console.log(res);
 })
 
 
-axios.get("https://api.spotify.com/v1/me", {
-    headers: {
-        Authorization: `Bearer ${myId}`
-    }
-}).then(res => {
-  axios.get(`https://api.spotify.com/v1/users/${res.data.id}/playlists`, {
-    headers: {
-        Authorization: `Bearer ${myId}`
-    }
-}).then(res => {
-  setTimeout(() => {
+getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
+.then(res => {
+  try {
+    console.log(res.data.tracks.slice(0, 6));
+    welcomeSong(res.data.tracks.slice(0, 6), welcomeBlock)
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+getSong("/me")
+.then(res => {
+
+  getSong(`/users/${res.data.id}/playlists`)
+.then(res => {
+  try {
 ReloadMediatekaSong(res.data.items, mediate_song_block)
-  createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
-  }, 0);
+createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
+  } catch (error) {
+    console.log(error);
+  }
 })
 })
-
 
 // появление песен конец
 
 // функционал audio
 
-axios.get("https://api.spotify.com/v1/tracks/11dFghVXANMlKmJXsNCbNl", {
-    headers: {
-        Authorization: `Bearer ${myId}`
-    }
-}).then(res => {
+getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
+.then(res => {
   audioLoyal(document.body, res.data)
   audioFunc()
 })
-
-  
 // функционал audio конец
 
-// добавление любимой песни
+// все песни в контейнере
+getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
+.then(res => {
+  createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks.slice(0, 9))
+  getSong("/me")
+.then(resTwo => {
+  createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.tracks.slice(10, 19))
 
-// добавление любимой песни конец
+})
+})
 
+getSong('/artists/0TnOYISbd1XYRBk9myaseg/related-artists')
+.then(res => {
+  createSongCont([`Популярные исполнители`], all_cont, res.data.artists.slice(0, 9))
+  createSongCont([`Рекомендованные исполнители`], all_cont, res.data.artists.slice(10, 19))
+})
+
+getSong('/browse/new-releases')
+.then(res => {
+  createSongCont([`Новые релизы`], all_cont, res.data.albums.items.slice(0, 9))
+  createSongCont([`Новые альбомы`], all_cont, res.data.albums.items.slice(10, 19))
+})
+
+// все песни в контейнере
+
+// footer
 setTimeout(() => {
   footer(all_cont)
-  }, 1000);
+  }, 1500);
+  // footer

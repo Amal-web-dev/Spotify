@@ -17,17 +17,17 @@ export function ReloadMediatekaSong(arr, place) {
         media_song_descr.classList.add('media_song_descr')
 
         p.innerHTML = media.name
-        
-        if(media.artists) {
+
+        if (media.artists) {
             span.innerHTML = media.album_type + " x " + media.artists[0].name
-        } else  {
+        } else {
             span.innerHTML = media.type + " • " + media.owner.display_name
         }
-        song_poster.style.backgroundImage =  `url(${media.images[0].url})`
+        song_poster.style.backgroundImage = `url(${media.images[0].url})`
 
         place.append(mediateka_song)
         mediateka_song.append(song_poster, media_song_descr)
-        media_song_descr.append(p,  span)
+        media_song_descr.append(p, span)
 
 
     }
@@ -48,17 +48,25 @@ export function welcomeSong(arr, place) {
         song_poster.classList.add('song_poster')
         song_name.classList.add('song_name')
 
-        song_p.innerHTML = song.name
-        song_poster.style.backgroundImage =  `url(${song.images[0].url})`
+        if(song.name.length >= 25)  {
+            song_p.innerHTML = song.name.slice(0, 25) + '...'
+        } else {
+            song_p.innerHTML = song.name
+        }
+        if(song.images) {
+        song_poster.style.backgroundImage = `url(${song.images[0].url})`
+    } else if(song.album.images) {
+        song_poster.style.backgroundImage = `url(${song.album.images[0].url})`
+    }
         buttonImg.src = '/public/icons/start-audio.svg'
 
         place.append(welcome_song_block)
         welcome_song_block.append(song_poster, song_name, song_button)
         song_name.append(song_p)
         song_button.append(buttonImg)
-        
+
     }
-    
+
 }
 
 export function createSongCont(arr, place, info) {
@@ -69,12 +77,12 @@ export function createSongCont(arr, place, info) {
         let song_bottom = document.createElement('div')
         let h1Title = document.createElement('h1')
 
-        if(info.length >= 9) {
+        if (info.length >= 9) {
             let pAll = document.createElement('p')
 
-        pAll.innerHTML = 'Показать все'
+            pAll.innerHTML = 'Показать все'
 
-        song_top.append(pAll)
+            song_top.append(pAll)
         }
 
         for (const song of info) {
@@ -82,34 +90,54 @@ export function createSongCont(arr, place, info) {
             let song_poster = document.createElement('div')
             let song_description = document.createElement('div')
             let pNameSong = document.createElement('p')
-            let pPLayer = document.createElement('span')
+            let pPlayer = document.createElement('span')
             let button = document.createElement('button')
             let buttonImg = document.createElement('img')
 
-            
-        song_block.classList.add('song_block')
-        song_poster.classList.add('song_poster')
-        song_description.classList.add('song_description')
-            
-        if(song.name.length >= 15) {
-            pNameSong.innerHTML = song.name.slice(0, 15) + '...'
-        } else {
-            pNameSong.innerHTML = song.name
-        }
-        if(song.description) {
-            pPLayer.innerHTML =  song.description.slice(0, 49)
-        } else {
-            pPLayer.innerHTML =  '???'
-        }
-        buttonImg.src = '/public/icons/start-audio.svg'
-        song_poster.style.backgroundImage =  `url(${song.images[0].url})`
 
-        
-        button.append(buttonImg)
-        song_bottom.append(song_block)
-        song_block.append(song_poster, song_description)
-        song_description.append(pNameSong, pPLayer)
-        song_poster.append(button)
+            song_block.classList.add('song_block')
+            song_poster.classList.add('song_poster')
+            song_description.classList.add('song_description')
+
+            if (song.name.length >= 15) {
+                pNameSong.innerHTML = song.name.slice(0, 15) + '...'
+            } else {
+                pNameSong.innerHTML = song.name
+            }
+            if (song.description) {
+                pPlayer.innerHTML = song.description.slice(0, 49)
+            } else if (song.artists) {
+                let artistNames = ""; 
+
+                for (let index = 0; index < song.artists.length; index++) {
+                    if (index !== 0) {
+                        artistNames += ", "; 
+                    }
+                        artistNames += song.artists[index].name
+                    }
+
+                    if(artistNames.length >= 70){
+                pPlayer.innerHTML = artistNames.slice(0, 70) + '...';
+            }else {
+                pPlayer.innerHTML = artistNames;
+            }
+            } else {
+                pPlayer.innerHTML = song.type
+            }
+            buttonImg.src = '/public/icons/start-audio.svg'
+            if (song.images) {
+                song_poster.style.backgroundImage = `url(${song.images[0].url})`
+            } else if (song.album.images) {
+                song_poster.style.backgroundImage = `url(${song.album.images[0].url})`
+
+            }
+
+
+            button.append(buttonImg)
+            song_bottom.append(song_block)
+            song_block.append(song_poster, song_description)
+            song_description.append(pNameSong, pPlayer)
+            song_poster.append(button)
         }
 
         h1Title.innerHTML = item
@@ -122,7 +150,7 @@ export function createSongCont(arr, place, info) {
         song_top.prepend(h1Title)
         place.append(song_cont)
         song_cont.append(song_top, song_bottom)
-        
-        
+
+
     }
 }
