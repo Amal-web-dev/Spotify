@@ -1,17 +1,16 @@
 import axios from 'axios'
 import { ReloadMediatekaSong, welcomeSong, createSongCont } from "./modules/function";
-import { asideAuth, audioLoyal, headerMain, footer } from "./modules/loyal";
+import { asideLoyal, audioLoyal, headerMain, footer } from "./modules/loyal";
 import { audioFunc } from "./modules/audio";
 import { getSong } from "./modules/http.request.js";
 
 let main = document.querySelector('main')
-let mainBottom = document.querySelector('.main_bottom')
 headerMain(main)
 
 let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
 let aside = document.querySelector('.aside')
-asideAuth(aside)
+asideLoyal(aside)
 let mediate_song_block = document.querySelector('.mediate_song_block')
 let welcomeBlock = document.querySelector('.welcome-block')
 let welcome_h1 = document.querySelector('.welcome_h1')
@@ -26,10 +25,7 @@ let currentTime = new Date().getHours();
 let allTitle =  ['Твои плейлисты']
 const myId = localStorage.getItem("myId");
 
-log_out.onclick = () => {
-  localStorage.setItem("myId", '');
-  location.assign('/pages/unAuth/')
-}
+
 
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
@@ -52,22 +48,6 @@ main.onscroll = () => {
 // header-main становитья не прозрачным
 
 // появление песен
-getSong('/me/tracks')
-.then(res => {
-  // console.log(res);
-})
-
-
-getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
-.then(res => {
-  try {
-    console.log(res.data.tracks.slice(0, 6));
-    welcomeSong(res.data.tracks.slice(0, 6), welcomeBlock)
-  } catch (error) {
-    console.log(error);
-  }
-})
-
 getSong("/me")
 .then(res => {
 
@@ -77,10 +57,28 @@ getSong("/me")
 ReloadMediatekaSong(res.data.items, mediate_song_block)
 createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
   } catch (error) {
-    console.log(error);
+    location.assign('/pages/unAuth/');
   }
 })
 })
+
+// getSong('/me/tracks')
+// .then(res => {
+//   // console.log(res);
+// })
+
+
+getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
+.then(res => {
+  try {
+    console.log(res.data.tracks.slice(0, 6));
+    welcomeSong(res.data.tracks.slice(0, 6), welcomeBlock)
+  } catch (error) {
+    location.assign('/pages/unAuth/');
+  }
+})
+
+
 
 // появление песен конец
 

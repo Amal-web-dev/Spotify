@@ -1,9 +1,10 @@
 let favTru = false
 import axios from 'axios'
 const myId = localStorage.getItem("myId");
+let focusFal = false
 let userBul = false
 
-export function asideAuth(place) {
+export function asideLoyal(place) {
 
   let asideTop = document.createElement('div')
   let asideBottom = document.createElement('div')
@@ -47,7 +48,6 @@ export function asideAuth(place) {
   asideTop.classList.add('aside-top')
   asideBottom.classList.add('aside-bottom')
   homeBlock.classList.add('home-block')
-  homeBlock.classList.add('active-main')
   homeBlock.classList.add('hovered_block')
   searhBlock.classList.add('search-block')
   searhBlock.classList.add('hovered_block')
@@ -70,9 +70,19 @@ export function asideAuth(place) {
   searchIconInput.classList.add('search-icon-input')
 
 
-  homeIcon.src = '/public/icons/home-main.svg'
+  if(location.href.includes('http://localhost:5173/#access')  || location.href == 'http://localhost:5173/') {
+    homeIcon.src = '/public/icons/home_icon_active.svg'
+    searchIconMain.src = '/public/icons/search-icon.svg'
+    homeBlock.classList.add('active-main')
+  } else if(location.href.includes('http://localhost:5173/')  && location.href == 'http://localhost:5173/pages/search/') {
+    searchIconMain.src = '/public/icons/search_icon_active.svg'
+    searhBlock.classList.add('active-main')
+    homeIcon.src = '/public/icons/home-main.svg'
+  } else {
+    homeIcon.src = '/public/icons/home-main.svg'
+    searchIconMain.src = '/public/icons/search-icon.svg'
+  }
   searchIcon.src = '/public/icons/search-icon.svg'
-  searchIconMain.src = '/public/icons/search-icon.svg'
   searchIconInput.src = '/public/icons/search-icon.svg'
   homeSpan.innerHTML = 'Главная'
   searchSpan.innerHTML = 'Поиск'
@@ -132,6 +142,9 @@ export function asideAuth(place) {
 
   homeBlock.onclick = () => {
     location.assign('/');
+  }
+  searhBlock.onclick = () =>  {
+    location.assign('/pages/search/');
   }
 }
 
@@ -361,6 +374,134 @@ export function headerMain(place) {
       userIcon.src = '/public/icons/user.svg'
     }
   }
+
+  log_out.onclick = () => {
+    localStorage.setItem("myId", '');
+    location.assign('/pages/unAuth/')
+  }
+
+}
+
+export function headerMainSearch(place) {
+  let headerMain = document.createElement('div')
+  let headerLeft = document.createElement('div')
+  let headerRight = document.createElement('div')
+  let btnLeft = document.createElement('button')
+  let btnRight = document.createElement('button')
+  let iconLeft = document.createElement('img')
+  let iconRight = document.createElement('img')
+  let btnDownload = document.createElement('button')
+  let iconDownload = document.createElement('img')
+  let userBtn = document.createElement('button')
+  let userIcon = document.createElement('img')
+  let userSetting = document.createElement('div')
+  let aAcc = document.createElement('a')
+  let aPremiumUpgrade = document.createElement('a')
+  let aLog_out = document.createElement('a')
+  let acc = document.createElement('div')
+  let profile = document.createElement('div')
+  let goPremium = document.createElement('div')
+  let settings = document.createElement('div')
+  let log_out = document.createElement('div')
+  let accP = document.createElement('p')
+  let profileP = document.createElement('p')
+  let goPremiumP = document.createElement('p')
+  let settingsP = document.createElement('p')
+  let log_outP = document.createElement('p')
+  let linkIconTwo = document.createElement('img')
+  let linkIcon = document.createElement('img')
+  let inputSearch = document.createElement('input')
+  let inputBlock = document.createElement('div')
+  let searchIcon = document.createElement('img')
+
+
+  headerMain.classList.add('header-main')
+  headerLeft.classList.add('header-left')
+  headerRight.classList.add('header-right')
+  btnDownload.classList.add('download-app')
+  userBtn.classList.add('user-btn')
+  userSetting.classList.add('user-setting-block')
+  acc.classList.add('p-block')
+  profile.classList.add('p-block')
+  goPremium.classList.add('p-block')
+  settings.classList.add('p-block')
+  log_out.classList.add('p-block')
+  log_out.classList.add('log-out')
+  inputSearch.classList.add('input_search')
+  inputBlock.classList.add('input-block')
+
+
+  searchIcon.src = '/public/icons/search-icon.svg'
+  iconLeft.src = '/public/icons/arrow-left.svg'
+  iconRight.src = '/public/icons/arrow-right.svg'
+  iconDownload.src = '/public/icons/download-icon.svg'
+  btnDownload.innerHTML = 'Установить приложение'
+  userIcon.src = '/public/icons/user.svg'
+  aAcc.href = 'https://www.spotify.com/uz/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account'
+  aPremiumUpgrade.href = 'https://www.spotify.com/uz/premium/?ref=web_loggedin_upgrade_menu'
+  accP.innerHTML = 'Аккаунт'
+  goPremiumP.innerHTML = 'Переход на Premium'
+  profileP.innerHTML = 'Профиль'
+  settingsP.innerHTML = 'Настройки'
+  log_outP.innerHTML = 'Выйти'
+  linkIconTwo.src = '/public/icons/link-icon.svg'
+  linkIcon.src = '/public/icons/link-icon.svg'
+  inputSearch.placeholder = 'Что хочешь послушать?'
+
+  place.prepend(headerMain)
+
+  headerMain.append(headerLeft, headerRight)
+
+  headerLeft.append(btnLeft, btnRight, inputBlock)
+  btnLeft.append(iconLeft)
+  btnRight.append(iconRight)
+  inputBlock.append(inputSearch, searchIcon)
+
+  headerRight.append( btnDownload, userBtn, userSetting)
+  btnDownload.prepend(iconDownload)
+  userBtn.append(userIcon)
+
+  userSetting.append(aAcc, profile, aPremiumUpgrade, settings, aLog_out)
+  aAcc.append(acc)
+  aPremiumUpgrade.append(goPremium)
+  aLog_out.append(log_out)
+  acc.append(accP, linkIcon)
+  goPremium.append(goPremiumP, linkIconTwo)
+  profile.append(profileP)
+  settings.append(settingsP)
+  log_out.append(log_outP)
+
+  userBtn.onclick = () => {
+    if (!userBul) {
+      userSetting.classList.add('user-setting-active')
+      userBul = true
+      userIcon.src = '/public/icons/user-full.svg'
+    } else {
+      userSetting.classList.remove('user-setting-active')
+      userBul = false
+      userIcon.src = '/public/icons/user.svg'
+    }
+  }
+
+  log_out.onclick = () => {
+    localStorage.setItem("myId", '');
+    location.assign('/pages/unAuth/')
+  }
+
+
+
+document.addEventListener('click', (event) => {
+  if (!event.target.classList.contains('search_active')) {
+    inputBlock.classList.remove('search_active');
+  }
+});
+
+
+  inputSearch.onfocus = () => {
+    inputBlock.classList.add('search_active');
+    inputSearch.classList.add('search_active');
+}
+
 
 }
 

@@ -1,4 +1,4 @@
-import { asideAuth, audioLoyal, footer } from "../../modules/loyal";
+import { footer } from "../../modules/loyal";
 import { createSongCont } from "../../modules/function";
 import { getDetails } from "../../modules/http.request.js";
 import axios from 'axios'

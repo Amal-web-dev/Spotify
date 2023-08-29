@@ -3,7 +3,7 @@
     position: sticky;
     width: 100%;
     top: 0;
-    background-color: #1C0E4030;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -55,9 +55,52 @@
         align-items: center;
         gap: 5px;
         opacity: 1;
+
+         .search_active {
+
+
+            input {
+            border: 2px solid white !important;
+            color: white !important;
+            }
+
+            img {
+                filter: invert(0) !important;
+            }
+         }
+
+        .input-block {
+            position: relative;
+
+            .input_search {
+                outline: none;
+                background-color: #242424;
+                color: #757575;
+                border-radius: 15px;
+                border: none;
+                padding: 10px 10px 10px 25px;
+                font-size: 12px;
+                width: 270px;
+            }
+
+            img {
+                position: absolute;
+                left: 5px;
+                top: 30%;
+                filter: invert(50%);
+            }
+        }
+
+        
+
+        .input_search:hover {
+            border: 1px solid #757575;
+
+        }
+
         button {
             border-radius: 100%;
-            background-color: #090414;
+            background-color: #050505;
             border: none;
             padding: 3px;
             display: flex;
@@ -89,7 +132,7 @@
             color: white;
             padding: 5px 8px;
             font-size: 10px;
-            background-color: #0D061C;
+            background-color: #080808;
             display: flex;
             align-items: center;
             gap: 5px;
