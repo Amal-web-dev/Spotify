@@ -154,3 +154,22 @@ export function createSongCont(arr, place, info) {
 
     }
 }
+
+export function categoriesFunc(arr, place) {
+    place.innerHTML = '' 
+
+    for (const categ of arr) {
+        let categories_block = document.createElement('div')
+        let categName = document.createElement('p')
+
+        categories_block.classList.add('categories_block')
+
+        categName.innerHTML = categ.name
+        categories_block.style.backgroundImage = `url(${categ.icons[0].url})`
+
+        
+
+        place.append(categories_block)
+        categories_block.append(categName)
+    }
+}

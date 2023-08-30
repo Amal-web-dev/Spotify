@@ -1,23 +1,38 @@
 import axios from 'axios'
 import { asideLoyal, audioLoyal, footer, headerMainSearch } from "../../modules/loyal";
-import { createSongCont } from "../../modules/function";
-import { getDetails } from "../../modules/http.request.js";
+import { categoriesFunc } from "../../modules/function";
 import { audioFunc } from "../../modules/audio";
 import { getSong } from "../../modules/http.request.js";
 import { ReloadMediatekaSong } from "../../modules/function";
 
 let aside = document.querySelector('aside')
 let main = document.querySelector('main')
+let searchCont =  document.querySelector('.search-cont')
+
 headerMainSearch(main)
 asideLoyal(aside)
+footer(searchCont)
+
 
 let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
 let mediate_song_block = document.querySelector('.mediate_song_block')
-
-getSong('/recommendations/available-genre-seeds?language=ru-RU')
+let all_categories = document.querySelector('.all_categories')
+getSong('/browse/categories')
 .then(res => {
-    console.log(res.data);
+    console.log(res.data.categories.items);
+
+    categoriesFunc(res.data.categories.items, all_categories)
+
+    getSong(`/browse/categories/${res.data.categories.items[0].id}`)
+    .then(categ => {
+      console.log(categ);
+    })
+    // getSong(`/browse/categories`)
+    // .then(categ => {
+    // console.log(categ);
+    // })
+
 })
 // loyal
 
