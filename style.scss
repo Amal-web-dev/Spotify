@@ -128,10 +128,11 @@ button {
                 border-radius: 5px;
                 padding: 10px;
                 cursor: pointer;
+                overflow: hidden;
 
                 .song_poster {
-                    height: 60%;
-                    width: 100%;
+                    height: 100px;
+                    width: 100px;
                     background-color: white;
                     border-radius: 3px;
                     background-repeat: no-repeat;

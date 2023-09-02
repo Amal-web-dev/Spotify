@@ -1,8 +1,8 @@
-let favTru = false
-import axios from 'axios'
 const myId = localStorage.getItem("myId");
 let focusFal = false
 let userBul = false
+let main  =  document.querySelector('main')
+let favTru = false
 
 export function asideLoyal(place) {
 
@@ -380,6 +380,14 @@ export function headerMain(place) {
     location.assign('/pages/unAuth/')
   }
 
+  main.onscroll = () => {
+    if (main.scrollTop >= 100) {
+      headerMain.style.backgroundColor = '#121212';
+    } else {
+      headerMain.style.backgroundColor = '#12121220'; 
+    }
+}
+
 }
 
 export function headerMainSearch(place) {
@@ -447,6 +455,7 @@ export function headerMainSearch(place) {
   linkIconTwo.src = '/public/icons/link-icon.svg'
   linkIcon.src = '/public/icons/link-icon.svg'
   inputSearch.placeholder = 'Что хочешь послушать?'
+  inputSearch.type = 'search'
 
   place.prepend(headerMain)
 
@@ -496,12 +505,18 @@ document.addEventListener('click', (event) => {
   }
 });
 
-
   inputSearch.onfocus = () => {
     inputBlock.classList.add('search_active');
     inputSearch.classList.add('search_active');
 }
 
+main.onscroll = () => {
+  if (main.scrollTop >= 100) {
+    headerMain.style.backgroundColor = '#121212';
+  } else {
+    headerMain.style.backgroundColor = '#12121220'; 
+  }
+};
 
 }
 

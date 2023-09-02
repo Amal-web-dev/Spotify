@@ -1,6 +1,6 @@
 
 let isMuted = false; 
-
+let previousVolume = 1.0;
 
 export function audioFunc() {
 let audio = document.getElementById(`audio-1`);
@@ -95,18 +95,20 @@ setTimeout(() => {
         }
     }
 
-    function updateVolumeMute() {
-        if (isMuted) {
-            audio.volume = 1; 
-            volumeBtn.style.bottom = '0%'; 
-            volumeDinamic.style.width = '100%'; 
-            isMuted = false; 
-        } else {
-            audio.volume = 0; 
-            volumeBtn.style.bottom = '100%';
-            volumeDinamic.style.width = '0%'; 
-            isMuted = true; 
-        }
+  function updateVolumeMute() {
+    if (isMuted) {
+        audio.volume = previousVolume;
+        volumeBtn.style.bottom = '0%';
+        volumeDinamic.style.width = audio.volume * 100 + '%';
+        isMuted = false;
+    } else {
+        previousVolume = audio.volume;
+        audio.volume = 0;
+        volumeBtn.style.bottom = '100%';
+        volumeDinamic.style.width = '0%';
+        isMuted = true;
+    }
+
         if (isMuted) {
             volumeIcon.src = '/public/icons/volume-mute.svg';
         } else {
