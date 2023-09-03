@@ -4,13 +4,13 @@ import { asideLoyal, audioLoyal, headerMain, footer } from "./modules/loyal";
 import { audioFunc } from "./modules/audio";
 import { getSong } from "./modules/http.request.js";
 
-let main = document.querySelector('main')
-headerMain(main)
 
-let token = location.href.split('access_token=').at(-1)
-let login_a = document.querySelector('.login-a')
+let main = document.querySelector('main')
 let aside = document.querySelector('.aside')
+headerMain(main)
 asideLoyal(aside)
+
+let login_a = document.querySelector('.login-a')
 let mediate_song_block = document.querySelector('.mediate_song_block')
 let welcomeBlock = document.querySelector('.welcome-block')
 let welcome_h1 = document.querySelector('.welcome_h1')
@@ -18,14 +18,15 @@ let all_cont =  document.querySelector('.all_cont')
 let headerMainBlock = document.querySelector('.header-main')
 let log_out = document.querySelector('.log-out')
 
-if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http://localhost:5173/pages/unAuth/') {
-  localStorage.setItem("myId", token);
-} 
 let currentTime = new Date().getHours();
 let allTitle =  ['Твои плейлисты']
 const myId = localStorage.getItem("myId");
+let token = location.href.split('access_token=').at(-1)
 
 
+if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http://localhost:5173/pages/unAuth/') {
+  localStorage.setItem("myId", token);
+} 
 
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
@@ -38,13 +39,13 @@ if (currentTime >= 5 && currentTime < 12) {
 // пишет добрый день
 
 // header-main становитья не прозрачным
-main.onscroll = () => {
-  if (main.scrollTop >= 100) {
-    headerMainBlock.style.backgroundColor = '#1C0E40';
-  } else {
-    headerMainBlock.style.backgroundColor = '#1C0E4020'; 
-  }
-};
+// main.onscroll = () => {
+//   if (main.scrollTop >= 100) {
+//     headerMainBlock.style.backgroundColor = '#1C0E40';
+//   } else {
+//     headerMainBlock.style.backgroundColor = '#1C0E4020'; 
+//   }
+// };
 // header-main становитья не прозрачным
 
 // появление песен

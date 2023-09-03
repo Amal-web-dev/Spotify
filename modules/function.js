@@ -94,6 +94,10 @@ export function createSongCont(arr, place, info) {
             let button = document.createElement('button')
             let buttonImg = document.createElement('img')
 
+            song_block.onclick  = () => {
+                location.assign('/pages/song/?id=' + song.id)
+                console.log(song);
+            }
 
             song_block.classList.add('song_block')
             song_poster.classList.add('song_poster')
