@@ -110,6 +110,29 @@ aside {
         display: flex;
         gap: 8px;
 
+        .btn_active {
+            background-color: white;
+            color: #232323;
+        }
+
+        .cancel-block {
+            background-color: #232323;
+            border-radius: 100%;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            display: none;
+
+            img {
+                filter: invert(40%);
+            }
+        }
+
+        .cancel-block:hover {
+            background-color: #2B2A30;
+        }
 
         button {
             padding: 5px 8px;
@@ -123,6 +146,10 @@ aside {
 
         button:hover {
             background-color: #2B2A30;
+        }
+
+        .btn_active:hover {
+            background-color: white;
         }
 
         margin-top: 15px;

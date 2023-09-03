@@ -1,3 +1,5 @@
+import { getSong } from "../modules/http.request.js";
+
 const myId = localStorage.getItem("myId");
 let focusFal = false
 let userBul = false
@@ -43,6 +45,8 @@ export function asideLoyal(place) {
   let spanName = document.createElement('span')
   let mediaSpan = document.createElement('span')
   let searchInput = document.createElement('input');
+  let cancelBlock = document.createElement('div')
+  let cancelImg = document.createElement('img')
 
 
   asideTop.classList.add('aside-top')
@@ -68,6 +72,7 @@ export function asideLoyal(place) {
   searchInput.classList.add('search-input');
   media_song_descr.classList.add('media_song_descr')
   searchIconInput.classList.add('search-icon-input')
+  cancelBlock.classList.add('cancel-block')
 
 
   if(location.href.includes('http://localhost:5173/#access')  || location.href == 'http://localhost:5173/') {
@@ -100,6 +105,7 @@ export function asideLoyal(place) {
   rightArrow.src = '/public/icons/right-arrow.svg'
   searchInput.type = 'text';
   searchInput.placeholder = 'Искать в медиатеке';
+  cancelImg.src = '/public/icons/close_icon.svg'
 
 
   place.append(asideTop, asideBottom)
@@ -112,7 +118,7 @@ export function asideLoyal(place) {
   rightMedia.append(plusBlock, arrowblock)
   plusBlock.append(plusIcon)
   arrowblock.append(rightArrow)
-  categoriesBlock.append(playListBtn, artistsBtn, albumsBtn)
+  categoriesBlock.append(cancelBlock, playListBtn, artistsBtn, albumsBtn)
   searchMedia.append(searchMediaBtn, filter_rercent)
   searchMediaBtn.append(searchIcon)
   filter_rercent.append(recentSpan, arrowBottomIcon)
@@ -121,6 +127,7 @@ export function asideLoyal(place) {
   media_song_descr.append(songName, spanName)
   searchInput.prepend(searchIconInputDiv)
   searchIconInputDiv.append(searchIconInput)
+  cancelBlock.append(cancelImg)
 
 
   searchMediaBtn.onclick = () => {
@@ -145,6 +152,61 @@ export function asideLoyal(place) {
   }
   searhBlock.onclick = () =>  {
     location.assign('/pages/search/');
+  }
+
+//   getSong("/me")
+// .then(res => {
+
+//   console.log(res);
+//   // getSong(`/users/${res.data.id}/artists`)
+//   getSong(`/users/${res.data.id}`)
+// .then(res => {
+//   try {
+//     console.log(res);
+// // ReloadMediatekaSong(res.data.items, mediate_song_block)
+// // createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
+// })
+
+
+  artistsBtn.onclick = () => {
+    playListBtn.style.display = 'none'
+    albumsBtn.style.display = 'none'
+    playListBtn.classList.remove('btn_active')
+    albumsBtn.classList.remove('btn_active')
+    artistsBtn.classList.add('btn_active')
+    cancelBlock.style.display = 'flex'
+  }
+
+  playListBtn.onclick = () => {
+    artistsBtn.style.display = 'none'
+    albumsBtn.style.display = 'none'
+    artistsBtn.classList.remove('btn_active')
+    albumsBtn.classList.remove('btn_active')
+    playListBtn.classList.add('btn_active')
+    cancelBlock.style.display = 'flex'
+  }
+
+  albumsBtn.onclick = () => {
+    artistsBtn.style.display = 'none'
+    playListBtn.style.display = 'none'
+    artistsBtn.classList.remove('btn_active')
+    playListBtn.classList.remove('btn_active')
+    albumsBtn.classList.add('btn_active')
+    cancelBlock.style.display = 'flex'
+  }
+
+  cancelBlock.onclick = () => {
+    artistsBtn.style.display = 'block'
+    playListBtn.style.display = 'block'
+    albumsBtn.style.display = 'block'
+    cancelBlock.style.display = 'none'
+    artistsBtn.classList.remove('btn_active')
+    playListBtn.classList.remove('btn_active')
+    albumsBtn.classList.remove('btn_active')
   }
 }
 

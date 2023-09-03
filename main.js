@@ -57,7 +57,7 @@ getSong("/me")
 ReloadMediatekaSong(res.data.items, mediate_song_block)
 createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
   } catch (error) {
-    location.assign('/pages/unAuth/');
+    console.log(error);
   }
 })
 })
@@ -71,10 +71,9 @@ createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
 getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
 .then(res => {
   try {
-    console.log(res.data.tracks.slice(0, 6));
     welcomeSong(res.data.tracks.slice(0, 6), welcomeBlock)
   } catch (error) {
-    location.assign('/pages/unAuth/');
+    console.log(error);
   }
 })
 

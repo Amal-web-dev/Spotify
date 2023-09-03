@@ -70,8 +70,8 @@ input_search.onkeyup = () => {
 
     getSong(`/search?q=remaster%2520track%3ADoxy%2520artist%3A${input_search.value}&type=album`)
       .then(res => {
+        albums.innerHTML = ''
         try {
-          albums.innerHTML = ''
           if (res.data.albums.items) {
             createSongCont(['Альбомы'], albums, res.data.albums.items.slice(0, 9))
           }
@@ -82,8 +82,8 @@ input_search.onkeyup = () => {
 
     getSong(`/search?q=remaster%2520track%3ADoxy%2520artist%3A${input_search.value}&type=artist`)
       .then(res => {
+        artist.innerHTML = ''
         try {
-          artist.innerHTML = ''
           if (res.data.artists.items) {
             createSongCont(['Артисты'], artist, res.data.artists.items.slice(0, 9))
           }
@@ -94,9 +94,8 @@ input_search.onkeyup = () => {
 
     getSong(`/search?q=remaster%2520track%3ADoxy%2520artist%3A${input_search.value}&type=playlist`)
       .then(res => {
+        playlists.innerHTML = ''
         try {
-          console.log(res.data);
-          playlists.innerHTML = ''
           if (res.data.playlists.items) {
             createSongCont(['Плейлисты'], artist, res.data.playlists.items.slice(0, 9))
           }
@@ -107,9 +106,8 @@ input_search.onkeyup = () => {
 
     getSong(`/search?q=remaster%2520track%3ADoxy%2520artist%3A${input_search.value}&type=show`)
       .then(res => {
+        show.innerHTML = ''
         try {
-          console.log(res.data);
-          show.innerHTML = ''
           if (res.data.shows.items) {
             createSongCont(['Показы'], show, res.data.shows.items.slice(0, 9))
           }
@@ -120,6 +118,7 @@ input_search.onkeyup = () => {
   } else {
     searchCont.style.display = 'block'
     findCont.style.display = 'none'
+    noFind.style.display = 'none'
   }
 
 }
