@@ -1,7 +1,5 @@
 import { getSong } from "../modules/http.request.js";
 
-const myId = localStorage.getItem("myId");
-let focusFal = false
 let userBul = false
 let main  =  document.querySelector('main')
 let favTru = false
@@ -122,8 +120,6 @@ export function asideLoyal(place) {
   searchMedia.append(searchMediaBtn, filter_rercent)
   searchMediaBtn.append(searchIcon)
   filter_rercent.append(recentSpan, arrowBottomIcon)
-  mediate_song_block.append(mediaTeka)
-  mediaTeka.append(song_poster, media_song_descr)
   media_song_descr.append(songName, spanName)
   searchInput.prepend(searchIconInputDiv)
   searchIconInputDiv.append(searchIconInput)
@@ -369,6 +365,7 @@ export function headerMain(place) {
   let linkIconTwo = document.createElement('img')
   let linkIcon = document.createElement('img')
 
+ 
 
   headerMain.classList.add('header-main')
   headerLeft.classList.add('header-left')
@@ -424,6 +421,33 @@ export function headerMain(place) {
   profile.append(profileP)
   settings.append(settingsP)
   log_out.append(log_outP)
+
+  if(location.href.includes('album') || location.href.includes('playlist') || location.href.includes('track') || location.href.includes('artist')) {
+    let btnPlay = document.createElement('button')
+    let h3Name = document.createElement('h3')
+    let btnImg = document.createElement('img')
+    let btnPlayFalse = false
+
+    h3Name.innerHTML = name
+    h3Name.id = 'songName'
+    btnImg.src = '/public/icons/start-audio.svg'
+
+    btnPlay.classList.add('btn_play')
+
+    headerLeft.append(btnPlay, h3Name)
+    btnPlay.append(btnImg)
+
+    btnPlay.onclick = () => {
+
+      if(!btnPlayFalse) {
+        btnImg.src = '/public/icons/pause-audio.svg'
+        btnPlayFalse = true
+      } else {
+        btnImg.src = '/public/icons/start-audio.svg'
+        btnPlayFalse = false
+      }
+    }
+  }
 
   userBtn.onclick = () => {
     if (!userBul) {

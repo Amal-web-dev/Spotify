@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,18 +15,31 @@
     <link rel="stylesheet" href="/styles/audio.scss">
     <link rel="stylesheet" href="/styles/header.scss">
     <link rel="stylesheet" href="/styles/footer.scss">
+    <link rel="stylesheet" href="./album.scss">
 </head>
-
 <body>
-
+    
     <aside></aside>
 
-    <main>
+    <main id="main">
        
+        <div class="about_song_cont">
+            <div class="poster_cont">
+                <div class="song_poster"></div>
+            </div>
+            <div class="descript_cont">
+
+                <p>Альбом</p>
+                <h1 id="type_name">Yamakasi</h1>
+                <div class="artist_song">
+                    <div class="artist_poster"></div>
+                    <p><span id="artist_name">Miyagi</span> • <span id="release_date">2020</span> • <span id="track_count">9 tracks</span>, <span id="duration"></span></p>
+                </div>
+            </div>
+        </div>
     </main>
 
 
-    <script src="./index.js" type="module"></script>
+    <script src="./album.js" type="module"></script>
 </body>
-
 </html>

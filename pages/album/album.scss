@@ -1,0 +1,68 @@
+main {
+    .about_song_cont {
+        padding: 0 20px;
+        color: white;
+        display: flex;
+        gap: 20px;
+        margin-top: 30px;
+        // background-color: #2D2D2D;
+        padding-bottom: 20px;
+
+        .poster_cont {
+
+            .song_poster {
+                width: 200px;
+                height: 200px;
+                background-image: url("/public/img/no_img.jpg");
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border-radius: 5px;
+            }
+        }
+
+        .descript_cont {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 50px;
+            position: relative;
+
+            p {
+                font-size: 12px;
+            }
+
+            .artist_song {
+                display: flex;
+                position: absolute;
+                bottom: 0;
+                align-items: center;
+                gap: 5px;
+                width: 300px;
+
+
+                .artist_poster {
+                    width: 30px;
+                    height: 30px;
+                    background-image: url("/public/img/no_img.jpg");
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    border-radius: 100%;
+                }
+            }
+        }
+    }
+}
+
+#main::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 330px;
+    position: absolute;
+    top: 0px;
+    z-index: -1;
+    background: linear-gradient(#555555 70%, transparent);
+    border-bottom: 1px solid #555555;
+}

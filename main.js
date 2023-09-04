@@ -102,6 +102,11 @@ getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classi
 })
 })
 
+getSong('/browse/featured-playlists') 
+.then(res => {
+  createSongCont([`Рекомендованные плейлисты`], all_cont, res.data.playlists.items.slice(0, 9))
+})
+
 getSong('/artists/0TnOYISbd1XYRBk9myaseg/related-artists')
 .then(res => {
   createSongCont([`Популярные исполнители`], all_cont, res.data.artists.slice(0, 9))

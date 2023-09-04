@@ -10,6 +10,8 @@ asideLoyal(aside)
 headerMain(main)
 let mediate_song_block = document.querySelector('.mediate_song_block')
 let songId = location.search.split('=').at(-1)
+let title = document.querySelector('title')
+
 
 console.log(songId);
 
@@ -21,7 +23,9 @@ console.log(songId);
 getSong(`/tracks/${songId}`)
 .then(res => {
   console.log(res);
+  title.innerHTML = res.data.name + ' • ' + res.data.type
 
+  localStorage.setItem("songName", res.data.name);
   getSong(`/audio-analysis/${songId}`)
   .then(res  =>  {
     console.log(res);

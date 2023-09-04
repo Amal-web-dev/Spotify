@@ -78,7 +78,24 @@ aside {
         .left-mediateka {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 10px;
+        }
+
+        .left-mediateka {
+            transition: -300ms;
+
+            img  {
+                filter: invert(50%);
+            }
+        }
+
+        .left-mediateka:hover {
+            color: white;
+            cursor: pointer;
+
+            img {
+                filter: invert(0%);
+            }
         }
 
         .rightmedia-teka {
@@ -90,6 +107,12 @@ aside {
                 border-radius: 100%;
                 padding: 3px;
                 cursor: pointer;
+            }
+
+            div:hover {
+                img  {
+                    filter: invert(100%);
+                }
             }
         }
 
