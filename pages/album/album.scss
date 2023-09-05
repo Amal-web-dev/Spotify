@@ -197,7 +197,7 @@ main {
                     gap: 5px;
 
                     p {
-                        font-size: 14px;
+                        font-size: 12px;
                     }
 
                     span {
@@ -232,6 +232,10 @@ main {
 
     img {
         filter: invert(50%);
+    }
+
+    p {
+        font-size: 12px;
     }
     
 }

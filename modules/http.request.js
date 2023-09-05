@@ -2,7 +2,26 @@ import axios from "axios"
 
 let baseURL = import.meta.env.VITE_API
 let myToken = localStorage.getItem('myId')
-let win = false
+// let win = false
+
+// export let getSong = async (path) => {
+//     try {
+//         const res = await axios.get(baseURL + path, {
+//             headers: {
+//                 Authorization: `Bearer ${myToken}`
+//             }
+//         })
+//         win = false
+
+//         return res
+//     } catch (e) {
+//         // window.location.reload();
+//         console.log(res);
+//     }
+// }
+
+let win = false;
+let errorCount = parseInt(localStorage.getItem('errorCount')) || 0;
 
 export let getSong = async (path) => {
     try {
@@ -10,18 +29,23 @@ export let getSong = async (path) => {
             headers: {
                 Authorization: `Bearer ${myToken}`
             }
-        })
+        });
 
-        win = false
-        return res
+        return res;
     } catch (e) {
-        console.log(res);
-        if(!win) {
+        if (errorCount === 0) {
+            errorCount++;
+            localStorage.setItem('errorCount', errorCount.toString());
             window.location.reload();
-
+        } else if (errorCount >= 2) {
+            window.location.assign('/pages/unAuth/');
+            errorCount = 0;
+            localStorage.removeItem('errorCount');
         }
+
+        console.log(e);
     }
-}
+};
 
 
 export async function putSong(path, data) {

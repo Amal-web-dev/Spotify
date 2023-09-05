@@ -20,6 +20,7 @@ let track_count = document.querySelector('#track_count')
 let duration = document.querySelector('#duration') 
 let type_name = document.querySelector('#type_name') 
 let all_tracks_cont =  document.querySelector('.all_tracks_cont')
+let type = document.querySelector('#type')
 
 // getSong(`/playlists/${songId}`)
 // .then(res  => {
@@ -34,6 +35,10 @@ getSong(`/albums/${songId}`)
   type_name.innerHTML = res.data.name
   song_poster.style.backgroundImage = `url(${res.data.images[0].url})`
   let durationMs = 0;
+
+  if(res.data.tracks.items.length == 1) {
+    type.innerHTML = 'Сингл'
+  }
 
   for (let time of res.data.tracks.items) {
     durationMs += time.duration_ms;
@@ -90,3 +95,7 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
   audioLoyal(document.body, res.data)
   audioFunc()
 })
+
+setTimeout(() => {
+  footer(main)
+  }, 1500);
