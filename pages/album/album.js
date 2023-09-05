@@ -2,7 +2,7 @@
 import { asideLoyal, audioLoyal, headerMain, footer } from "../../modules/loyal";
 import { audioFunc } from "../../modules/audio";
 import { getSong } from "../../modules/http.request.js";
-import { ReloadMediatekaSong, createSongCont } from "../../modules/function";
+import { ReloadMediatekaSong, createSongCont, tracks } from "../../modules/function";
 
 let aside = document.querySelector('aside')
 let main = document.querySelector('main')
@@ -19,6 +19,7 @@ let release_date = document.querySelector('#release_date')
 let track_count = document.querySelector('#track_count') 
 let duration = document.querySelector('#duration') 
 let type_name = document.querySelector('#type_name') 
+let all_tracks_cont =  document.querySelector('.all_tracks_cont')
 
 // getSong(`/playlists/${songId}`)
 // .then(res  => {
@@ -27,7 +28,7 @@ let type_name = document.querySelector('#type_name')
 
 getSong(`/albums/${songId}`)
 .then(res => {
-  console.log(res.data);
+  tracks(res.data.tracks.items, all_tracks_cont)
   title.innerHTML = res.data.name + ' • ' + res.data.type
   h3Name.innerHTML = res.data.name
   type_name.innerHTML = res.data.name
@@ -67,7 +68,6 @@ let seconds = Math.floor(totalSeconds % 60);
 
   getSong(`/artists/${res.data.artists[0].id}`)
   .then(res => {
-    console.log(res.data);
     artist_poster.style.backgroundImage = `url(${res.data.images[0].url})`
   })
 

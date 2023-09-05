@@ -9,7 +9,8 @@ let main = document.querySelector('main')
 let aside = document.querySelector('.aside')
 headerMain(main)
 asideLoyal(aside)
-
+for (let index = 0; index < 1; index++) {
+}
 let login_a = document.querySelector('.login-a')
 let mediate_song_block = document.querySelector('.mediate_song_block')
 let welcomeBlock = document.querySelector('.welcome-block')

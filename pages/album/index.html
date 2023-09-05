@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title></title>
     <link rel="stylesheet" href="/style.scss">
     <script src="/modules/guard.js"></script>
     <link rel="icon" sizes="32x32" type="image/png"
@@ -34,6 +34,44 @@
                 <div class="artist_song">
                     <div class="artist_poster"></div>
                     <p><span id="artist_name">Miyagi</span> • <span id="release_date">2020</span> • <span id="track_count">9 tracks</span>, <span id="duration"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="play_cont">
+            <button class="play_btn"><img src="/public/icons/start-audio.svg"></button>
+            <img src="/public/icons/favorite-icon.svg" class="like_icon">
+            <img src="/public/icons/dots_icon.svg">
+        </div>
+
+        <div class="tracks_cont">
+            <div class="tracks_table">
+                <div class="left_side">
+                <p>#</p>
+                <p>Название</p>
+            </div>
+            <div class="right_side">
+                <img src="/public/icons/duration_time.svg">
+            </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="all_tracks_cont">
+            <div class="track_block">
+                <div class="left_track_side">
+                    <button class="hidden_icon"><img src="/public/icons/start-audio.svg"></button>
+                    <span id="track_number">1</span>
+                    <div class="track_name">
+                        <p>Don Juan</p>
+                        <span>Don Juan</span>
+                    </div>
+                </div>
+                <div class="right_track_side">
+                    <img src="/public/icons/favorite-icon.svg">
+                    <p id="time_dur">3:33</p>
+                    <img src="/public/icons/dots_icon.svg">
                 </div>
             </div>
         </div>

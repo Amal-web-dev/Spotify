@@ -1,7 +1,7 @@
 import { getSong } from "../modules/http.request.js";
 
 let userBul = false
-let main  =  document.querySelector('main')
+let main = document.querySelector('main')
 let favTru = false
 
 export function asideLoyal(place) {
@@ -73,11 +73,11 @@ export function asideLoyal(place) {
   cancelBlock.classList.add('cancel-block')
 
 
-  if(location.href.includes('http://localhost:5173/#access')  || location.href == 'http://localhost:5173/') {
+  if (location.href.includes('http://localhost:5173/#access') || location.href == 'http://localhost:5173/') {
     homeIcon.src = '/public/icons/home_icon_active.svg'
     searchIconMain.src = '/public/icons/search-icon.svg'
     homeBlock.classList.add('active-main')
-  } else if(location.href.includes('http://localhost:5173/')  && location.href == 'http://localhost:5173/pages/search/') {
+  } else if (location.href.includes('http://localhost:5173/') && location.href == 'http://localhost:5173/pages/search/') {
     searchIconMain.src = '/public/icons/search_icon_active.svg'
     searhBlock.classList.add('active-main')
     homeIcon.src = '/public/icons/home-main.svg'
@@ -146,26 +146,26 @@ export function asideLoyal(place) {
   homeBlock.onclick = () => {
     location.assign('/');
   }
-  searhBlock.onclick = () =>  {
+  searhBlock.onclick = () => {
     location.assign('/pages/search/');
   }
 
-//   getSong("/me")
-// .then(res => {
+  //   getSong("/me")
+  // .then(res => {
 
-//   console.log(res);
-//   // getSong(`/users/${res.data.id}/artists`)
-//   getSong(`/users/${res.data.id}`)
-// .then(res => {
-//   try {
-//     console.log(res);
-// // ReloadMediatekaSong(res.data.items, mediate_song_block)
-// // createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
-//   } catch (error) {
-//     console.log(error);
-//   }
-// })
-// })
+  //   console.log(res);
+  //   // getSong(`/users/${res.data.id}/artists`)
+  //   getSong(`/users/${res.data.id}`)
+  // .then(res => {
+  //   try {
+  //     console.log(res);
+  // // ReloadMediatekaSong(res.data.items, mediate_song_block)
+  // // createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // })
+  // })
 
 
   artistsBtn.onclick = () => {
@@ -365,7 +365,6 @@ export function headerMain(place) {
   let linkIconTwo = document.createElement('img')
   let linkIcon = document.createElement('img')
 
- 
 
   headerMain.classList.add('header-main')
   headerLeft.classList.add('header-left')
@@ -422,24 +421,73 @@ export function headerMain(place) {
   settings.append(settingsP)
   log_out.append(log_outP)
 
-  if(location.href.includes('album') || location.href.includes('playlist') || location.href.includes('track') || location.href.includes('artist')) {
+  if (location.href.includes('album') || location.href.includes('playlist') || location.href.includes('track') || location.href.includes('artist')) {
     let btnPlay = document.createElement('button')
     let h3Name = document.createElement('h3')
     let btnImg = document.createElement('img')
+    let tableBlock = document.createElement('div')
+    let leftSide = document.createElement('div');
+    let rightSide = document.createElement('div');
+    let numberHeader = document.createElement('p');
+    let nameHeader = document.createElement('p');
+    let durationImage = document.createElement('img');
+
+    tableBlock.classList.add('tracks_table');
+    tableBlock.classList.add('header_table')
+    leftSide.classList.add('left_side');
+    rightSide.classList.add('right_side');
+
+    numberHeader.textContent = '#';
+    nameHeader.textContent = 'Название';
+    durationImage.src = '/public/icons/duration_time.svg';
+    tableBlock.style.display = 'none'
+
+    leftSide.append(numberHeader, nameHeader);
+
+    rightSide.append(durationImage);
+
+    tableBlock.append(leftSide, rightSide);
+
     let btnPlayFalse = false
+    btnPlay.style.opacity = '0'
+    h3Name.style.opacity = '0'
 
     h3Name.innerHTML = name
     h3Name.id = 'songName'
     btnImg.src = '/public/icons/start-audio.svg'
 
     btnPlay.classList.add('btn_play')
+    tableBlock.classList.add('header_table')
 
+    headerMain.append(tableBlock)
     headerLeft.append(btnPlay, h3Name)
     btnPlay.append(btnImg)
 
+    main.onscroll = () => {
+      if (main.scrollTop >= 360) {
+        tableBlock.style.display = 'flex'
+      } else {
+        tableBlock.style.display = 'none'
+      }
+
+      if (main.scrollTop >= 310) {
+        btnPlay.style.opacity = '1'
+        h3Name.style.opacity = '1'
+      } else {
+        btnPlay.style.opacity = '0'
+        h3Name.style.opacity = '0'
+      }
+
+      if (main.scrollTop >= 100) {
+        headerMain.style.backgroundColor = '#121212';
+      } else {
+        headerMain.style.backgroundColor = '#12121200';
+      }
+    }
+
     btnPlay.onclick = () => {
 
-      if(!btnPlayFalse) {
+      if (!btnPlayFalse) {
         btnImg.src = '/public/icons/pause-audio.svg'
         btnPlayFalse = true
       } else {
@@ -466,13 +514,6 @@ export function headerMain(place) {
     location.assign('/pages/unAuth/')
   }
 
-  main.onscroll = () => {
-    if (main.scrollTop >= 100) {
-      headerMain.style.backgroundColor = '#121212';
-    } else {
-      headerMain.style.backgroundColor = '#12121220'; 
-    }
-}
 
 }
 
@@ -552,7 +593,7 @@ export function headerMainSearch(place) {
   btnRight.append(iconRight)
   inputBlock.append(inputSearch, searchIcon)
 
-  headerRight.append( btnDownload, userBtn, userSetting)
+  headerRight.append(btnDownload, userBtn, userSetting)
   btnDownload.prepend(iconDownload)
   userBtn.append(userIcon)
 
@@ -585,24 +626,24 @@ export function headerMainSearch(place) {
 
 
 
-document.addEventListener('click', (event) => {
-  if (!event.target.classList.contains('search_active')) {
-    inputBlock.classList.remove('search_active');
-  }
-});
+  document.addEventListener('click', (event) => {
+    if (!event.target.classList.contains('search_active')) {
+      inputBlock.classList.remove('search_active');
+    }
+  });
 
   inputSearch.onfocus = () => {
     inputBlock.classList.add('search_active');
     inputSearch.classList.add('search_active');
-}
-
-main.onscroll = () => {
-  if (main.scrollTop >= 100) {
-    headerMain.style.backgroundColor = '#121212';
-  } else {
-    headerMain.style.backgroundColor = '#12121220'; 
   }
-};
+
+  main.onscroll = () => {
+    if (main.scrollTop >= 100) {
+      headerMain.style.backgroundColor = '#121212';
+    } else {
+      headerMain.style.backgroundColor = '#12121220';
+    }
+  };
 
 }
 
@@ -683,42 +724,42 @@ export function footer(place) {
   vendorsLink.href = 'https://spotifyforvendors.com/';
 
   let helpLink = document.createElement('a');
-    helpLink.innerHTML = 'Справка';
-    helpLink.href = 'https://support.spotify.com/uz/';
-  
-    let mobileAppLink = document.createElement('a');
-    mobileAppLink.innerHTML = 'Бесплатное мобильное приложение';
-    mobileAppLink.href = 'https://www.spotify.com/uz/free/';
+  helpLink.innerHTML = 'Справка';
+  helpLink.href = 'https://support.spotify.com/uz/';
 
-  if(location.href !== 'http://localhost:5173/pages/unAuth/#' && location.href !== 'http://localhost:5173/pages/unAuth/') {
+  let mobileAppLink = document.createElement('a');
+  mobileAppLink.innerHTML = 'Бесплатное мобильное приложение';
+  mobileAppLink.href = 'https://www.spotify.com/uz/free/';
+
+  if (location.href !== 'http://localhost:5173/pages/unAuth/#' && location.href !== 'http://localhost:5173/pages/unAuth/') {
     let legalInfoLink = document.createElement('a');
     legalInfoLink.innerHTML = 'Юридическая информация';
     legalInfoLink.href = 'https://www.spotify.com/uz/legal/end-user-agreement/';
-  
+
     let privacyCenterLink = document.createElement('a');
     privacyCenterLink.innerHTML = 'Центр конфиденциальности';
     privacyCenterLink.href = 'https://www.spotify.com/uz/privacy';
-  
+
     let privacyPolicyLink = document.createElement('a');
     privacyPolicyLink.innerHTML = 'Политика конфиденциальности';
     privacyPolicyLink.href = 'https://www.spotify.com/uz/legal/privacy-policy/';
-  
+
     let cookieFilesLink = document.createElement('a');
     cookieFilesLink.innerHTML = 'Файлы сookie';
     cookieFilesLink.href = 'https://www.spotify.com/uz/legal/cookies-policy/';
-  
+
     let aboutAdvertisingLink = document.createElement('a');
     aboutAdvertisingLink.innerHTML = 'О рекламе';
     aboutAdvertisingLink.href = 'https://www.spotify.com/uz/legal/privacy-policy/#s3';
-  
+
     let specialFeaturesLink = document.createElement('a');
     specialFeaturesLink.innerHTML = 'Специальные возможности';
     specialFeaturesLink.href = 'https://www.spotify.com/uz/accessibility';
 
-  mainLinkBottomLeftDiv.append(legalInfoLink, privacyCenterLink, privacyPolicyLink, cookieFilesLink, aboutAdvertisingLink, specialFeaturesLink);
+    mainLinkBottomLeftDiv.append(legalInfoLink, privacyCenterLink, privacyPolicyLink, cookieFilesLink, aboutAdvertisingLink, specialFeaturesLink);
 
   }
-  
+
 
 
   place.append(mainBottomDiv)

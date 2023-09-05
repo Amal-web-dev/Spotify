@@ -2,7 +2,7 @@ import axios from "axios"
 
 let baseURL = import.meta.env.VITE_API
 let myToken = localStorage.getItem('myId')
-
+let win = false
 
 export let getSong = async (path) => {
     try {
@@ -12,9 +12,31 @@ export let getSong = async (path) => {
             }
         })
 
+        win = false
         return res
     } catch (e) {
         console.log(res);
+        if(!win) {
+            window.location.reload();
+
+        }
+    }
+}
+
+
+export async function putSong(path, data) {
+    try {
+        const response = await axios.put(`${baseURL}${path}`, data, {
+            headers: {
+                'Authorization': `Bearer ${myToken}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error making PUT request:', error);
+        throw error; 
     }
 }
 
