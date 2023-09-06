@@ -7,6 +7,7 @@ import { getSong } from "./modules/http.request.js";
 
 let main = document.querySelector('main')
 let aside = document.querySelector('.aside')
+let errorCount = parseInt(localStorage.getItem('errorCount')) || 0;
 headerMain(main)
 asideLoyal(aside)
 for (let index = 0; index < 1; index++) {
@@ -59,6 +60,15 @@ getSong("/me")
 ReloadMediatekaSong(res.data.items, mediate_song_block)
 createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
   } catch (error) {
+    if (errorCount === 0) {
+      errorCount++;
+      localStorage.setItem('errorCount', errorCount.toString());
+      window.location.reload();
+  } else if (errorCount >= 2) {
+      window.location.assign('/pages/unAuth/');
+      errorCount = 0;
+      localStorage.removeItem('errorCount');
+  }
     console.log(error);
   }
 })

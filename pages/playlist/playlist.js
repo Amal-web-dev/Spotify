@@ -2,7 +2,7 @@
 import { asideLoyal, audioLoyal, headerMain, footer } from "../../modules/loyal";
 import { audioFunc } from "../../modules/audio";
 import { getSong } from "../../modules/http.request.js";
-import { ReloadMediatekaSong, createSongCont } from "../../modules/function";
+import { ReloadMediatekaSong, createSongCont, tracksPlaylist } from "../../modules/function";
 
 let aside = document.querySelector('aside')
 let main = document.querySelector('main')
@@ -15,35 +15,37 @@ let back = document.querySelector('.back')
 let type_name = document.querySelector('#type_name') 
 let artist_name = document.querySelector('#artist_name') 
 let artist_poster = document.querySelector('.artist_poster') 
+let all_tracks_cont = document.querySelector('.all_tracks_cont')
 
 console.log(songId);
 
-// getSong(`/playlists/${songId}`)
-// .then(res  => {
-//   console.log(res.data);
-//   title.innerHTML = res.data.name + ' • ' + res.data.type
-//   back.style.backgroundImage = `url(${res.data.images[0].url})`
-//   type_name.innerHTML = res.data.name
-//   artist_name.innerHTML = res.data.owner.display_name
-//   if(res.data.artist) {
-//     getSong(`/artists/${res.data.artists[0].id}`)
-//     .then(res => {
-//       artist_poster.style.backgroundImage = `url(${res.data.images[0].url})`
-//     })
-//   } else {
-//     artist_poster.style.backgroundImage = `url('/public/icons/spotify-icon.png')`
-//   }
-// })
+getSong(`/playlists/${songId}`)
+.then(res  => {
+  console.log(res.data);
+  tracksPlaylist(res.data.tracks.items, all_tracks_cont)
+  title.innerHTML = res.data.name + ' • ' + res.data.type
+  back.style.backgroundImage = `url(${res.data.images[0].url})`
+  type_name.innerHTML = res.data.name
+  artist_name.innerHTML = res.data.owner.display_name
+  if(res.data.artist) {
+    getSong(`/artists/${res.data.artists[0].id}`)
+    .then(res => {
+      artist_poster.style.backgroundImage = `url(${res.data.images[0].url})`
+    })
+  } else {
+    artist_poster.style.backgroundImage = `url('/public/icons/spotify-icon.png')`
+  }
+})
 
-// getSong(`/tracks/${songId}`)
-// .then(res => {
-//   console.log(res);
+getSong(`/tracks/${songId}`)
+.then(res => {
+  console.log(res);
 
-//   getSong(`/audio-analysis/${songId}`)
-//   .then(res  =>  {
-//     console.log(res);
-//   })
-// })
+  getSong(`/audio-analysis/${songId}`)
+  .then(res  =>  {
+    console.log(res);
+  })
+})
 
 getSong("/me")
 .then(res => {
