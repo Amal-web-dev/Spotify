@@ -6,7 +6,7 @@
     top: 0px;
     z-index: -1;
     border-bottom: 1px solid #555555;
-    background-image: url('/public/img/no_img.jpg') ;
+    background-image: url('/public/img/no_img.jpg');
     background-position: top !important;
     background-size: 100% !important;
     background-repeat: no-repeat !important;
@@ -26,7 +26,7 @@
 
 #main::after {
     content: "";
-    display: none  !important;
+    display: none !important;
 }
 
 .playlist_descript_cont {
@@ -51,4 +51,30 @@
         background-repeat: no-repeat;
         border-radius: 100%;
     }
+}
+
+.album_div {
+    margin-right: 90px;
+    white-space: nowrap;
+    width: 50px;
+
+    p {
+        font-size: 10px;
+        color: #B0B0B0;
+    }
+}
+
+.last_addDiv {
+    margin-right: 30px;
+
+    p {
+        font-size: 10px;
+        color: #B0B0B0;
+        cursor: default;
+    }
+}
+
+.track_name {
+    width: 150px;
+    white-space: nowrap;
 }

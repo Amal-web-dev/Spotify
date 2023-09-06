@@ -464,19 +464,39 @@ export function headerMain(place) {
     btnPlay.append(btnImg)
 
     main.onscroll = () => {
-      if (main.scrollTop >= 360) {
-        tableBlock.style.display = 'flex'
-      } else {
-        tableBlock.style.display = 'none'
-      }
 
-      if (main.scrollTop >= 310) {
-        btnPlay.style.opacity = '1'
-        h3Name.style.opacity = '1'
+      if(location.href.includes('playlist')) {
+        if (main.scrollTop >= 410) {
+          tableBlock.style.display = 'flex'
+        } else {
+          tableBlock.style.display = 'none'
+        }
+
+        if (main.scrollTop >= 365) {
+          btnPlay.style.opacity = '1'
+          h3Name.style.opacity = '1'
+        } else {
+          btnPlay.style.opacity = '0'
+          h3Name.style.opacity = '0'
+        }
       } else {
-        btnPlay.style.opacity = '0'
-        h3Name.style.opacity = '0'
+        if (main.scrollTop >= 360) {
+          tableBlock.style.display = 'flex'
+        } else {
+          tableBlock.style.display = 'none'
+        }
+
+        if (main.scrollTop >= 310) {
+          btnPlay.style.opacity = '1'
+          h3Name.style.opacity = '1'
+        } else {
+          btnPlay.style.opacity = '0'
+          h3Name.style.opacity = '0'
+        }
       }
+      
+
+      
 
       if (main.scrollTop >= 100) {
         headerMain.style.backgroundColor = '#121212';

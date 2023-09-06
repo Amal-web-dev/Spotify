@@ -2,7 +2,7 @@ import axios from 'axios'
 import { putSong } from "../modules/http.request.js";
 let favB = false
 let hidB = true
-
+let n = 1
 
 
 export function ReloadMediatekaSong(arr, place) {
@@ -97,7 +97,7 @@ export function createSongCont(arr, place, info) {
             let button = document.createElement('button')
             let buttonImg = document.createElement('img')
 
-            song_block.onclick  = () => {
+            song_block.onclick = () => {
                 location.assign(`/pages/${song.type}/?id=${song.id}`)
                 console.log(song);
             }
@@ -135,11 +135,11 @@ export function createSongCont(arr, place, info) {
 
             if (song && song.images && song.images.length !== 0) {
                 song_poster.style.backgroundImage = `url(${song.images[0].url})`;
-              } else if (song && song.album && song.album.images && song.album.images.length !== 0) {
+            } else if (song && song.album && song.album.images && song.album.images.length !== 0) {
                 song_poster.style.backgroundImage = `url(${song.album.images[0].url})`;
-              } else {
+            } else {
                 song_poster.style.backgroundImage = `url(/public/img/no_img.jpg)`;
-              }
+            }
 
             if (song.type == 'artist' || song.type == 'исполнитель') {
                 song_poster.style.borderRadius = '100%'
@@ -258,10 +258,10 @@ export function trackResult(arr, place) {
             const minutes = Math.floor(duration_ms / 60000);
             const seconds = ((duration_ms % 60000) / 1000).toFixed(0);
             return `${minutes}:${(seconds < 10 ? '0' : '')}${seconds}`;
-          }
+        }
 
         trackPosterImage.src = '/public/icons/start-audio.svg';
-        trackName1.innerHTML = track.name.slice(0, 20)  +  '...';
+        trackName1.innerHTML = track.name.slice(0, 20) + '...';
         trackName2.innerHTML = track.artists[0].name;
         timeTrackImage.src = '/public/icons/favorite-icon.svg';
         timeTrackSpan.innerHTML = millisecondsToMinutesAndSeconds(track.duration_ms);
@@ -277,194 +277,206 @@ export function trackResult(arr, place) {
     }
 }
 
+
 export function tracks(arr, place) {
     place.innerHTML = ''
 
     for (let track of arr) {
-let trackBlock = document.createElement('div');
-let leftTrackSide = document.createElement('div');
-let hiddenIconBtn = document.createElement('button');
-let hiddenIconImg = document.createElement('img');
-let trackNumber = document.createElement('span');
-let trackName = document.createElement('div');
-let trackNameText = document.createElement('p');
-let trackNameSpan = document.createElement('span');
-let rightTrackSide = document.createElement('div');
-let favoriteIcon = document.createElement('img');
-let timeDur = document.createElement('p');
-let dotsIcon = document.createElement('img');
+        let trackBlock = document.createElement('div');
+        let leftTrackSide = document.createElement('div');
+        let hiddenIconBtn = document.createElement('button');
+        let hiddenIconImg = document.createElement('img');
+        let trackNumber = document.createElement('span');
+        let trackName = document.createElement('div');
+        let trackNameText = document.createElement('p');
+        let trackNameSpan = document.createElement('span');
+        let rightTrackSide = document.createElement('div');
+        let favoriteIcon = document.createElement('img');
+        let timeDur = document.createElement('p');
+        let dotsIcon = document.createElement('img');
 
-trackBlock.classList.add('track_block');
-leftTrackSide.classList.add('left_track_side');
-hiddenIconBtn.classList.add('hidden_icon');
-trackName.classList.add('track_name');
-favoriteIcon.classList.add('favorite-icon');
-rightTrackSide.classList.add('right_track_side');
-dotsIcon.classList.add('dots_icon');
+        trackBlock.classList.add('track_block');
+        leftTrackSide.classList.add('left_track_side');
+        hiddenIconBtn.classList.add('hidden_icon');
+        trackName.classList.add('track_name');
+        favoriteIcon.classList.add('favorite-icon');
+        rightTrackSide.classList.add('right_track_side');
+        dotsIcon.classList.add('dots_icon');
 
-trackNumber.id = 'track_number';
-hiddenIconImg.src =  '/public/icons/start-audio.svg';
-trackNameText.innerHTML = track.name;
-timeDur.id = 'time_dur';
-trackNameSpan.innerHTML = track.artists[0].name;
-if(track.artists[1]) {
-    trackNameSpan.innerHTML += ', ' + track.artists[1].name
-} else if(track.artists[2]) {
-    trackNameSpan.innerHTML += ', ' + track.artists[2].name
-}
-const durationMs = track.duration_ms; 
-const totalSeconds = Math.floor(durationMs / 1000);
-const minutes = Math.floor(totalSeconds / 60);
-const seconds = totalSeconds % 60;
-timeDur.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        trackNumber.id = 'track_number';
+        hiddenIconImg.src = '/public/icons/start-audio.svg';
+        trackNameText.innerHTML = track.name;
+        timeDur.id = 'time_dur';
+        trackNameSpan.innerHTML = track.artists[0].name;
+        if (track.artists[1]) {
+            trackNameSpan.innerHTML += ', ' + track.artists[1].name
+        } else if (track.artists[2]) {
+            trackNameSpan.innerHTML += ', ' + track.artists[2].name
+        }
+        let durationMs = track.duration_ms;
+        let totalSeconds = Math.floor(durationMs / 1000);
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        timeDur.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-trackNumber.innerHTML = track.track_number;
-if(track.track_number > 9) {
-    trackBlock.style.padding = '0 10px'
-} else if(track.track_number > 99)  {
-    trackBlock.style.padding = '0 5px'
-}
-favoriteIcon.src = '/public/icons/favorite-icon.svg';
-dotsIcon.src = '/public/icons/dots_icon.svg';
-
-hiddenIconBtn.append(hiddenIconImg);
-
-trackName.append(trackNameText, trackNameSpan);
-
-leftTrackSide.append(hiddenIconBtn,trackNumber, trackName);
-
-rightTrackSide.append(favoriteIcon, timeDur, dotsIcon);
-
-trackBlock.append(leftTrackSide, rightTrackSide);
-
-place.append(trackBlock);
-
-hiddenIconImg.onclick = () => {
-
-    if(hidB) {
-        hiddenIconImg.src = '/public/icons/pause-audio.svg'
-        hidB = false
-    }  else  {
-        hiddenIconImg.src = '/public/icons/start-audio.svg'
-        hidB = true
-    }
-}
-
-favoriteIcon.onclick = () =>  {
-
-    if(!favB) {
-       favoriteIcon.src = '/public/icons/favorite-full.svg'
-       favB = true
-    } else {
+        trackNumber.innerHTML = track.track_number;
+        if (track.track_number > 9) {
+            trackBlock.style.padding = '0 10px'
+        } else if (track.track_number > 99) {
+            trackBlock.style.padding = '0 5px'
+        }
         favoriteIcon.src = '/public/icons/favorite-icon.svg';
-        favB = false
-    }
+        dotsIcon.src = '/public/icons/dots_icon.svg';
 
-    // putSong(`/me/tracks?ids=${track.id}`)
-}
+        hiddenIconBtn.append(hiddenIconImg);
+
+        trackName.append(trackNameText, trackNameSpan);
+
+        leftTrackSide.append(hiddenIconBtn, trackNumber, trackName);
+
+        rightTrackSide.append(favoriteIcon, timeDur, dotsIcon);
+
+        trackBlock.append(leftTrackSide, rightTrackSide);
+
+        place.append(trackBlock);
+
+        hiddenIconImg.onclick = () => {
+
+            if (hidB) {
+                hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                hidB = false
+            } else {
+                hiddenIconImg.src = '/public/icons/start-audio.svg'
+                hidB = true
+            }
+        }
+
+        favoriteIcon.onclick = () => {
+
+            if (!favB) {
+                favoriteIcon.src = '/public/icons/favorite-full.svg'
+                favB = true
+            } else {
+                favoriteIcon.src = '/public/icons/favorite-icon.svg';
+                favB = false
+            }
+
+            // putSong(`/me/tracks?ids=${track.id}`)
+        }
 
     }
 }
-let n = 1
 
 export function tracksPlaylist(arr, place) {
     place.innerHTML = ''
 
     for (let track of arr) {
-let trackBlock = document.createElement('div');
-let leftTrackSide = document.createElement('div');
-let hiddenIconBtn = document.createElement('button');
-let hiddenIconImg = document.createElement('img');
-let trackNumber = document.createElement('span');
-let trackName = document.createElement('div');
-let trackNameText = document.createElement('p');
-let trackNameSpan = document.createElement('span');
-let rightTrackSide = document.createElement('div');
-let favoriteIcon = document.createElement('img');
-let timeDur = document.createElement('p');
-let dotsIcon = document.createElement('img');
-let albumDiv = document.createElement('div');
-let lastAddDiv = document.createElement('div');
-let lastAddP = document.createElement('p');
-let albumP = document.createElement('p');
+        let trackBlock = document.createElement('div');
+        let leftTrackSide = document.createElement('div');
+        let hiddenIconBtn = document.createElement('button');
+        let hiddenIconImg = document.createElement('img');
+        let trackNumber = document.createElement('span');
+        let trackName = document.createElement('div');
+        let trackNameText = document.createElement('p');
+        let trackNameSpan = document.createElement('span');
+        let rightTrackSide = document.createElement('div');
+        let favoriteIcon = document.createElement('img');
+        let timeDur = document.createElement('p');
+        let dotsIcon = document.createElement('img');
+        let albumDiv = document.createElement('div');
+        let lastAddDiv = document.createElement('div');
+        let lastAddP = document.createElement('p');
+        let albumP = document.createElement('p');
 
+        trackBlock.classList.add('track_block');
+        leftTrackSide.classList.add('left_track_side');
+        hiddenIconBtn.classList.add('hidden_icon');
+        trackName.classList.add('track_name');
+        favoriteIcon.classList.add('favorite-icon');
+        rightTrackSide.classList.add('right_track_side');
+        dotsIcon.classList.add('dots_icon');
+        albumDiv.classList.add('album_div')
+        lastAddDiv.classList.add('last_addDiv')
 
-trackBlock.classList.add('track_block');
-leftTrackSide.classList.add('left_track_side');
-hiddenIconBtn.classList.add('hidden_icon');
-trackName.classList.add('track_name');
-favoriteIcon.classList.add('favorite-icon');
-rightTrackSide.classList.add('right_track_side');
-dotsIcon.classList.add('dots_icon');
+        function formatDate(dateString) {
+            let options = { day: 'numeric', month: 'short', year: 'numeric' };
+            let date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', options);
+        }
 
-trackNumber.id = 'track_number';
-hiddenIconImg.src =  '/public/icons/start-audio.svg';
-trackNameText.innerHTML = track.track.name;
-timeDur.id = 'time_dur';
-albumP.innerHTML = 'afde'
-console.log(track);
-lastAddP.innerHTML =  'sdasdd'
-trackNameSpan.innerHTML = track.track.artists[0].name;
-if(track.track.artists[1]) {
-    trackNameSpan.innerHTML += ', ' + track.track.artists[1].name
-} else if(track.track.artists[2]) {
-    trackNameSpan.innerHTML += ', ' + track.track.artists[2].name
-} 
-const durationMs = track.duration_ms; 
-const totalSeconds = Math.floor(durationMs / 1000);
-const minutes = Math.floor(totalSeconds / 60);
-const seconds = totalSeconds % 60;
-timeDur.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        let durationMs = track.track.duration_ms;
+        let totalSeconds = Math.floor(durationMs / 1000);
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
 
-  trackNumber.innerHTML = n;
-if(track.track_number > 9) {
-    trackBlock.style.padding = '0 10px'
-} else if(track.track_number > 99)  {
-    trackBlock.style.padding = '0 5px'
-}
-favoriteIcon.src = '/public/icons/favorite-icon.svg';
-dotsIcon.src = '/public/icons/dots_icon.svg';
+        trackNumber.id = 'track_number';
+        hiddenIconImg.src = '/public/icons/start-audio.svg';
+        trackNameText.innerHTML = track.track.name.slice(0, 50);
+        timeDur.id = 'time_dur';
+        albumP.innerHTML = track.track.album.name
+        lastAddP.innerHTML = formatDate(track.added_at.slice(0, 10))
+        trackNameSpan.innerHTML = track.track.artists[0].name;
+        if (track.track.artists[1]) {
+            trackNameSpan.innerHTML += ', ' + track.track.artists[1].name
+        } else if (track.track.artists[2]) {
+            trackNameSpan.innerHTML += ', ' + track.track.artists[2].name
+        }
+        timeDur.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-hiddenIconBtn.append(hiddenIconImg);
-
-trackName.append(trackNameText, trackNameSpan);
-
-leftTrackSide.append(hiddenIconBtn,trackNumber, trackName);
-
-rightTrackSide.append(favoriteIcon, timeDur, dotsIcon);
-
-trackBlock.append(leftTrackSide, albumDiv, lastAddDiv, rightTrackSide);
-
-albumDiv.append(albumP)
-lastAddDiv.append(lastAddP)
-
-place.append(trackBlock);
-n++
-
-hiddenIconImg.onclick = () => {
-
-    if(hidB) {
-        hiddenIconImg.src = '/public/icons/pause-audio.svg'
-        hidB = false
-    }  else  {
-        hiddenIconImg.src = '/public/icons/start-audio.svg'
-        hidB = true
-    }
-}
-
-favoriteIcon.onclick = () =>  {
-
-    if(!favB) {
-       favoriteIcon.src = '/public/icons/favorite-full.svg'
-       favB = true
-    } else {
+        trackNumber.innerHTML = n;
+        if (track.track_number > 9) {
+            trackBlock.style.padding = '0 10px'
+        } else if (track.track_number > 99) {
+            trackBlock.style.padding = '0 5px'
+        }
         favoriteIcon.src = '/public/icons/favorite-icon.svg';
-        favB = false
-    }
+        dotsIcon.src = '/public/icons/dots_icon.svg';
 
-    // putSong(`/me/tracks?ids=${track.id}`)
+        hiddenIconBtn.append(hiddenIconImg);
 
-}
+        trackName.append(trackNameText, trackNameSpan);
 
+        leftTrackSide.append(hiddenIconBtn, trackNumber, trackName);
+
+        rightTrackSide.append(favoriteIcon, timeDur, dotsIcon);
+
+        trackBlock.append(leftTrackSide, albumDiv, lastAddDiv, rightTrackSide);
+
+        albumDiv.append(albumP)
+        lastAddDiv.append(lastAddP)
+
+        place.append(trackBlock);
+        n++
+
+        hiddenIconImg.onclick = () => {
+
+            if (hidB) {
+                hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                hidB = false
+            } else {
+                hiddenIconImg.src = '/public/icons/start-audio.svg'
+                hidB = true
+            }
+        }
+
+        favoriteIcon.onclick = () => {
+
+            if (!favB) {
+                favoriteIcon.src = '/public/icons/favorite-full.svg'
+                favB = true
+            } else {
+                favoriteIcon.src = '/public/icons/favorite-icon.svg';
+                favB = false
+            }
+
+            // putSong(`/me/tracks?ids=${track.id}`)
+
+        }
+
+
+        albumP.onclick = () => {
+            location.assign(`/pages/${track.track.album.type}/?id=${track.track.album.id}`)
+            console.log(track);
+        }
     }
 }

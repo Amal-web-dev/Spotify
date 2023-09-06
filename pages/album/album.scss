@@ -112,6 +112,17 @@ main {
         .track_block:hover {
             background-color: #313538;
 
+            .album_div {
+                p {
+                    color: white;
+                }
+
+                p:hover {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            }
+
             .right_track_side {
                 img {
                     opacity: 1;
@@ -119,6 +130,25 @@ main {
             }
 
             .left_track_side {
+
+                .track_name {
+
+                    span {
+                        color: white;
+                    }
+
+                    span:hover {
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+
+                    p:hover {
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+
+
+                }
 
                 .hidden_icon {
                     display: block;
