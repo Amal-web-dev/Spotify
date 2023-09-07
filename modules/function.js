@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { putSong } from "../modules/http.request.js";
+import { getSong, putSong } from "../modules/http.request.js";
 let favB = false
 let hidB = true
 let n = 1
@@ -305,6 +305,7 @@ export function tracks(arr, place) {
 
         trackNumber.id = 'track_number';
         hiddenIconImg.src = '/public/icons/start-audio.svg';
+        hiddenIconImg.id = 'hidden_icon_img'
         trackNameText.innerHTML = track.name;
         timeDur.id = 'time_dur';
         trackNameSpan.innerHTML = track.artists[0].name;
@@ -340,15 +341,54 @@ export function tracks(arr, place) {
 
         place.append(trackBlock);
 
-        hiddenIconImg.onclick = () => {
+        let allhiddenIconImg = document.querySelectorAll('#hidden_icon_img')
+        let track_name = document.querySelectorAll('.track_name')
 
-            if (hidB) {
-                hiddenIconImg.src = '/public/icons/pause-audio.svg'
-                hidB = false
-            } else {
-                hiddenIconImg.src = '/public/icons/start-audio.svg'
-                hidB = true
+
+        allhiddenIconImg.forEach((hiddenIconImg, index) => {
+            hiddenIconImg.onclick = () => {
+                allhiddenIconImg.forEach(icon => {
+                    icon.src = '/public/icons/start-audio.svg';
+                });
+                track_name.forEach(p => {
+                    p.style.color = 'white';
+                });
+        
+                if (hidB) {
+                    hiddenIconImg.src = '/public/icons/pause-audio.svg';
+                    track_name[index].style.color = '#1ED760';
+                    hidB = false;
+                } else {
+                    hiddenIconImg.src = '/public/icons/start-audio.svg';
+                    track_name[index].style.color = 'white';
+                    hidB = true;
+                }
             }
+        });
+
+        const allTrackBlocks = document.querySelectorAll('.track_block');
+
+        allTrackBlocks.forEach((trackBlock) => {
+            trackBlock.onclick = () => {
+                allTrackBlocks.forEach((block) => {
+                    block.style.backgroundColor = '';
+                });
+
+                trackBlock.style.backgroundColor = '#5A5A5A';
+
+            }
+        });
+
+        trackBlock.addEventListener('click', () => {
+            // location.assign(`/pages/${track.type}/?id=${track.id}`)
+        });
+
+        trackBlock.addEventListener('dblclick', () => {
+            location.assign(`/pages/${track.type}/?id=${track.id}`)
+        });
+
+        trackName.onclick = () => {
+            location.assign(`/pages/${track.type}/?id=${track.id}`)
         }
 
         favoriteIcon.onclick = () => {
@@ -478,5 +518,34 @@ export function tracksPlaylist(arr, place) {
             location.assign(`/pages/${track.track.album.type}/?id=${track.track.album.id}`)
             console.log(track);
         }
+    }
+}
+
+export function artist(arr, place) {
+    place.innerHTML = ''
+
+    for (const artist of arr) {
+        const artistBlock = document.createElement('div');
+        const artistImg = document.createElement('div');
+        const artistDescr = document.createElement('div');
+        const artistName = document.createElement('h3');
+        const artistParagraph = document.createElement('p');
+
+        artistBlock.classList.add('artist_block');
+        artistImg.classList.add('artist_img');
+        artistDescr.classList.add('artist_desrc');
+        artistName.textContent = 'Исполнитель';
+        artistParagraph.textContent = artist.name;
+        getSong(`/artists/${artist.id}`)
+            .then(res => {
+                artistImg.style.backgroundImage = `url(${res.data.images[0].url})`
+            })
+
+        artistDescr.appendChild(artistName);
+        artistDescr.appendChild(artistParagraph);
+        artistBlock.appendChild(artistImg);
+        artistBlock.appendChild(artistDescr);
+
+        place.appendChild(artistBlock);
     }
 }

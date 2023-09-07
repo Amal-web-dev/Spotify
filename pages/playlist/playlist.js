@@ -20,7 +20,7 @@ let playlist_descr = document.querySelector('.playlist_descr')
 let like_info = document.querySelector('#like_info')
 let track_count = document.querySelector('#track_count')
 let duration = document.querySelector('#duration')
-
+let h3Name = document.querySelector('#songName')
 
 
 getSong(`/playlists/${songId}`)
@@ -29,6 +29,7 @@ getSong(`/playlists/${songId}`)
   tracksPlaylist(res.data.tracks.items, all_tracks_cont)
   title.innerHTML = res.data.name + ' • ' + res.data.type
   back.style.backgroundImage = `url(${res.data.images[0].url})`
+  h3Name.innerHTML = res.data.name
   type_name.innerHTML = res.data.name
   artist_name.innerHTML = res.data.owner.display_name
   playlist_descr.innerHTML = res.data.description

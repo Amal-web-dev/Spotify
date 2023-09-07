@@ -16,13 +16,57 @@
     <link rel="stylesheet" href="/styles/header.scss">
     <link rel="stylesheet" href="/styles/footer.scss">
     <link rel="stylesheet" href="./track.scss">
+    <link rel="stylesheet" href="/styles/tracks.scss">
 </head>
 <body>
     
     <aside></aside>
 
     <main>
-       
+        <div class="about_song_cont">
+            <div class="poster_cont">
+                <div class="song_poster"></div>
+            </div>
+            <div class="descript_cont">
+                <p id="type">Трек</p>
+                <h2 id="type_name">Yamakasi</h2>
+                <div class="artist_song">
+                    <div class="artist_poster"></div>
+                    <p><span id="artist_name">Miyagi</span> • <span id="release_date">2020</span> • <span id="duration"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="play_cont">
+            <button class="play_btn"><img src="/public/icons/start-audio.svg"></button>
+            <img src="/public/icons/favorite-icon.svg" class="like_icon">
+            <img src="/public/icons/dots_icon.svg">
+        </div>
+
+        <div class="artists_cont">
+            <div class="artist_block">
+                <div class="artist_img"></div>
+                <div class="artist_desrc">
+                    <h3>Исполнитель</h3>
+                    <p>Треллар</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="fan_like"></div>
+
+        <div class="from_album">
+            <div class="from_album_block">
+                <div class="album_poster"></div>
+                <div class="descr_from_album">
+                    <p>Из альбома</p>
+                    <h3 id="from_album_name">faww</h3>
+                </div>
+            </div>
+
+            <div class="from_album_tracks"></div>
+        </div>
     </main>
 
 

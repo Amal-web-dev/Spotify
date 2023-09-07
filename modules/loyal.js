@@ -425,18 +425,22 @@ export function headerMain(place) {
     let btnPlay = document.createElement('button')
     let h3Name = document.createElement('h3')
     let btnImg = document.createElement('img')
-    let tableBlock = document.createElement('div')
-    let leftSide = document.createElement('div');
-    let rightSide = document.createElement('div');
-    let numberHeader = document.createElement('p');
-    let nameHeader = document.createElement('p');
-    let durationImage = document.createElement('img');
 
-    tableBlock.classList.add('tracks_table');
-    tableBlock.classList.add('header_table')
-    leftSide.classList.add('left_side');
-    rightSide.classList.add('right_side');
 
+    if(!location.href.includes('track')) {
+      let tableBlock = document.createElement('div')
+      let leftSide = document.createElement('div');
+      let rightSide = document.createElement('div');
+      let numberHeader = document.createElement('p');
+      let nameHeader = document.createElement('p');
+      let durationImage = document.createElement('img');
+
+      tableBlock.classList.add('tracks_table');
+      tableBlock.classList.add('header_table')
+      leftSide.classList.add('left_side');
+      rightSide.classList.add('right_side');
+
+      
     numberHeader.textContent = '#';
     nameHeader.textContent = 'Название';
     durationImage.src = '/public/icons/duration_time.svg';
@@ -448,6 +452,10 @@ export function headerMain(place) {
 
     tableBlock.append(leftSide, rightSide);
 
+    headerMain.append(tableBlock)
+    }
+
+
     let btnPlayFalse = false
     btnPlay.style.opacity = '0'
     h3Name.style.opacity = '0'
@@ -457,9 +465,7 @@ export function headerMain(place) {
     btnImg.src = '/public/icons/start-audio.svg'
 
     btnPlay.classList.add('btn_play')
-    tableBlock.classList.add('header_table')
 
-    headerMain.append(tableBlock)
     headerLeft.append(btnPlay, h3Name)
     btnPlay.append(btnImg)
 
@@ -480,10 +486,12 @@ export function headerMain(place) {
           h3Name.style.opacity = '0'
         }
       } else {
-        if (main.scrollTop >= 360) {
-          tableBlock.style.display = 'flex'
-        } else {
-          tableBlock.style.display = 'none'
+        if(!location.href.includes('track')) {
+          if (main.scrollTop >= 360) {
+            tableBlock.style.display = 'flex'
+          } else {
+            tableBlock.style.display = 'none'
+          }
         }
 
         if (main.scrollTop >= 310) {
@@ -501,10 +509,16 @@ export function headerMain(place) {
       if (main.scrollTop >= 100) {
         headerMain.style.backgroundColor = '#121212';
       } else {
+      if(location.href.includes('track')) {
+        headerMain.style.backgroundColor = '#121212';
+      } else {
         headerMain.style.backgroundColor = '#12121200';
       }
+      }
     }
-
+    if(location.href.includes('track')) {
+      headerMain.style.backgroundColor = '#121212';
+    }
     btnPlay.onclick = () => {
 
       if (!btnPlayFalse) {

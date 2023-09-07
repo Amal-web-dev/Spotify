@@ -35,6 +35,7 @@ getSong(`/albums/${songId}`)
   type_name.innerHTML = res.data.name
   song_poster.style.backgroundImage = `url(${res.data.images[0].url})`
   let durationMs = 0;
+  console.log(res);
 
   if(res.data.tracks.items.length == 1) {
     type.innerHTML = 'Сингл'
