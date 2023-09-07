@@ -427,7 +427,7 @@ export function headerMain(place) {
     let btnImg = document.createElement('img')
 
 
-    if(!location.href.includes('track')) {
+    if(!location.href.includes('track') || !location.href.includes('artist')) {
       let tableBlock = document.createElement('div')
       let leftSide = document.createElement('div');
       let rightSide = document.createElement('div');
@@ -486,7 +486,7 @@ export function headerMain(place) {
           h3Name.style.opacity = '0'
         }
       } else {
-        if(!location.href.includes('track')) {
+        if(!location.href.includes('track') && !location.href.includes('artist')) {
           if (main.scrollTop >= 360) {
             tableBlock.style.display = 'flex'
           } else {
