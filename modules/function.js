@@ -68,9 +68,12 @@ export function welcomeSong(arr, place) {
         song_name.append(song_p)
         song_button.append(buttonImg)
 
+        welcome_song_block.onclick = () => 
+            location.assign(`/pages/${song.type}/?id=${song.id}`)
+        }
+
     }
 
-}
 
 export function createSongCont(arr, place, info) {
 
@@ -81,75 +84,30 @@ export function createSongCont(arr, place, info) {
         let h1Title = document.createElement('h1')
 
         if (info.length >= 9) {
-            let pAll = document.createElement('p')
+            if(!location.href.includes('search')) {
+                if(!location.href.includes('allSong')) {
+                    let pAll = document.createElement('p')
 
-            pAll.innerHTML = 'Показать все'
-
-            song_top.append(pAll)
+                    pAll.innerHTML = 'Показать все'
+        
+                    song_top.append(pAll)
+    
+                    pAll.onclick =  () => {
+                        localStorage.setItem('seeAll', JSON.stringify(info))
+                        localStorage.setItem('title', JSON.stringify(h1Title.innerHTML))
+                        location.assign(`/pages/allSong/`)
+                }
+                
+                }
+            }
+            
         }
 
-        for (const song of info) {
-            let song_block = document.createElement('div')
-            let song_poster = document.createElement('div')
-            let song_description = document.createElement('div')
-            let pNameSong = document.createElement('p')
-            let pPlayer = document.createElement('span')
-            let button = document.createElement('button')
-            let buttonImg = document.createElement('img')
 
-            song_block.onclick = () => {
-                location.assign(`/pages/${song.type}/?id=${song.id}`)
-                console.log(song);
-            }
-
-            song_block.classList.add('song_block')
-            song_poster.classList.add('song_poster')
-            song_description.classList.add('song_description')
-
-            if (song.name.length >= 15) {
-                pNameSong.innerHTML = song.name.slice(0, 15) + '...'
-            } else {
-                pNameSong.innerHTML = song.name
-            }
-            if (song.description) {
-                pPlayer.innerHTML = song.description.slice(0, 49)
-            } else if (song.artists) {
-                let artistNames = "";
-
-                for (let index = 0; index < song.artists.length; index++) {
-                    if (index !== 0) {
-                        artistNames += ", ";
-                    }
-                    artistNames += song.artists[index].name
-                }
-
-                if (artistNames.length >= 70) {
-                    pPlayer.innerHTML = artistNames.slice(0, 70) + '...';
-                } else {
-                    pPlayer.innerHTML = artistNames;
-                }
-            } else {
-                pPlayer.innerHTML = song.type
-            }
-            buttonImg.src = '/public/icons/start-audio.svg'
-
-            if (song && song.images && song.images.length !== 0) {
-                song_poster.style.backgroundImage = `url(${song.images[0].url})`;
-            } else if (song && song.album && song.album.images && song.album.images.length !== 0) {
-                song_poster.style.backgroundImage = `url(${song.album.images[0].url})`;
-            } else {
-                song_poster.style.backgroundImage = `url(/public/img/no_img.jpg)`;
-            }
-
-            if (song.type == 'artist' || song.type == 'исполнитель') {
-                song_poster.style.borderRadius = '100%'
-            }
-
-            button.append(buttonImg)
-            song_bottom.append(song_block)
-            song_block.append(song_poster, song_description)
-            song_description.append(pNameSong, pPlayer)
-            song_poster.append(button)
+        if(location.href.includes('allSong')) {
+            createSongs(info, song_bottom)
+        } else {
+            createSongs(info.slice(0, 9), song_bottom)
         }
 
         h1Title.innerHTML = item
@@ -164,6 +122,73 @@ export function createSongCont(arr, place, info) {
         song_cont.append(song_top, song_bottom)
 
 
+    }
+}
+
+export function createSongs(arr, place) {
+    place.innerHTML = ''
+
+    for (const song of arr) {
+        let song_block = document.createElement('div')
+        let song_poster = document.createElement('div')
+        let song_description = document.createElement('div')
+        let pNameSong = document.createElement('p')
+        let pPlayer = document.createElement('span')
+        let button = document.createElement('button')
+        let buttonImg = document.createElement('img')
+
+        song_block.onclick = () => {
+            location.assign(`/pages/${song.type}/?id=${song.id}`)
+        }
+
+        song_block.classList.add('song_block')
+        song_poster.classList.add('song_poster')
+        song_description.classList.add('song_description')
+
+        if (song.name.length >= 15) {
+            pNameSong.innerHTML = song.name.slice(0, 15) + '...'
+        } else {
+            pNameSong.innerHTML = song.name
+        }
+        if (song.description) {
+            pPlayer.innerHTML = song.description.slice(0, 49)
+        } else if (song.artists) {
+            let artistNames = "";
+
+            for (let index = 0; index < song.artists.length; index++) {
+                if (index !== 0) {
+                    artistNames += ", ";
+                }
+                artistNames += song.artists[index].name
+            }
+
+            if (artistNames.length >= 70) {
+                pPlayer.innerHTML = artistNames.slice(0, 70) + '...';
+            } else {
+                pPlayer.innerHTML = artistNames;
+            }
+        } else {
+            pPlayer.innerHTML = song.type
+        }
+        buttonImg.src = '/public/icons/start-audio.svg'
+
+        if (song && song.images && song.images.length !== 0) {
+            song_poster.style.backgroundImage = `url(${song.images[0].url})`;
+        } else if (song && song.album && song.album.images && song.album.images.length !== 0) {
+            song_poster.style.backgroundImage = `url(${song.album.images[0].url})`;
+        } else {
+            song_poster.style.backgroundImage = `url(/public/img/no_img.jpg)`;
+        }
+
+        if (song.type == 'artist' || song.type == 'исполнитель') {
+            song_poster.style.borderRadius = '100%'
+        }
+
+        button.append(buttonImg)
+        place.append(song_block)
+        song_block.append(song_poster, song_description)
+        song_description.append(pNameSong, pPlayer)
+        song_poster.append(button)
     }
 }
 
@@ -231,6 +256,11 @@ export function bestResult(arr, place) {
     bestResultBlock.append(heading, bestResult);
 
     place.append(bestResultBlock);
+
+    bestResultBlock.onclick = () => {
+        location.assign(`/pages/${arr.type}/?id=${arr.id}`)
+    }
+
 }
 
 export function trackResult(arr, place) {
@@ -274,6 +304,15 @@ export function trackResult(arr, place) {
         timeTrack.append(timeTrackImage, timeTrackSpan);
 
         place.append(trackResult);
+
+        trackName1.onclick = () => {
+            location.assign(`/pages/${track.type}/?id=${track.id}`)
+        }
+
+        trackName2.onclick = () => {
+            console.log(track.artists);
+            location.assign(`/pages/${track.artists[0].type}/?id=${track.artists[0].id}`)
+        }
     }
 }
 
@@ -377,10 +416,6 @@ export function tracks(arr, place) {
                 trackBlock.style.backgroundColor = '#5A5A5A';
 
             }
-        });
-
-        trackBlock.addEventListener('click', () => {
-            // location.assign(`/pages/${track.type}/?id=${track.id}`)
         });
 
         trackBlock.addEventListener('dblclick', () => {
@@ -547,5 +582,9 @@ export function artist(arr, place) {
         artistBlock.appendChild(artistDescr);
 
         place.appendChild(artistBlock);
+
+        artistBlock.onclick = () => {
+            location.assign(`/pages/${artist.type}/?id=${artist.id}`)
+        }
     }
 }

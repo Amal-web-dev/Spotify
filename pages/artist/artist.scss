@@ -120,4 +120,60 @@ main {
         width: 30px;
         margin-right: 5px;
     }
+
+    
+}
+
+.fan_like {
+    margin-left: 30px;
+}
+
+.song {
+    margin-left: 30px;
+    margin-top: 30px;
+
+   
+
+    .categ_btn_cont {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+
+        button {
+            padding: 7px 12px;
+            background-color: #232323;
+            color: white;
+            border-radius: 15px;
+            border: none;
+            font-size: 12px;
+        }
+
+        .btn_cat.active {
+            color: #2A2A2A;
+            background-color: white;
+          }
+
+          .active:hover {
+            background-color: white  !important;
+          }
+
+        .btn_cat:hover {
+            background-color: #2A2A2A;
+        }
+    }
+
+    .all_song_cont {
+        margin-top: -40px;
+
+        .song_cont {
+            .song_top {
+                display: none;
+            }
+
+            .song_bottom {
+                margin-top: 30px;
+            }
+        }
+        
+    }
 }

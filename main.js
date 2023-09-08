@@ -10,8 +10,8 @@ let aside = document.querySelector('.aside')
 let errorCount = parseInt(localStorage.getItem('errorCount')) || 0;
 headerMain(main)
 asideLoyal(aside)
-for (let index = 0; index < 1; index++) {
-}
+
+
 let login_a = document.querySelector('.login-a')
 let mediate_song_block = document.querySelector('.mediate_song_block')
 let welcomeBlock = document.querySelector('.welcome-block')
@@ -58,7 +58,7 @@ getSong("/me")
 .then(res => {
   try {
 ReloadMediatekaSong(res.data.items, mediate_song_block)
-createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
+createSongCont(allTitle, all_cont, res.data.items)
   } catch (error) {
     if (errorCount === 0) {
       errorCount++;
@@ -105,29 +105,27 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 // все песни в контейнере
 getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
 .then(res => {
-  createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks.slice(0, 9))
+  createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks)
   getSong("/me")
 .then(resTwo => {
-  createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.tracks.slice(10, 19))
+  createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.tracks)
 
 })
 })
 
 getSong('/browse/featured-playlists') 
 .then(res => {
-  createSongCont([`Рекомендованные плейлисты`], all_cont, res.data.playlists.items.slice(0, 9))
+  createSongCont([`Рекомендованные плейлисты`], all_cont, res.data.playlists.items)
 })
 
 getSong('/artists/0TnOYISbd1XYRBk9myaseg/related-artists')
 .then(res => {
-  createSongCont([`Популярные исполнители`], all_cont, res.data.artists.slice(0, 9))
-  createSongCont([`Рекомендованные исполнители`], all_cont, res.data.artists.slice(10, 19))
+  createSongCont([`Популярные исполнители`], all_cont, res.data.artists)
 })
 
 getSong('/browse/new-releases')
 .then(res => {
-  createSongCont([`Новые релизы`], all_cont, res.data.albums.items.slice(0, 9))
-  createSongCont([`Новые альбомы`], all_cont, res.data.albums.items.slice(10, 19))
+  createSongCont([`Новые релизы`], all_cont, res.data.albums.items)
 })
 
 // все песни в контейнере

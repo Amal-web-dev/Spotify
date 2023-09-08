@@ -453,6 +453,58 @@ export function headerMain(place) {
     tableBlock.append(leftSide, rightSide);
 
     headerMain.append(tableBlock)
+
+
+    main.onscroll = () => {
+      if(location.href.includes('playlist')) {
+        if(!location.href.includes('track') || !location.href.includes('artist')) {
+          if (main.scrollTop >= 410) {
+            tableBlock.style.display = 'flex'
+          } else {
+            tableBlock.style.display = 'none'
+          }
+        }
+       
+
+        if (main.scrollTop >= 365) {
+          btnPlay.style.opacity = '1'
+          h3Name.style.opacity = '1'
+        } else {
+          btnPlay.style.opacity = '0'
+          h3Name.style.opacity = '0'
+        }
+      } else {
+        if(!location.href.includes('artist')) {
+          if(!location.href.includes('track')) {
+            if (main.scrollTop >= 360) {
+              tableBlock.style.display = 'flex'
+            } else {
+              tableBlock.style.display = 'none'
+            }
+          }
+          
+        }
+
+
+        if (main.scrollTop >= 310) {
+          btnPlay.style.opacity = '1'
+          h3Name.style.opacity = '1'
+        } else {
+          btnPlay.style.opacity = '0'
+          h3Name.style.opacity = '0'
+        }
+      }
+
+      if (main.scrollTop >= 100) {
+        headerMain.style.backgroundColor = '#121212';
+      } else {
+      if(location.href.includes('track')) {
+        headerMain.style.backgroundColor = '#121212';
+      } else {
+        headerMain.style.backgroundColor = '#12121200';
+      }
+      }
+    }
     }
 
 
@@ -469,53 +521,7 @@ export function headerMain(place) {
     headerLeft.append(btnPlay, h3Name)
     btnPlay.append(btnImg)
 
-    main.onscroll = () => {
-
-      if(location.href.includes('playlist')) {
-        if (main.scrollTop >= 410) {
-          tableBlock.style.display = 'flex'
-        } else {
-          tableBlock.style.display = 'none'
-        }
-
-        if (main.scrollTop >= 365) {
-          btnPlay.style.opacity = '1'
-          h3Name.style.opacity = '1'
-        } else {
-          btnPlay.style.opacity = '0'
-          h3Name.style.opacity = '0'
-        }
-      } else {
-        if(!location.href.includes('track') && !location.href.includes('artist')) {
-          if (main.scrollTop >= 360) {
-            tableBlock.style.display = 'flex'
-          } else {
-            tableBlock.style.display = 'none'
-          }
-        }
-
-        if (main.scrollTop >= 310) {
-          btnPlay.style.opacity = '1'
-          h3Name.style.opacity = '1'
-        } else {
-          btnPlay.style.opacity = '0'
-          h3Name.style.opacity = '0'
-        }
-      }
-      
-
-      
-
-      if (main.scrollTop >= 100) {
-        headerMain.style.backgroundColor = '#121212';
-      } else {
-      if(location.href.includes('track')) {
-        headerMain.style.backgroundColor = '#121212';
-      } else {
-        headerMain.style.backgroundColor = '#12121200';
-      }
-      }
-    }
+    
     if(location.href.includes('track')) {
       headerMain.style.backgroundColor = '#121212';
     }

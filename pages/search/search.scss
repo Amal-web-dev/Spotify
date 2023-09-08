@@ -138,12 +138,23 @@
 
                         p {
                             font-size: 12px;
+                            cursor: pointer;
+                        }
+
+                        p:hover {
+                            text-decoration: underline;
                         }
 
                         span {
                             font-size: 10px;
                             color: #B3B3B3;
                             margin-top: 5px;
+                            cursor: pointer;
+                        }
+
+                        span:hover {
+                            text-decoration: underline;
+                            color: white;
                         }
                     }
 

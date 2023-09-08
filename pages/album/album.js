@@ -21,14 +21,19 @@ let duration = document.querySelector('#duration')
 let type_name = document.querySelector('#type_name') 
 let all_tracks_cont =  document.querySelector('.all_tracks_cont')
 let type = document.querySelector('#type')
+let other_album =  document.querySelector('.other_album')
 
-// getSong(`/playlists/${songId}`)
-// .then(res  => {
-//   console.log(res);
-// })
 
 getSong(`/albums/${songId}`)
 .then(res => {
+  getSong(`/artists/${res.data.artists[0].id}/albums`)
+  .then(alb => {
+    // console.log(res.data.artists[0].name);
+    other_album.innerHTML = ''
+    // createSongCont(`${res.data.artists[0].name}: другие альбомы`, other_album, alb.data.items)
+    createSongCont([`${res.data.artists[0].name}: другие альбомы`], other_album, alb.data.items)
+  })
+
   tracks(res.data.tracks.items, all_tracks_cont)
   title.innerHTML = res.data.name + ' • ' + res.data.type
   h3Name.innerHTML = res.data.name
@@ -76,6 +81,8 @@ let seconds = Math.floor(totalSeconds % 60);
   .then(res => {
     artist_poster.style.backgroundImage = `url(${res.data.images[0].url})`
   })
+
+  
 
 })
 

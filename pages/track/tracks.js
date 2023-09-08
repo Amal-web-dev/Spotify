@@ -58,18 +58,21 @@ getSong(`/tracks/${songId}`)
 
       getSong(`/artists/${res.data.id}/related-artists`)
     .then(res => {
-      createSongCont(['Поклонникам также нравятся'] ,fan_like, res.data.artists.slice(0, 9))
+      if(res.data.artists.length > 1) {
+        createSongCont(['Поклонникам также нравятся'] ,fan_like, res.data.artists.slice(0, 9))
+      }
     })
 
     getSong(`/artists/${res.data.id}/albums`)
     .then(alb => {
-      createSongCont([`${res.data.name}: Популярные альбомы`] ,fan_like, alb.data.items.slice(0, 9))
+      if(alb.data.items.length > 1) {
+        createSongCont([`${res.data.name}: Популярные альбомы`] ,fan_like, alb.data.items.slice(0, 9))
+      }
     })
     })
 
     getSong(`/albums/${res.data.album.id}`)
     .then(albTrack => {
-      console.log(albTrack.data.tracks.items);
       tracks(albTrack.data.tracks.items, from_album_tracks)
     })
 
