@@ -28,9 +28,7 @@ getSong(`/albums/${songId}`)
 .then(res => {
   getSong(`/artists/${res.data.artists[0].id}/albums`)
   .then(alb => {
-    // console.log(res.data.artists[0].name);
     other_album.innerHTML = ''
-    // createSongCont(`${res.data.artists[0].name}: другие альбомы`, other_album, alb.data.items)
     createSongCont([`${res.data.artists[0].name}: другие альбомы`], other_album, alb.data.items)
   })
 

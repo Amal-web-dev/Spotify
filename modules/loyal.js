@@ -5,7 +5,6 @@ let main = document.querySelector('main')
 let favTru = false
 
 export function asideLoyal(place) {
-
   let asideTop = document.createElement('div')
   let asideBottom = document.createElement('div')
   let homeBlock = document.createElement('div')
@@ -153,9 +152,8 @@ export function asideLoyal(place) {
   //   getSong("/me")
   // .then(res => {
 
-  //   console.log(res);
-  //   // getSong(`/users/${res.data.id}/artists`)
-  //   getSong(`/users/${res.data.id}`)
+  //   // getSong(`/users/${res.data.id}`)
+  //   getSong(`/users/${res.data.id}/following?type=artist`)
   // .then(res => {
   //   try {
   //     console.log(res);
@@ -554,6 +552,37 @@ export function headerMain(place) {
     location.assign('/pages/unAuth/')
   }
 
+  btnLeft.onclick = () => {
+    try {
+      window.history.back();
+    } catch (e) {
+      btnLeft.style.backgroundColor = '#05050550';
+    }
+  }
+
+  btnRight.onclick = () => {
+    try {
+      window.history.forward();
+    } catch (e) {
+      btnRight.style.backgroundColor = '#05050550';
+    }
+  }
+  
+  if(!window.navigation.canGoForward) {
+    btnRight.style.backgroundColor = '#05050550';
+
+  btnRight.onmouseenter = () => {
+    btnRight.style.cursor = 'not-allowed';
+  };
+  }
+
+  if(!window.navigation.canGoBack) {
+    btnLeft.style.backgroundColor = '#05050550';
+
+    btnLeft.onmouseenter = () => {
+      btnLeft.style.cursor = 'not-allowed';
+    };
+  }
 
 }
 

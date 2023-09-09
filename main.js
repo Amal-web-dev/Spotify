@@ -8,6 +8,7 @@ import { getSong } from "./modules/http.request.js";
 let main = document.querySelector('main')
 let aside = document.querySelector('.aside')
 let errorCount = parseInt(localStorage.getItem('errorCount')) || 0;
+let footer_cont = document.querySelector('.footer_cont')
 headerMain(main)
 asideLoyal(aside)
 
@@ -133,5 +134,5 @@ getSong('/browse/new-releases')
 // footer
 setTimeout(() => {
   footer(all_cont)
-  }, 1500);
+  }, 2500);
   // footer

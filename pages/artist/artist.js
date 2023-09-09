@@ -73,23 +73,21 @@ getSong(`/artists/${artistId}`)
     getSong(`/artists/${artistId}/related-artists`)
 .then(alb => {
   if(alb.data.artists.length > 1) {
-    createSongCont([''], all_song_cont, alb.data.artists.slice(0, 9))
+    createSongCont([''], all_song_cont, alb.data.artists)
   }
 })
 
     getSong(`/artists/${artistId}/related-artists`)
 .then(alb => {
   if(alb.data.artists.length > 1) {
-    createSongCont([`${res.data.name} и не только`], fan_like, alb.data.artists.slice(10, 19))
-    createSongCont(['Поклонникам также нравятся'], fan_like, alb.data.artists.slice(0, 9))
+    createSongCont(['Поклонникам также нравятся'], fan_like, alb.data.artists)
   }
 })
 
 getSong(`/artists/${artistId}/albums`)
 .then(alb => {
   if(alb.data.items.length > 1) {
-    createSongCont(['Еще с этим исполнителем'], fan_like, alb.data.items.slice(0, 9))
-    createSongCont([`Альбомы исполнителя`], fan_like, alb.data.items.slice(10, 19))
+    createSongCont([`Альбомы исполнителя`], fan_like, alb.data.items)
   }
 })
 

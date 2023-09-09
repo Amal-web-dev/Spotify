@@ -1,0 +1,174 @@
+@media (max-width: 1530px) {
+    main {
+
+        .song_cont {
+
+            .song_bottom {
+            grid-template-columns: repeat(8, 1fr);
+            }
+
+            .song_bottom > :nth-child(n+9) {
+                display: none;
+              }
+        }
+    }
+  }
+
+  @media (max-width: 1390px) {
+    main {
+
+        .song_cont {
+
+            .song_bottom {
+            grid-template-columns: repeat(7, 1fr);
+            }
+
+            .song_bottom > :nth-child(n+8) {
+                display: none;
+              }
+        }
+    }
+  }
+
+  @media (max-width: 1260px) {
+    main {
+
+        .song_cont {
+
+            .song_bottom {
+            grid-template-columns: repeat(6, 1fr);
+            }
+
+            .song_bottom > :nth-child(n+7) {
+                display: none;
+              }
+        }
+    }
+  }
+
+  @media (max-width: 1120px) {
+    main {
+
+        .main-cont {
+            .welcome-cont  {
+
+                .welcome-block {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+        }
+       
+
+        .song_cont {
+
+            .song_bottom {
+            grid-template-columns: repeat(5, 1fr);
+            }
+
+            .song_bottom > :nth-child(n+6) {
+                display: none;
+              }
+        }
+    }
+  }
+
+  @media (max-width: 990px) {
+    main {
+
+        .song_cont {
+
+            .song_bottom {
+            grid-template-columns: repeat(4, 1fr);
+            }
+
+            .song_bottom > :nth-child(n+5) {
+                display: none;
+              }
+        }
+    }
+  }
+
+  
+  @media (max-width: 850px) {
+    main {
+
+        .header-main {
+
+            
+            .header-right {
+
+                .btn-premium {
+                    display: none;
+                }
+            }
+        }
+
+        .song_cont {
+
+            .song_bottom {
+            grid-template-columns: repeat(3, 1fr);
+            }
+
+            .song_bottom > :nth-child(n+4) {
+                display: none;
+              }
+        }
+    }
+  }
+
+  @media (max-width: 710px) {
+
+    aside {
+    min-width: 250px;
+    max-width: 250px;
+    }
+    main {
+        width: calc(100% - 260px);
+        left: calc(260px);
+
+        .song_cont {
+
+            .song_bottom {
+            grid-template-columns: repeat(2, 1fr);
+            }
+
+            .song_bottom > :nth-child(n+3) {
+                display: none;
+              }
+        }
+    }
+  }
+
+  
+  @media (max-width: 740px) {
+    main {
+
+        .main-cont {
+            .welcome-cont  {
+
+                .welcome-block {
+                    grid-auto-rows: 40px;
+
+                    .welcome_song_block {
+                        
+
+                    .song_poster {
+                        height: 100%;
+                        width: 20%;
+                    }
+
+                        .song_name {
+                            margin-left: 25%;
+    
+                            p  {
+                                font-size: 8px;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+  }

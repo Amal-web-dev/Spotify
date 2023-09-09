@@ -68,11 +68,11 @@ export function welcomeSong(arr, place) {
         song_name.append(song_p)
         song_button.append(buttonImg)
 
-        welcome_song_block.onclick = () => 
+        welcome_song_block.onclick = () =>
             location.assign(`/pages/${song.type}/?id=${song.id}`)
-        }
-
     }
+
+}
 
 
 export function createSongCont(arr, place, info) {
@@ -84,27 +84,27 @@ export function createSongCont(arr, place, info) {
         let h1Title = document.createElement('h1')
 
         if (info.length >= 9) {
-            if(!location.href.includes('search')) {
-                if(!location.href.includes('allSong')) {
+            if (!location.href.includes('search')) {
+                if (!location.href.includes('allSong')) {
                     let pAll = document.createElement('p')
 
                     pAll.innerHTML = 'Показать все'
-        
+
                     song_top.append(pAll)
-    
-                    pAll.onclick =  () => {
+
+                    pAll.onclick = () => {
                         localStorage.setItem('seeAll', JSON.stringify(info))
                         localStorage.setItem('title', JSON.stringify(h1Title.innerHTML))
                         location.assign(`/pages/allSong/`)
-                }
-                
+                    }
+
                 }
             }
-            
+
         }
 
 
-        if(location.href.includes('allSong')) {
+        if (location.href.includes('allSong')) {
             createSongs(info, song_bottom)
         } else {
             createSongs(info.slice(0, 9), song_bottom)
@@ -151,7 +151,7 @@ export function createSongs(arr, place) {
             pNameSong.innerHTML = song.name
         }
         if (song.description) {
-            pPlayer.innerHTML = song.description.slice(0, 49)
+            pPlayer.innerHTML = song.description.slice(0, 10) + '...'
         } else if (song.artists) {
             let artistNames = "";
 
@@ -316,6 +316,7 @@ export function trackResult(arr, place) {
     }
 }
 
+let artistSpans = []
 
 export function tracks(arr, place) {
     place.innerHTML = ''
@@ -328,11 +329,12 @@ export function tracks(arr, place) {
         let trackNumber = document.createElement('span');
         let trackName = document.createElement('div');
         let trackNameText = document.createElement('p');
-        let trackNameSpan = document.createElement('span');
+        // let trackNameSpan = document.createElement('span');
         let rightTrackSide = document.createElement('div');
         let favoriteIcon = document.createElement('img');
         let timeDur = document.createElement('p');
         let dotsIcon = document.createElement('img');
+        let allArtistName = document.createElement('div');
 
         trackBlock.classList.add('track_block');
         leftTrackSide.classList.add('left_track_side');
@@ -347,18 +349,12 @@ export function tracks(arr, place) {
         hiddenIconImg.id = 'hidden_icon_img'
         trackNameText.innerHTML = track.name;
         timeDur.id = 'time_dur';
-        trackNameSpan.innerHTML = track.artists[0].name;
-        if (track.artists[1]) {
-            trackNameSpan.innerHTML += ', ' + track.artists[1].name
-        } else if (track.artists[2]) {
-            trackNameSpan.innerHTML += ', ' + track.artists[2].name
-        }
+
         let durationMs = track.duration_ms;
         let totalSeconds = Math.floor(durationMs / 1000);
         let minutes = Math.floor(totalSeconds / 60);
         let seconds = totalSeconds % 60;
         timeDur.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
         trackNumber.innerHTML = track.track_number;
         if (track.track_number > 9) {
             trackBlock.style.padding = '0 10px'
@@ -370,7 +366,7 @@ export function tracks(arr, place) {
 
         hiddenIconBtn.append(hiddenIconImg);
 
-        trackName.append(trackNameText, trackNameSpan);
+        trackName.append(trackNameText, allArtistName);
 
         leftTrackSide.append(hiddenIconBtn, trackNumber, trackName);
 
@@ -384,6 +380,24 @@ export function tracks(arr, place) {
         let track_name = document.querySelectorAll('.track_name')
 
 
+for (let artist of track.artists) {
+    let artistSpan = document.createElement('span');
+    artistSpan.innerHTML = artist.name + ', ';
+
+
+    allArtistName.append(artistSpan);
+    artistSpans.push(artistSpan);
+
+    artistSpan.onclick = () => {
+        location.assign(`/pages/${artist.type}/?id=${artist.id}`)
+    }
+}
+if (artistSpans.length > 0) {
+    let lastArtistSpan = artistSpans[artistSpans.length - 1];
+    lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
+}
+
+
         allhiddenIconImg.forEach((hiddenIconImg, index) => {
             hiddenIconImg.onclick = () => {
                 allhiddenIconImg.forEach(icon => {
@@ -392,7 +406,7 @@ export function tracks(arr, place) {
                 track_name.forEach(p => {
                     p.style.color = 'white';
                 });
-        
+
                 if (hidB) {
                     hiddenIconImg.src = '/public/icons/pause-audio.svg';
                     track_name[index].style.color = '#1ED760';
@@ -422,7 +436,7 @@ export function tracks(arr, place) {
             location.assign(`/pages/${track.type}/?id=${track.id}`)
         });
 
-        trackName.onclick = () => {
+        trackNameText.onclick = () => {
             location.assign(`/pages/${track.type}/?id=${track.id}`)
         }
 
@@ -453,7 +467,7 @@ export function tracksPlaylist(arr, place) {
         let trackNumber = document.createElement('span');
         let trackName = document.createElement('div');
         let trackNameText = document.createElement('p');
-        let trackNameSpan = document.createElement('span');
+        let allArtistName = document.createElement('div');
         let rightTrackSide = document.createElement('div');
         let favoriteIcon = document.createElement('img');
         let timeDur = document.createElement('p');
@@ -490,12 +504,6 @@ export function tracksPlaylist(arr, place) {
         timeDur.id = 'time_dur';
         albumP.innerHTML = track.track.album.name
         lastAddP.innerHTML = formatDate(track.added_at.slice(0, 10))
-        trackNameSpan.innerHTML = track.track.artists[0].name;
-        if (track.track.artists[1]) {
-            trackNameSpan.innerHTML += ', ' + track.track.artists[1].name
-        } else if (track.track.artists[2]) {
-            trackNameSpan.innerHTML += ', ' + track.track.artists[2].name
-        }
         timeDur.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
         trackNumber.innerHTML = n;
@@ -509,7 +517,27 @@ export function tracksPlaylist(arr, place) {
 
         hiddenIconBtn.append(hiddenIconImg);
 
-        trackName.append(trackNameText, trackNameSpan);
+        trackName.append(trackNameText, allArtistName);
+
+        if(track.track.artists) {
+            for (let artist of track.track.artists) {
+                let artistSpan = document.createElement('span');
+                artistSpan.innerHTML = artist.name + ', ';
+            
+                allArtistName.append(artistSpan);
+                artistSpans.push(artistSpan);
+            
+                artistSpan.onclick = () => {
+                    location.assign(`/pages/${artist.type}/?id=${artist.id}`)
+                }
+            }
+            if (artistSpans.length > 0) {
+                let lastArtistSpan = artistSpans[artistSpans.length - 1];
+                lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
+            }
+        } else {
+        }
+       
 
         leftTrackSide.append(hiddenIconBtn, trackNumber, trackName);
 
