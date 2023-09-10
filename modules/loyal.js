@@ -204,8 +204,6 @@ export function asideLoyal(place) {
   }
 }
 
-
-
 export function audioLoyal(place, arr) {
   let audioCont = document.createElement('div')
   let leftAudio = document.createElement('div')
@@ -282,7 +280,7 @@ export function audioLoyal(place, arr) {
   audioPlayer.classList.add('audio-player')
   audioInfo.classList.add('audio-info')
 
-  aName.innerHTML = arr.name
+  aName.innerHTML = arr.name.slice(0, 10)
   songArt.innerHTML = arr.artists[0].name
   likeIcon.src = '/public/icons/favorite-icon.svg'
   currentTimeSpan.textContent = '0:00';
@@ -377,6 +375,8 @@ export function headerMain(place) {
   settings.classList.add('p-block')
   log_out.classList.add('p-block')
   log_out.classList.add('log-out')
+  btnLeft.classList.add('btn_left')
+  btnRight.classList.add('btn_right')
 
 
   btnPremium.innerHTML = 'Узнать больше о Premium'

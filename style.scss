@@ -168,6 +168,9 @@ button {
                     flex-direction: column;
                     margin-top: 10px;
                     gap: 5px;
+                    text-overflow: ellipsis; 
+                    white-space: nowrap; 
+                    overflow: hidden; 
 
                     p {
                         font-size: 10px;

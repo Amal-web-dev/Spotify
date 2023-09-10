@@ -112,6 +112,17 @@
         color: white;
     }
 
+    .song-name {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis; 
+      width: auto;
+    }
+
     p {
         font-size: 8px;
         color: #B3B3B3;
@@ -175,7 +186,7 @@
   .volume {
     display: flex;
     align-items: center;
-
+    gap: 5px;
   }
   
   .volume-button {

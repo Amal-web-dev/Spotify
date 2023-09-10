@@ -146,12 +146,12 @@ export function createSongs(arr, place) {
         song_description.classList.add('song_description')
 
         if (song.name.length >= 15) {
-            pNameSong.innerHTML = song.name.slice(0, 15) + '...'
+            pNameSong.innerHTML = song.name.slice(0, 14) + '...'
         } else {
             pNameSong.innerHTML = song.name
         }
         if (song.description) {
-            pPlayer.innerHTML = song.description.slice(0, 10) + '...'
+            pPlayer.innerHTML = song.description + '...'
         } else if (song.artists) {
             let artistNames = "";
 

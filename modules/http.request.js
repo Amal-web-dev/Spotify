@@ -33,18 +33,18 @@ export let getSong = async (path) => {
 
         return res;
     } catch (e) {
-        // if (errorCount <= 4) {
-        //     errorCount++;
-        //     localStorage.setItem('errorCount', errorCount.toString());
-        //     window.location.reload();
-        // } else if (errorCount >= 5) {
-        //     console.log(e);
-        //     errorCount = 0;
-        //     localStorage.removeItem('errorCount');
-        //     if(e.message.includes('401')) {
-        //     window.location.assign('/pages/unAuth/');
-        //     }
-        // }
+        if (errorCount <= 4) {
+            errorCount++;
+            localStorage.setItem('errorCount', errorCount.toString());
+            window.location.reload();
+        } else if (errorCount >= 5) {
+            console.log(e);
+            errorCount = 0;
+            localStorage.removeItem('errorCount');
+            if(e.message.includes('401')) {
+            window.location.assign('/pages/unAuth/');
+            }
+        }
 
         console.log(e);
     }
