@@ -3,6 +3,7 @@ import { getSong, putSong } from "../modules/http.request.js";
 let favB = false
 let hidB = true
 let n = 1
+let artistSpans = []
 
 
 export function ReloadMediatekaSong(arr, place) {
@@ -322,7 +323,6 @@ export function trackResult(arr, place) {
     }
 }
 
-let artistSpans = []
 
 export function tracks(arr, place) {
     place.innerHTML = ''
@@ -506,7 +506,7 @@ export function tracksPlaylist(arr, place) {
 
         trackNumber.id = 'track_number';
         hiddenIconImg.src = '/public/icons/start-audio.svg';
-        trackNameText.innerHTML = track.track.name.slice(0, 50);
+        trackNameText.innerHTML = track.track.name;
         timeDur.id = 'time_dur';
         albumP.innerHTML = track.track.album.name
         lastAddP.innerHTML = formatDate(track.added_at.slice(0, 10))

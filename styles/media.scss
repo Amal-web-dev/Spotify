@@ -92,6 +92,20 @@
   @media (max-width: 850px) {
     main {
 
+        .main-bottom  {
+            .main-link-bottom {
+                flex-direction: column;
+                align-items: start;
+
+                .main-link-bottom-right {
+
+                    p {
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+
         .header-main {
 
             
@@ -185,8 +199,12 @@
 
             .song_top {
                 h1 {
-                    font-size: 14px;
+                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;
                 }
+
             }
 
             .song_bottom {
@@ -361,7 +379,12 @@
 .aside-bottom  {
     padding: 5px 10px;
 
-
+        .search_mediateka_block {
+    
+            .filter_recent_block {
+                display: none;
+            }
+        }
         
     .mediate_song_block {
 
@@ -429,6 +452,19 @@
 
   
   @media (max-width: 555px) {
+
+    main  {
+        .main-bottom  {
+            .main-link-top {
+                flex-direction: column;
+                align-items: start;
+
+                .network_block {
+                    margin-top: 20px;
+                }
+            }
+        }
+  }
     .audio-cont {
         padding: 5px 10px;
 
@@ -519,8 +555,46 @@
 .aside-bottom  {
     padding: 5px 10px;
 
+    .search_mediateka_block {
 
-        
+
+        .search-input {
+            margin-right: 5px;
+            flex-grow: 1;
+        }
+
+        .filter_recent_block {
+            flex-grow: 1;
+        }
+    }
+
+
+        .mediaTeka-block {
+
+            .left-mediateka {
+                span {
+                    font-size: 8px;
+                }
+
+                gap: 5px;
+
+                img  {
+                    width: 10px;
+                }
+            }
+
+            .rightmedia-teka {
+                gap: 5px;
+                
+            div {
+
+                img {
+                    width: 10px;
+                }
+            }
+
+            }
+        }
     .mediate_song_block {
 
         
@@ -649,13 +723,20 @@
     }
   }
 
-  @media (max-width: 380px) {
+  @media (max-width: 390px) {
     main {
-       
+        .header-main {
+            padding: 0 10px;
+        }
 
         .main-cont  {
+
+            
             .song_cont {
                 gap: 5px;
+                margin: 20px 0 0 0;
+                height: 120px;
+                flex-wrap: nowrap;
 
                 .song_top {
                     h1 {

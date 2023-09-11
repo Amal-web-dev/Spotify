@@ -115,15 +115,21 @@
         .track_name {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            width: 150px;
 
             p {
                 font-size: 12px;
+                white-space: nowrap;
+                // overflow: hidden; 
+                text-overflow: ellipsis;
             }
 
             span {
                 font-size: 10px;
                 color: #B0B0B0;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;
             }
         }
     }

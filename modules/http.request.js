@@ -42,7 +42,7 @@ export let getSong = async (path) => {
             errorCount = 0;
             localStorage.removeItem('errorCount');
             if(e.message.includes('401')) {
-            window.location.assign('/pages/unAuth/');
+           location.assign('/pages/unAuth/');
             }
         }
 

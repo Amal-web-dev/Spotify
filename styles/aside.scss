@@ -122,7 +122,6 @@ aside {
             font-size: 10px;
         }
 
-        svg,
         img {
             filter: invert(50%);
         }
@@ -264,15 +263,24 @@ aside {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;
             }
 
             p {
                 font-size: 10px;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;
             }
 
             span {
                 font-size: 10px;
                 color: #A2A2A2;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;
             }
 
             .song_poster {
