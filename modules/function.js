@@ -98,6 +98,12 @@ export function createSongCont(arr, place, info) {
                         location.assign(`/pages/allSong/`)
                     }
 
+                    h1Title.onclick = () => {
+                        localStorage.setItem('seeAll', JSON.stringify(info))
+                        localStorage.setItem('title', JSON.stringify(h1Title.innerHTML))
+                        location.assign(`/pages/allSong/`)
+                    }
+
                 }
             }
 

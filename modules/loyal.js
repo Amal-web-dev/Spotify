@@ -202,6 +202,31 @@ export function asideLoyal(place) {
     playListBtn.classList.remove('btn_active')
     albumsBtn.classList.remove('btn_active')
   }
+
+  let isDragging = false;
+let startPositionX = 0;
+let scrollLeft = 0;
+
+categoriesBlock.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  startPositionX = e.pageX - categoriesBlock.offsetLeft;
+  scrollLeft = categoriesBlock.scrollLeft;
+});
+
+categoriesBlock.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+categoriesBlock.addEventListener('mouseleave', () => {
+  isDragging = false;
+});
+
+categoriesBlock.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  const mouseX = e.pageX - categoriesBlock.offsetLeft;
+  const scrollX = mouseX - startPositionX;
+  categoriesBlock.scrollLeft = scrollLeft - scrollX;
+});
 }
 
 export function audioLoyal(place, arr) {
@@ -493,18 +518,19 @@ export function headerMain(place) {
         }
       }
 
-      if (main.scrollTop >= 100) {
-        headerMain.style.backgroundColor = '#121212';
-      } else {
-      if(location.href.includes('track')) {
-        headerMain.style.backgroundColor = '#121212';
-      } else {
-        headerMain.style.backgroundColor = '#12121200';
+      if(!location.href.includes('track')) {
+        if (main.scrollTop >= 100) {
+          headerMain.style.backgroundColor = '#121212';
+        } else {
+          headerMain.style.backgroundColor = '#12121200';
+        }
       }
-      }
+      
     }
     }
-
+    if(location.href.includes('track')) {
+      headerMain.style.backgroundColor = '#121212';
+    } 
 
     let btnPlayFalse = false
     btnPlay.style.opacity = '0'
@@ -534,6 +560,13 @@ export function headerMain(place) {
       }
     }
   }
+  main.addEventListener('scroll', () => {
+    if (main.scrollTop >= 100) {
+      headerMain.style.backgroundColor = '#121212';
+    } else {
+      headerMain.style.backgroundColor = '#12121230';
+    }
+})
 
   userBtn.onclick = () => {
     if (!userBul) {

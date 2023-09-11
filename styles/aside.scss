@@ -21,7 +21,7 @@ aside {
     padding: 10px 0 10px 15px;
     justify-content: center;
 
-    img  {
+    img {
         width: 15px;
         filter: invert(50%);
     }
@@ -40,17 +40,17 @@ aside {
         border-bottom-left-radius: 10px;
         color: #B3B3B3;
 
-       img {
-        filter: invert(50%);
-       }
+        img {
+            filter: invert(50%);
+        }
     }
 
-    
+
 
     .active-main {
         color: white;
 
-        img  {
+        img {
             filter: invert(0%);
         }
     }
@@ -63,10 +63,10 @@ aside {
     border-radius: 5px;
 }
 
-.aside-bottom  {
+.aside-bottom {
     padding: 10px 15px;
 
-    .mediaTeka-block{
+    .mediaTeka-block {
         display: flex;
         align-items: center;
         color: #B3B3B3;
@@ -84,7 +84,7 @@ aside {
         .left-mediateka {
             transition: -300ms;
 
-            img  {
+            img {
                 filter: invert(50%);
             }
         }
@@ -110,7 +110,7 @@ aside {
             }
 
             div:hover {
-                img  {
+                img {
                     filter: invert(100%);
                 }
             }
@@ -118,20 +118,36 @@ aside {
 
 
 
-    span {
-        font-size: 10px;
+        span {
+            font-size: 10px;
+        }
+
+        svg,
+        img {
+            filter: invert(50%);
+        }
     }
 
-    svg,
-    img {
-        filter: invert(50%);
-    }
-    }
-
-    .categories-block  {
+    .categories-block {
         width: 100%;
         display: flex;
         gap: 8px;
+        overflow: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+
+
+        .categories-block::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .categories-block:hover {
+            overflow-y: auto;
+        }
 
         .btn_active {
             background-color: white;
@@ -218,14 +234,14 @@ aside {
 
     }
 
-.hovered:hover {
-    background-color: #2B2A30;
+    .hovered:hover {
+        background-color: #2B2A30;
 
-    img {
-        filter: invert(0%);
+        img {
+            filter: invert(0%);
+        }
     }
-}
-    
+
     .mediate_song_block {
         display: flex;
         flex-direction: column;
@@ -270,9 +286,9 @@ aside {
             }
         }
 
-        .mediateka_song:hover  {
+        .mediateka_song:hover {
             background-color: #2B2A30;
         }
     }
-  
+
 }

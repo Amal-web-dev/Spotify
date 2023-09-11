@@ -332,13 +332,13 @@
             }
 
             a {
-                font-size: 7px;
+                font-size: 8px;
                 text-decoration: none;
                 color: white;
             }
         
             p {
-                font-size: 5px;
+                font-size: 7px;
                 color: #B3B3B3;
             }
         
@@ -356,6 +356,28 @@
     aside {
         min-width: 200px;
         max-width: 200px;
+
+        
+.aside-bottom  {
+    padding: 5px 10px;
+
+
+        
+    .mediate_song_block {
+
+        
+        .mediateka_song {
+            p {
+                font-size: 8px;
+            }
+
+            span {
+                font-size: 8px;
+            }
+
+        }
+    }
+}
         }
     main {
         width: calc(100% - 210px);
@@ -469,13 +491,13 @@
             }
 
             a {
-                font-size: 5px;
+                font-size: 7px;
                 text-decoration: none;
                 color: white;
             }
         
             p {
-                font-size: 4px;
+                font-size: 6px;
                 color: #B3B3B3;
             }
         
@@ -489,8 +511,36 @@
 
   
   @media (max-width: 510px) {
+    aside {
+        min-width: 150px;
+        max-width: 150px;
+
+        
+.aside-bottom  {
+    padding: 5px 10px;
+
+
+        
+    .mediate_song_block {
+
+        
+        .mediateka_song {
+            p {
+                font-size: 8px;
+            }
+
+            span {
+                font-size: 8px;
+            }
+
+        }
+    }
+}
+        }
 
     main {
+        width: calc(100% - 160px);
+        left: calc(160px);
         .header-main {
 
             .header-left {
@@ -545,7 +595,7 @@
                             margin-left: 25%;
     
                             p  {
-                                font-size: 6px;
+                                font-size: 4px;
                                 font-weight: 600;
                             }
                         }
@@ -554,5 +604,96 @@
             }
         }
        
+    }
+  }
+
+  
+  @media (max-width: 440px) {
+    main {
+       
+
+        .song_cont {
+
+            // .song_top {
+            //     h1 {
+            //         font-size: 14px;
+            //     }
+            // }
+
+            .song_bottom {
+
+
+                .song_block {
+                    width: 100px;
+                    height: 150px;
+
+                    .song_description {
+
+                        p {
+                            font-size: 8px;
+                        }
+
+                        span {
+                            font-size: 7px;
+                        }
+                    }
+
+                    .song_poster {
+                        height: 80px;
+                        width: 80px;
+                    }
+                }
+            }
+
+        }
+    }
+  }
+
+  @media (max-width: 380px) {
+    main {
+       
+
+        .main-cont  {
+            .song_cont {
+                gap: 5px;
+
+                .song_top {
+                    h1 {
+                        font-size: 8px;
+                    }
+    
+                    p {
+                        font-size: 6px;
+                    }
+                }
+    
+                .song_bottom {
+    
+    
+                    .song_block {
+                        width: 70px;
+                        height: 100px;
+    
+                        .song_description {
+    
+                            p {
+                                font-size: 7px;
+                            }
+    
+                            span {
+                                font-size: 6px;
+                            }
+                        }
+    
+                        .song_poster {
+                            height: 50px;
+                            width: 50px;
+                        }
+                    }
+                }
+    
+            }
+        }
+        
     }
   }
