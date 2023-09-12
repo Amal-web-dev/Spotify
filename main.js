@@ -3,6 +3,7 @@ import { ReloadMediatekaSong, welcomeSong, createSongCont } from "./modules/func
 import { asideLoyal, audioLoyal, headerMain, footer } from "./modules/loyal";
 import { audioFunc } from "./modules/audio";
 import { getSong } from "./modules/http.request.js";
+import SpotifyWebApi from "spotify-web-api-js";
 
 
 let main = document.querySelector('main')
@@ -30,6 +31,47 @@ let token = location.href.split('access_token=').at(-1)
 if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http://localhost:5173/pages/unAuth/') {
   localStorage.setItem("myId", token);
 } 
+
+
+const spotifyApi = new SpotifyWebApi();
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+    const token = myId; // Получите токен доступа после авторизации пользователя
+    const player = new Spotify.Player({
+        name: 'Your Player Name',
+        getOAuthToken: (cb) => { cb(token); },
+    });
+
+    // Готовность плеера
+    player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+    });
+
+    // Ошибка
+    player.addListener('initialization_error', ({ message }) => {
+        console.error('Initialization Error', message);
+    });
+
+    // Авторизация пользователя
+    player.addListener('authentication_error', ({ message }) => {
+        console.error('Authentication Error', message);
+    });
+
+    // Другие обработчики событий
+
+    // Включите плеер
+    player.connect().then(() => {
+        console.log('Connected to Spotify Web Playback SDK');
+    });
+};
+
+// Загрузите Spotify Web Playback SDK скрипт
+const script = document.createElement('script');
+script.src = 'https://sdk.scdn.co/spotify-player.js';
+script.async = true;
+document.body.appendChild(script);
+
+
 
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {

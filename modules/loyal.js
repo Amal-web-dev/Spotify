@@ -3,6 +3,8 @@ import { getSong } from "../modules/http.request.js";
 let userBul = false
 let main = document.querySelector('main')
 let favTru = false
+let med = false
+let big = false
 
 export function asideLoyal(place) {
   let asideTop = document.createElement('div')
@@ -201,6 +203,49 @@ export function asideLoyal(place) {
     artistsBtn.classList.remove('btn_active')
     playListBtn.classList.remove('btn_active')
     albumsBtn.classList.remove('btn_active')
+  }
+
+  leftMedia.onclick = () => {
+    if(!med) {
+      place.classList.add('mini_aside')
+      main.classList.add('mini')
+      med = true
+    } else {
+      place.classList.remove('mini_aside')
+      main.classList.remove('mini')
+      med = false
+    }
+  }
+  if(!med) {
+    place.classList.add('mini_aside')
+    main.classList.add('mini')
+    med = true
+  } else {
+    place.classList.remove('mini_aside')
+    main.classList.remove('mini')
+    med = false
+  }
+
+  arrowblock.onclick = () => {
+    if(!big) {
+      place.classList.add('big_aside')
+      main.classList.add('big')
+      big = true
+    } else {
+      place.classList.remove('big_aside')
+      main.classList.remove('big')
+      big = false
+    }
+  }
+  
+  if(!big) {
+    place.classList.add('big_aside')
+    main.classList.add('big')
+    big = true
+  } else {
+    place.classList.remove('big_aside')
+    main.classList.remove('big')
+    big = false
   }
 
   let isDragging = false;

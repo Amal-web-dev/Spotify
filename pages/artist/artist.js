@@ -22,9 +22,9 @@ let album_cat = document.querySelector('.album_cat')
 let art_friend = document.querySelector('.art_friend')
 let submit = document.querySelector('.submit')
 
-// submit.onclick = () => {
-//  subscribeToArtist(artistId)
-// }
+submit.onclick = () => {
+ subscribeToArtist(artistId)
+}
 
 btnCat.forEach(button => {
   button.addEventListener('click', () => {

@@ -37,38 +37,56 @@ export let getSong = async (path) => {
             errorCount++;
             localStorage.setItem('errorCount', errorCount.toString());
             window.location.reload();
-        } else if (errorCount >= 5) {
-            console.log(e);
-            errorCount = 0;
-            localStorage.removeItem('errorCount');
+        } else {
             if(e.message.includes('401')) {
            location.assign('/pages/unAuth/');
             }
+           console.log(e);
+            errorCount = 0;
+            localStorage.removeItem('errorCount');
+            
         }
 
         console.log(e);
     }
 };
+const BASE_URL = 'https://api.spotify.com/v1';
 
 export const subscribeToArtist = async (artistId) => {
-    try {
-      const res = await axios.put(
-        `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
-        {}, 
-        {
-          headers: {
-            Authorization: `Bearer ${myToken}`,
-            "Content-Type": "application/json"
-          },
-        }
-      );
+    const url = `${BASE_URL}/me/following?type=artist&ids=${artistId}`;
   
-        console.log(`Вы успешно подписались на артиста с ID ${artistId}`);
-        return res
+    const headers = {
+      'Authorization': `Bearer ${myToken}`,
+      'Content-Type': 'application/json',
+    };
+  
+    try {
+      const response = await axios.put(url, null, { headers });
+        console.log('Подписка успешно оформлена на исполнителя!');
+        console.error(response.data);
     } catch (error) {
-      console.error('Произошла ошибка:', error);
+      console.error('Произошла ошибка при выполнении запроса:', error.message);
     }
+    // try {
+    //   const res = await axios.put(
+    //     `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
+    //     {}, 
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${myToken}`,
+    //         "Content-Type": "application/json"
+    //       },
+    //     }
+    //   );
+  
+    //     console.log(`Вы успешно подписались на артиста с ID ${artistId}`);
+    //     return res
+    // } catch (error) {
+    //   console.error('Произошла ошибка:', error);
+    // }
   };
+
+
 
 
 export async function putSong(path, data) {
