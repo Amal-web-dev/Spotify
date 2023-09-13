@@ -109,6 +109,11 @@ aside {
                 border-radius: 100%;
                 padding: 3px;
                 cursor: pointer;
+
+                img {
+                    width: 15px;
+                    height: 15px;
+                }
             }
 
             div:hover {

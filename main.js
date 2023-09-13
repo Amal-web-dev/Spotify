@@ -35,41 +35,41 @@ if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http:
 
 const spotifyApi = new SpotifyWebApi();
 
-window.onSpotifyWebPlaybackSDKReady = () => {
-    const token = myId; // Получите токен доступа после авторизации пользователя
-    const player = new Spotify.Player({
-        name: 'Your Player Name',
-        getOAuthToken: (cb) => { cb(token); },
-    });
+// window.onSpotifyWebPlaybackSDKReady = () => {
+//     const token = myId; // Получите токен доступа после авторизации пользователя
+//     const player = new Spotify.Player({
+//         name: 'Your Player Name',
+//         getOAuthToken: (cb) => { cb(token); },
+//     });
 
-    // Готовность плеера
-    player.addListener('ready', ({ device_id }) => {
-        console.log('Ready with Device ID', device_id);
-    });
+//     // Готовность плеера
+//     player.addListener('ready', ({ device_id }) => {
+//         console.log('Ready with Device ID', device_id);
+//     });
 
-    // Ошибка
-    player.addListener('initialization_error', ({ message }) => {
-        console.error('Initialization Error', message);
-    });
+//     // Ошибка
+//     player.addListener('initialization_error', ({ message }) => {
+//         console.error('Initialization Error', message);
+//     });
 
-    // Авторизация пользователя
-    player.addListener('authentication_error', ({ message }) => {
-        console.error('Authentication Error', message);
-    });
+//     // Авторизация пользователя
+//     player.addListener('authentication_error', ({ message }) => {
+//         console.error('Authentication Error', message);
+//     });
 
-    // Другие обработчики событий
+//     // Другие обработчики событий
 
-    // Включите плеер
-    player.connect().then(() => {
-        console.log('Connected to Spotify Web Playback SDK');
-    });
-};
+//     // Включите плеер
+//     player.connect().then(() => {
+//         console.log('Connected to Spotify Web Playback SDK');
+//     });
+// };
 
 // Загрузите Spotify Web Playback SDK скрипт
-const script = document.createElement('script');
-script.src = 'https://sdk.scdn.co/spotify-player.js';
-script.async = true;
-document.body.appendChild(script);
+// const script = document.createElement('script');
+// script.src = 'https://sdk.scdn.co/spotify-player.js';
+// script.async = true;
+// document.body.appendChild(script);
 
 
 
@@ -103,15 +103,6 @@ getSong("/me")
 ReloadMediatekaSong(res.data.items, mediate_song_block)
 createSongCont(allTitle, all_cont, res.data.items)
   } catch (error) {
-    if (errorCount === 0) {
-      errorCount++;
-      localStorage.setItem('errorCount', errorCount.toString());
-      window.location.reload();
-  } else if (errorCount >= 2) {
-      window.location.assign('/pages/unAuth/');
-      errorCount = 0;
-      localStorage.removeItem('errorCount');
-  }
     console.log(error);
   }
 })
@@ -123,14 +114,13 @@ createSongCont(allTitle, all_cont, res.data.items)
 // })
 
 
-getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
-.then(res => {
-  try {
-    welcomeSong(res.data.tracks.slice(0, 6), welcomeBlock)
-  } catch (error) {
-    console.log(error);
-  }
-})
+// getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
+// .then(res => {
+//   try {
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
 
 
 
@@ -159,6 +149,7 @@ getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classi
 getSong('/browse/featured-playlists') 
 .then(res => {
   createSongCont([`Рекомендованные плейлисты`], all_cont, res.data.playlists.items)
+  welcomeSong(res.data.playlists.items.slice(0, 6), welcomeBlock)
 })
 
 getSong('/artists/0TnOYISbd1XYRBk9myaseg/related-artists')

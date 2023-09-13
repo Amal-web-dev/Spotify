@@ -6,6 +6,7 @@ let n = 1
 let artistSpans = []
 
 
+
 export function ReloadMediatekaSong(arr, place) {
     place.innerHTML = ''
 
@@ -33,6 +34,9 @@ export function ReloadMediatekaSong(arr, place) {
         mediateka_song.append(song_poster, media_song_descr)
         media_song_descr.append(p, span)
 
+        mediateka_song.onclick = () => {
+            location.assign(`/pages/${media.type}/?id=${media.id}`)
+        }
 
     }
 }
@@ -69,12 +73,14 @@ export function welcomeSong(arr, place) {
         song_name.append(song_p)
         song_button.append(buttonImg)
 
-        welcome_song_block.onclick = () =>
+        welcome_song_block.onclick = () => {
             location.assign(`/pages/${song.type}/?id=${song.id}`)
+        }
     }
 
-}
+    
 
+}
 
 export function createSongCont(arr, place, info) {
 
@@ -218,8 +224,6 @@ export function categoriesFunc(arr, place) {
     }
 }
 
-
-
 export function bestResult(arr, place) {
     place.innerHTML = ''
 
@@ -322,7 +326,6 @@ export function trackResult(arr, place) {
         }
     }
 }
-
 
 export function tracks(arr, place) {
     place.innerHTML = ''

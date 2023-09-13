@@ -3,8 +3,17 @@ import { getSong } from "../modules/http.request.js";
 let userBul = false
 let main = document.querySelector('main')
 let favTru = false
-let med = false
-let big = false
+if(!localStorage.getItem('mediateka') == null) {
+  localStorage.setItem('mediateka', false)
+}
+if(localStorage.getItem('bigMed') == null) {
+  localStorage.setItem('bigMed', false)
+}
+
+let med = localStorage.getItem('mediateka')
+let big = localStorage.getItem('bigMed')
+
+console.log(big);
 
 export function asideLoyal(place) {
   let asideTop = document.createElement('div')
@@ -206,48 +215,49 @@ export function asideLoyal(place) {
   }
 
   leftMedia.onclick = () => {
-    if(!med) {
-      place.classList.add('mini_aside')
-      main.classList.add('mini')
-      med = true
-    } else {
+    if(med == false) {
       place.classList.remove('mini_aside')
       main.classList.remove('mini')
+      localStorage.setItem('mediateka', false)
+      med = true
+    } else {
+      place.classList.add('mini_aside')
+      main.classList.add('mini')
+      localStorage.setItem('mediateka', true)
       med = false
     }
   }
-  if(!med) {
-    place.classList.add('mini_aside')
-    main.classList.add('mini')
-    med = true
-  } else {
+  if(med == 'false') {
     place.classList.remove('mini_aside')
     main.classList.remove('mini')
-    med = false
+  } else {
+    place.classList.add('mini_aside')
+    main.classList.add('mini')
   }
 
   arrowblock.onclick = () => {
-    if(!big) {
-      place.classList.add('big_aside')
-      main.classList.add('big')
-      big = true
-    } else {
+    if(big == false) {
       place.classList.remove('big_aside')
       main.classList.remove('big')
+      localStorage.setItem('bigMed', false)
+      rightArrow.src = '/public/icons/right-arrow.svg'
+      big = true
+    } else {
+      place.classList.add('big_aside')
+      main.classList.add('big')
+      localStorage.setItem('bigMed', true)
+      rightArrow.src = '/public/icons/arrow_left_icon.svg'
       big = false
     }
   }
   
-  if(!big) {
-    place.classList.add('big_aside')
-    main.classList.add('big')
-    big = true
-  } else {
+  if (big == "false" || big == false) {
     place.classList.remove('big_aside')
     main.classList.remove('big')
-    big = false
+  } else {
+    place.classList.add('big_aside')
+    main.classList.add('big')
   }
-
   let isDragging = false;
 let startPositionX = 0;
 let scrollLeft = 0;
@@ -272,6 +282,10 @@ categoriesBlock.addEventListener('mousemove', (e) => {
   const scrollX = mouseX - startPositionX;
   categoriesBlock.scrollLeft = scrollLeft - scrollX;
 });
+
+// mediateka_song.onclick = () => {
+//   console.log();
+// }
 }
 
 export function audioLoyal(place, arr) {
@@ -411,6 +425,7 @@ export function headerMain(place) {
   let aPremium = document.createElement('a')
   let btnPremium = document.createElement('button')
   let btnDownload = document.createElement('button')
+  let aDownload = document.createElement('a')
   let iconDownload = document.createElement('img')
   let userBtn = document.createElement('button')
   let userIcon = document.createElement('img')
@@ -451,6 +466,7 @@ export function headerMain(place) {
 
   btnPremium.innerHTML = 'Узнать больше о Premium'
   aPremium.href = 'https://www.spotify.com/uz/premium/?utm_source=app&utm_medium=desktop&utm_campaign=upgrade&ref=web_loggedin_upgrade_button'
+  aDownload.href = 'https://www.spotify.com/uz/download/windows/'
   iconLeft.src = '/public/icons/arrow-left.svg'
   iconRight.src = '/public/icons/arrow-right.svg'
   iconDownload.src = '/public/icons/download-icon.svg'
@@ -474,7 +490,8 @@ export function headerMain(place) {
   btnLeft.append(iconLeft)
   btnRight.append(iconRight)
 
-  headerRight.append(aPremium, btnDownload, userBtn, userSetting)
+  headerRight.append(aPremium, aDownload, userBtn, userSetting)
+  aDownload.append(btnDownload)
   aPremium.append(btnPremium)
   btnDownload.prepend(iconDownload)
   userBtn.append(userIcon)
@@ -631,6 +648,7 @@ export function headerMain(place) {
   }
 
   btnLeft.onclick = () => {
+    console.log('as');
     try {
       window.history.back();
     } catch (e) {

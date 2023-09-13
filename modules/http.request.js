@@ -33,19 +33,19 @@ export let getSong = async (path) => {
 
         return res;
     } catch (e) {
-        if (errorCount <= 4) {
-            errorCount++;
-            localStorage.setItem('errorCount', errorCount.toString());
-            window.location.reload();
-        } else {
-            if(e.message.includes('401')) {
-           location.assign('/pages/unAuth/');
-            }
-           console.log(e);
-            errorCount = 0;
-            localStorage.removeItem('errorCount');
+        // if (errorCount <= 4) {
+        //     errorCount++;
+        //     localStorage.setItem('errorCount', errorCount.toString());
+        //     window.location.reload();
+        // } else {
+        //     if(e.message.includes('401')) {
+        //    location.assign('/pages/unAuth/');
+        //     }
+        //    console.log(e);
+        //     errorCount = 0;
+        //     localStorage.removeItem('errorCount');
             
-        }
+        // }
 
         console.log(e);
     }
@@ -66,6 +66,7 @@ export const subscribeToArtist = async (artistId) => {
         console.error(response.data);
     } catch (error) {
       console.error('Произошла ошибка при выполнении запроса:', error.message);
+      console.log(error);
     }
     // try {
     //   const res = await axios.put(
