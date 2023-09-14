@@ -4,6 +4,8 @@ let favB = false
 let hidB = true
 let n = 1
 let artistSpans = []
+let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+let cancel = false
 
 
 
@@ -78,11 +80,15 @@ export function welcomeSong(arr, place) {
         }
     }
 
-    
+
 
 }
 
 export function createSongCont(arr, place, info) {
+
+    if(arr == 'История поиска') {
+        cancel = true
+    }
 
     for (const item of arr) {
         let song_cont = document.createElement('div')
@@ -189,6 +195,15 @@ export function createSongs(arr, place) {
             song_poster.style.backgroundImage = `url(${song.images[0].url})`;
         } else if (song && song.album && song.album.images && song.album.images.length !== 0) {
             song_poster.style.backgroundImage = `url(${song.album.images[0].url})`;
+        } else if(song.type == artist || song.external_urls) {
+           getSong(`/artists/${song.id}`)
+           .then(art => {
+            if(art.data.images[0]) {
+                song_poster.style.backgroundImage = `url(${art.data.images[0].url})`;
+            } else {
+                song_poster.style.backgroundImage = `url(/public/img/no_img.jpg)`;
+            }
+           })
         } else {
             song_poster.style.backgroundImage = `url(/public/img/no_img.jpg)`;
         }
@@ -202,7 +217,33 @@ export function createSongs(arr, place) {
         song_block.append(song_poster, song_description)
         song_description.append(pNameSong, pPlayer)
         song_poster.append(button)
+        
+        if (cancel) {
+            let button = document.createElement('button')
+            let imgBtn = document.createElement('img')
+
+            button.classList.add('btn_del')
+
+            imgBtn.src = '/public/icons/close_icon.svg'
+
+            button.append(imgBtn)
+            song_block.append(button)
+
+            button.onclick = (event) =>  {
+                event.stopPropagation();
+                removeSearchHistoryItem(song.id)
+            }
+
+          }
+
+          if(location.href.includes('search')) {
+            song_block.addEventListener('click', function () {
+                updateSearchHistory(song);
+              });
+          }
+
     }
+    cancel = false
 }
 
 export function categoriesFunc(arr, place) {
@@ -223,6 +264,31 @@ export function categoriesFunc(arr, place) {
         categories_block.append(categName)
     }
 }
+
+function updateSearchHistory(query) {
+    // Фильтруем элементы по их id
+    const filteredHistory = searchHistory.filter(item => item.id !== query.id);
+
+    filteredHistory.unshift(query);
+
+    if (filteredHistory.length > 20) {
+        filteredHistory.pop();
+    }
+
+    searchHistory = filteredHistory;
+
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+
+    // updateSearchHistoryUI();
+}
+
+function removeSearchHistoryItem(id) {
+    const filteredHistory = searchHistory.filter(item => item.id !== id);
+  
+    localStorage.setItem('searchHistory', JSON.stringify(filteredHistory));
+  
+    window.location.reload();
+  }
 
 export function bestResult(arr, place) {
     place.innerHTML = ''
@@ -247,11 +313,7 @@ export function bestResult(arr, place) {
     playButton.classList.add('play_btn');
 
     heading.innerHTML = 'Лучший результат';
-    if (arr.name.length >= 20) {
-        resultTitle.innerHTML = arr.name.slice(0, 20) + '...';
-    } else {
-        resultTitle.innerHTML = arr.name
-    }
+    resultTitle.innerHTML = arr.name
     artistSpan.innerHTML = arr.artists[0].name;
     typeParagraph.innerHTML = arr.type;
     playButtonImage.src = '/public/icons/start-audio.svg';
@@ -268,7 +330,8 @@ export function bestResult(arr, place) {
 
     place.append(bestResultBlock);
 
-    bestResultBlock.onclick = () => {
+    bestResult.onclick = () => {
+        updateSearchHistory(arr);
         location.assign(`/pages/${arr.type}/?id=${arr.id}`)
     }
 
@@ -278,16 +341,16 @@ export function trackResult(arr, place) {
     place.innerHTML = ''
 
     for (const track of arr) {
-        const trackResult = document.createElement('div');
-        const aboutTrack = document.createElement('div');
-        const trackPoster = document.createElement('div');
-        const trackPosterImage = document.createElement('img');
-        const nameTrack = document.createElement('div');
-        const trackName1 = document.createElement('p');
-        const trackName2 = document.createElement('span');
-        const timeTrack = document.createElement('div');
-        const timeTrackImage = document.createElement('img');
-        const timeTrackSpan = document.createElement('span');
+        let trackResult = document.createElement('div');
+        let aboutTrack = document.createElement('div');
+        let trackPoster = document.createElement('div');
+        let trackPosterImage = document.createElement('img');
+        let nameTrack = document.createElement('div');
+        let trackName1 = document.createElement('p');
+        let allArtistName = document.createElement('div');
+        let timeTrack = document.createElement('div');
+        let timeTrackImage = document.createElement('img');
+        let timeTrackSpan = document.createElement('span');
 
         aboutTrack.classList.add('about_track');
         trackResult.classList.add('track_result');
@@ -296,34 +359,49 @@ export function trackResult(arr, place) {
         nameTrack.classList.add('name_track');
 
         function millisecondsToMinutesAndSeconds(duration_ms) {
-            const minutes = Math.floor(duration_ms / 60000);
-            const seconds = ((duration_ms % 60000) / 1000).toFixed(0);
+            let minutes = Math.floor(duration_ms / 60000);
+            let seconds = ((duration_ms % 60000) / 1000).toFixed(0);
             return `${minutes}:${(seconds < 10 ? '0' : '')}${seconds}`;
         }
 
         trackPosterImage.src = '/public/icons/start-audio.svg';
         trackName1.innerHTML = track.name.slice(0, 20) + '...';
-        trackName2.innerHTML = track.artists[0].name;
         timeTrackImage.src = '/public/icons/favorite-icon.svg';
         timeTrackSpan.innerHTML = millisecondsToMinutesAndSeconds(track.duration_ms);
         trackPoster.style.backgroundImage = `url(${track.album.images[0].url})`
 
+        if (track.artists) {
+            for (let artist of track.artists) {
+                let artistSpan = document.createElement('span');
+                artistSpan.innerHTML = artist.name + ', ';
+
+                allArtistName.append(artistSpan);
+                artistSpans.push(artistSpan);
+
+                artistSpan.onclick = () => {
+                    location.assign(`/pages/${artist.type}/?id=${artist.id}`)
+            updateSearchHistory(artist);
+                }
+            }
+            if (artistSpans.length > 0) {
+                let lastArtistSpan = artistSpans[artistSpans.length - 1];
+                lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
+            }
+        } 
+
         trackResult.append(aboutTrack, timeTrack);
         aboutTrack.append(trackPoster, nameTrack);
         trackPoster.append(trackPosterImage);
-        nameTrack.append(trackName1, trackName2);
+        nameTrack.append(trackName1, allArtistName);
         timeTrack.append(timeTrackImage, timeTrackSpan);
 
         place.append(trackResult);
 
         trackName1.onclick = () => {
             location.assign(`/pages/${track.type}/?id=${track.id}`)
+            updateSearchHistory(track);
         }
 
-        trackName2.onclick = () => {
-            console.log(track.artists);
-            location.assign(`/pages/${track.artists[0].type}/?id=${track.artists[0].id}`)
-        }
     }
 }
 
@@ -389,22 +467,22 @@ export function tracks(arr, place) {
         let track_name = document.querySelectorAll('.track_name')
 
 
-for (let artist of track.artists) {
-    let artistSpan = document.createElement('span');
-    artistSpan.innerHTML = artist.name + ', ';
+        for (let artist of track.artists) {
+            let artistSpan = document.createElement('span');
+            artistSpan.innerHTML = artist.name + ', ';
 
 
-    allArtistName.append(artistSpan);
-    artistSpans.push(artistSpan);
+            allArtistName.append(artistSpan);
+            artistSpans.push(artistSpan);
 
-    artistSpan.onclick = () => {
-        location.assign(`/pages/${artist.type}/?id=${artist.id}`)
-    }
-}
-if (artistSpans.length > 0) {
-    let lastArtistSpan = artistSpans[artistSpans.length - 1];
-    lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
-}
+            artistSpan.onclick = () => {
+                location.assign(`/pages/${artist.type}/?id=${artist.id}`)
+            }
+        }
+        if (artistSpans.length > 0) {
+            let lastArtistSpan = artistSpans[artistSpans.length - 1];
+            lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
+        }
 
 
         allhiddenIconImg.forEach((hiddenIconImg, index) => {
@@ -528,14 +606,14 @@ export function tracksPlaylist(arr, place) {
 
         trackName.append(trackNameText, allArtistName);
 
-        if(track.track.artists) {
+        if (track.track.artists) {
             for (let artist of track.track.artists) {
                 let artistSpan = document.createElement('span');
                 artistSpan.innerHTML = artist.name + ', ';
-            
+
                 allArtistName.append(artistSpan);
                 artistSpans.push(artistSpan);
-            
+
                 artistSpan.onclick = () => {
                     location.assign(`/pages/${artist.type}/?id=${artist.id}`)
                 }
@@ -544,9 +622,8 @@ export function tracksPlaylist(arr, place) {
                 let lastArtistSpan = artistSpans[artistSpans.length - 1];
                 lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
             }
-        } else {
-        }
-       
+        } 
+
 
         leftTrackSide.append(hiddenIconBtn, trackNumber, trackName);
 

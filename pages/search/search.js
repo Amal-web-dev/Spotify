@@ -26,6 +26,17 @@ let show = document.querySelector('.show')
 let findCont = document.querySelector('.find-cont')
 let noFind = document.querySelector('.no_find')
 let profiles = document.querySelector('.profiles')
+let searchHistoryString = localStorage.getItem('searchHistory');
+let history_cont = document.querySelector('.history_cont')
+
+if (searchHistoryString) {
+  let searchHistory = JSON.parse(searchHistoryString);
+  createSongCont(['История поиска'], history_cont, searchHistory)
+
+} else {
+  let searchHistory = [];
+}
+
 
 getSong('/browse/categories')
   .then(res => {
@@ -56,7 +67,7 @@ input_search.onkeyup = () => {
     getSong(`/search?q=remaster%2520track%3ADoxy%2520artist%3A${input_search.value}&type=track`)
       .then(res => {
         try {
-          if (res.data.tracks.items[0] && res.data.tracks.items.length > 10) {
+          if (res.data.tracks.items[0] && res.data.tracks.items.length > 4) {
             bestResult(res.data.tracks.items[0], best)
             trackResult(res.data.tracks.items.slice(0, 4), best_track_result)
           } else {
@@ -73,7 +84,7 @@ input_search.onkeyup = () => {
       .then(res => {
         albums.innerHTML = ''
         try {
-          if (res.data.albums.items) {
+          if (res.data.albums.items.length > 2) {
             createSongCont(['Альбомы'], albums, res.data.albums.items)
           }
         } catch (error) {
@@ -86,7 +97,7 @@ input_search.onkeyup = () => {
       .then(res => {
         artist.innerHTML = ''
         try {
-          if (res.data.artists.items) {
+          if (res.data.artists.items.length > 2) {
             createSongCont(['Артисты'], artist, res.data.artists.items)
           }
         } catch (error) {
@@ -98,7 +109,7 @@ input_search.onkeyup = () => {
       .then(res => {
         playlists.innerHTML = ''
         try {
-          if (res.data.playlists.items) {
+          if (res.data.playlists.items.length > 2) {
             createSongCont(['Плейлисты'], artist, res.data.playlists.items)
           }
         } catch (error) {
@@ -110,7 +121,7 @@ input_search.onkeyup = () => {
       .then(res => {
         show.innerHTML = ''
         try {
-          if (res.data.shows.items) {
+          if (res.data.shows.items.length > 2) {
             createSongCont(['Показы'], show, res.data.shows.items)
           }
         } catch (error) {

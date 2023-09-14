@@ -13,8 +13,6 @@ if(localStorage.getItem('bigMed') == null) {
 let med = localStorage.getItem('mediateka')
 let big = localStorage.getItem('bigMed')
 
-console.log(big);
-
 export function asideLoyal(place) {
   let asideTop = document.createElement('div')
   let asideBottom = document.createElement('div')
