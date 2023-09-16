@@ -38,9 +38,9 @@ export let getSong = async (path) => {
             localStorage.setItem('errorCount', errorCount.toString());
             window.location.reload();
         } else {
-        //     if(e.message.includes('401')) {
-        //    location.assign('/pages/unAuth/');
-        //     }
+            if(e.message.includes('401')) {
+           location.assign('/pages/unAuth/');
+            }
            console.log(e);
             errorCount = 0;
             localStorage.removeItem('errorCount');

@@ -38,6 +38,12 @@ main {
             font-size: 12px;
         }
 
+        h2 {
+        text-overflow: ellipsis; 
+        white-space: nowrap; 
+        overflow: hidden;
+        }
+
         .artist_song {
             display: flex;
             position: absolute;

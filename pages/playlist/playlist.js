@@ -23,6 +23,12 @@ let duration = document.querySelector('#duration')
 let h3Name = document.querySelector('#songName')
 
 
+getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
+.then(res => {
+  audioLoyal(document.body, res.data)
+  audioFunc()
+})
+
 getSong(`/playlists/${songId}`)
 .then(res  => {
   console.log(res.data);

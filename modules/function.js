@@ -97,7 +97,7 @@ export function createSongCont(arr, place, info) {
         let h1Title = document.createElement('h1')
 
         if (info.length >= 9) {
-            if (!location.href.includes('search')) {
+            if (!location.href.includes('search') || cancel == true) {
                 if (!location.href.includes('allSong')) {
                     let pAll = document.createElement('p')
 
@@ -662,6 +662,10 @@ export function tracksPlaylist(arr, place) {
 
         }
 
+        trackNameText.onclick = () => {
+            location.assign(`/pages/${track.track.type}/?id=${track.track.id}`)
+        }
+
 
         albumP.onclick = () => {
             location.assign(`/pages/${track.track.album.type}/?id=${track.track.album.id}`)
@@ -687,7 +691,11 @@ export function artist(arr, place) {
         artistParagraph.textContent = artist.name;
         getSong(`/artists/${artist.id}`)
             .then(res => {
-                artistImg.style.backgroundImage = `url(${res.data.images[0].url})`
+                if(res.data.images[0]) {
+                    artistImg.style.backgroundImage = `url(${res.data.images[0].url})`
+                } else {
+                    artistImg.style.backgroundImage = `url(/public/img/no_img.jpg)`
+                }
             })
 
         artistDescr.appendChild(artistName);

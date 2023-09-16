@@ -21,6 +21,7 @@ let popular_tracks = document.querySelector('.popular_tracks')
 let album_cat = document.querySelector('.album_cat')
 let art_friend = document.querySelector('.art_friend')
 let submit = document.querySelector('.submit')
+let song = document.querySelector('.song')
 
 submit.onclick = () => {
  subscribeToArtist(artistId)
@@ -67,13 +68,19 @@ getSong(`/artists/${artistId}`)
 .then(res => {
     title.innerHTML = res.data.name
     type_name.innerHTML = res.data.name
-    back.style.backgroundImage = `url(${res.data.images[0].url})` 
-    users.innerHTML = res.data.followers.total.toLocaleString('ru-RU') + ' слушателей за месяц'
+    users.innerHTML = (res.data.followers.total.toLocaleString('ru-RU')) + ' слушателей за месяц'
+    if(res.data.images[0]) {
+      back.style.backgroundImage = `url(${res.data.images[0].url})` 
+    } else {
+      back.style.backgroundImage =`url(/public/img/no_img.jpg)`
+    }
 
     getSong(`/artists/${artistId}/related-artists`)
 .then(alb => {
   if(alb.data.artists.length > 1) {
     createSongCont([''], all_song_cont, alb.data.artists)
+  } else {
+    song.innerHTML = ''
   }
 })
 
