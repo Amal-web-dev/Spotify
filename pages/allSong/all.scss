@@ -5,8 +5,8 @@
     .song_cont {
 
         .song_bottom {
-            display: flex;
-            flex-wrap: wrap;
+            display: flex !important;
+            flex-wrap: wrap !important;
         }
     }
 }

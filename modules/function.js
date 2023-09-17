@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { getSong, putSong } from "../modules/http.request.js";
 let favB = false
 let hidB = true

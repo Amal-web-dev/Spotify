@@ -1,7 +1,6 @@
 import { footer } from "../../modules/loyal";
 import { createSongCont } from "../../modules/function";
 import { getDetails } from "../../modules/http.request.js";
-import axios from 'axios'
 
 let token = location.href.split('access_token=').at(-1)
 let login_a = document.querySelector('.login-a')
