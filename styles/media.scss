@@ -62,6 +62,19 @@
   }
 
   @media (max-width: 1120px) {
+
+    aside {
+        .aside-bottom {
+
+            .mediaTeka-block {
+                .rightmedia-teka {
+                    .arrow-block {
+                        display: none;
+                    }
+                } 
+            }
+        } 
+    }
     main {
 
         .header-main {
@@ -904,6 +917,24 @@
                         p {
                             font-size: 8px;
                         }
+                    }
+                }
+            }
+        }
+
+        .artists_cont {
+            .artist_block {
+                .artist_img {
+                    height: 40px;
+                    width: 40px;
+                }
+
+                .artist_desrc {
+                    h3 {
+                        font-size: 10px;
+                    }
+                    p {
+                        font-size: 8px;
                     }
                 }
             }

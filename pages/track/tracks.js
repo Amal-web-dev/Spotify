@@ -27,12 +27,58 @@ let album_poster = document.querySelector('.album_poster')
 let from_album_name = document.querySelector('#from_album_name')
 let from_album_block = document.querySelector('.from_album_block')
 let from_album_tracks = document.querySelector('.from_album_tracks')
-
+let play_btn = document.querySelector('.play_btn')
+const myId = localStorage.getItem("myId");
 
 // getSong(`/playlists/${songId}`)
 // .then(res  => {
 //   console.log(res);
 // })
+
+// Инициализация Spotify Web Playback SDK
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const player = new Spotify.Player({
+      name: 'Your App Name',
+      getOAuthToken: callback => {
+          const token = myId;
+          callback(token);
+      },
+      volume: 0.5
+  });
+
+  player.connect().then(success => {
+      if (success) {
+          console.log('Connected to Spotify Web Playback SDK');
+      }
+  });
+
+  // Добавляем обработчики событий для элементов управления
+  // document.getElementById('login').addEventListener('click', () => {
+  //     // Ваш код для аутентификации пользователя
+  // });
+  const audio = document.querySelector('#audio-1');
+  console.log(audio);
+
+  audio.addEventListener('click', () => {
+      audio.play();
+      console.log('Started playback');
+  });
+
+  // document.getElementById('pause').addEventListener('click', () => {
+  //     // Ваш код для паузы музыки
+  //     const audio = document.getElementById('yourAudioElementId');
+  //     audio.pause();
+  //     console.log('Paused playback');
+  // });
+
+  // document.getElementById('next').addEventListener('click', () => {
+  //     // Ваш код для переключения на следующий трек
+  // });
+
+  // document.getElementById('prev').addEventListener('click', () => {
+  //     // Ваш код для переключения на предыдущий трек
+  // });
+};
 
 getSong(`/tracks/${songId}`)
   .then(res => {
@@ -111,6 +157,16 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
   .then(res => {
     audioLoyal(document.body, res.data)
     audioFunc()
+  })
+
+  getSong(`/audio-features/${songId}`) 
+  .then(res => {
+    console.log(res.data);
+
+    getSong(`/audio-analysis/${songId}`)
+    .then(analysis => {
+      console.log(analysis.data);
+    })
   })
 
   setTimeout(() => {
