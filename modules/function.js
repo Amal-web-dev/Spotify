@@ -29,7 +29,11 @@ export function ReloadMediatekaSong(arr, place) {
         } else {
             span.innerHTML = media.type + " • " + media.owner.display_name
         }
-        song_poster.style.backgroundImage = `url(${media.images[0].url})`
+        if(media.images[0]) {
+            song_poster.style.backgroundImage = `url(${media.images[0].url})`
+        } else {
+            song_poster.style.backgroundImage = `url(/public/img/no_img.jpg)`;
+        }
 
         place.append(mediateka_song)
         mediateka_song.append(song_poster, media_song_descr)
@@ -143,6 +147,125 @@ export function createSongCont(arr, place, info) {
     }
 }
 
+function formatMillisecondsToTime(duration_ms) {
+    const minutes = Math.floor(duration_ms / 60000); 
+    const seconds = ((duration_ms % 60000) / 1000).toFixed(0); 
+
+    return `${minutes}:${(seconds < 10 ? '0' : '')}${seconds}`;
+}
+
+function audioSongNames(song) {
+    let audio = document.querySelector('#audio-1')
+    let playImg = document.querySelector('.play-button img')
+    let songName = document.querySelector('.song-name a')
+    let artistName = document.querySelector('.song-name p')
+    let songDur = document.querySelector('.duration')
+    let songPost = document.querySelector('.song-poster')
+
+    audio.src = song.preview_url
+    playImg.src = '/public/icons/pause-audio.svg'
+    audio.play()
+    songName.innerHTML = song.name.slice(0, 10)
+    artistName.innerHTML = song.artists[0].name
+    songDur.innerHTML = formatMillisecondsToTime(song.duration_ms)
+    if(song.album) {
+        songPost.style.backgroundImage = `url(${song.album.images[0].url})`
+    } else {
+        getSong(`/artists/${song.artists[0].id}`)
+        .then(res => {
+        songPost.style.backgroundImage = `url(${res.data.images[0].url})`
+        })
+    }
+}
+
+function audioSongsMany(song) {
+    let audio = document.querySelector('#audio-1')
+    let playImg = document.querySelector('.play-button img')
+    let songName = document.querySelector('.song-name a')
+    let artistName = document.querySelector('.song-name p')
+    let songDur = document.querySelector('.duration')
+    let songPost = document.querySelector('.song-poster')
+    let nextSong = document.querySelector('#next-song img')
+    let preSong = document.querySelector('#pre-song img')
+    let nextS = 1
+    let preS = nextS - 1
+    preSong.style.opacity = '1'
+    nextSong.style.opacity = '1'
+
+    audio.src = song[0].preview_url ? song[0].preview_url : song[0].track.preview_url
+    playImg.src = '/public/icons/pause-audio.svg'
+    audio.play()
+    songName.innerHTML = (song[0].track ? song[0].track.name : song[0].name).slice(0, 10);
+    artistName.innerHTML = (song[0].artists ? song[0].artists[0].name : song[0].track.artists[0].name);
+    songDur.innerHTML = song[0].track ? formatMillisecondsToTime(song[0].track.duration_ms) : formatMillisecondsToTime(song[0].duration_ms);
+    if((song[0].track && song[0].track.album) || (song.album && song.album.images)) {
+        songPost.style.backgroundImage = song[0].track ? `url(${song[0].track.album.images[0].url})` : `url(${song[0].album.images[0].url})`;
+    } else if(song.type = 'artist') {
+        getSong(`/artists/${song[0].artists[0].id}`)
+        .then(res => {
+        songPost.style.backgroundImage = `url(${res.data.images[0].url})`
+        })
+    }
+
+    nextSong.onclick = () => {
+        if(song[0].type == 'track') {
+            while ((nextS < song.length && song[nextS].preview_url === null)) {
+                nextS++;
+            }
+        } else {
+            while ((nextS < song.length && song[nextS].track.preview_url === null)) {
+                nextS++;
+            }
+        }
+        
+        if(nextS < song.length) {
+            if(song[nextS].track) {
+                if(song[nextS].track.preview_url == null) {
+                    nextS++
+                }
+                audioSongNames(song[nextS].track)
+            } else  {
+                audioSongNames(song[nextS])
+            }
+            preSong.style.opacity = '1'
+            nextS++
+            preS = nextS - 1
+        } else {
+           nextSong.style.opacity = '0.5'
+        }
+    }
+
+    preSong.onclick = () => {
+        console.log(song);
+        if (song[0].type == 'track') {
+            while (preS >= 0 && song[preS].preview_url === null) {
+                nextS--
+            }
+        } else {
+            while (preS >= 0 && song[preS].track.preview_url === null) {
+                nextS--
+            }
+        }
+
+
+        if(nextS > 1) {
+            nextS--
+            preS = nextS - 1
+            preSong.style.opacity = '1'
+            nextSong.style.opacity = '1'
+            if(nextS < song.length ) {
+                if(song[nextS].track) {
+                    audioSongNames(song[preS].track)
+                } else {
+                    audioSongNames(song[preS])
+                }
+            } 
+        } else {
+            preSong.style.opacity = '0.5'
+        }
+    }
+}
+
 export function createSongs(arr, place) {
     place.innerHTML = ''
 
@@ -239,6 +362,32 @@ export function createSongs(arr, place) {
             song_block.addEventListener('click', function () {
                 updateSearchHistory(song);
               });
+          }
+          
+
+          button.onclick = () => {
+            event.stopPropagation();
+
+            if(song.preview_url) {
+                audioSongNames(song)
+            } else if(song.type == 'artist') {
+                getSong(`/artists/${song.id}/albums`)
+                .then(res => {
+                    getSong(`/albums/${res.data.items[0].id}/tracks`)
+                    .then(res2 => {
+                        audioSongsMany(res2.data.items)
+                    })
+                })
+            } else if (song.type == 'playlist') {
+                console.log(song);
+                getSong(`/playlists/${song.id}/tracks`)
+                .then(res => {
+                    audioSongsMany(res.data.items)
+                })
+            }
+
+
+
           }
 
     }

@@ -28,7 +28,15 @@ let token = location.href.split('access_token=').at(-1)
 if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http://localhost:5173/pages/unAuth/') {
   localStorage.setItem("myId", token);
 } 
+let playlist = []
 
+getSong("/me/player/recently-played")
+.then(res => {
+  console.log(res);
+  for (let track of res.data.items) {
+    if (track.track.preview_url) playlist.push(track.track)
+}
+})
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
   welcome_h1.innerHTML = 'Доброе утро';
@@ -68,28 +76,45 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 // все песни в контейнере
 getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
 .then(res => {
-  createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks)
-  getSong("/me")
-.then(resTwo => {
-  createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.tracks)
-
-})
+  try {
+    createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks)
+    getSong("/me")
+  .then(resTwo => {
+    createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.tracks)
+  
+  })
+  } catch (error) {
+    console.log(error);
+  }
+ 
 })
 
 getSong('/browse/featured-playlists') 
 .then(res => {
-  createSongCont([`Рекомендованные плейлисты`], all_cont, res.data.playlists.items)
-  welcomeSong(res.data.playlists.items.slice(0, 6), welcomeBlock)
+  try {
+    createSongCont([`Рекомендованные плейлисты`], all_cont, res.data.playlists.items)
+    welcomeSong(res.data.playlists.items.slice(0, 6), welcomeBlock)
+  } catch (error) {
+    console.log(error);
+  }
 })
 
 getSong('/artists/0TnOYISbd1XYRBk9myaseg/related-artists')
 .then(res => {
+  try {
   createSongCont([`Популярные исполнители`], all_cont, res.data.artists)
+  } catch (error) {
+    console.log(error);
+  }
 })
 
 getSong('/browse/new-releases')
 .then(res => {
+  try {
   createSongCont([`Новые релизы`], all_cont, res.data.albums.items)
+  } catch (error) {
+    console.log(error);
+  }
 })
 
 // все песни в контейнере

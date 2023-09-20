@@ -337,6 +337,8 @@ export function audioLoyal(place, arr) {
   songName.classList.add('song-name')
   songLike.classList.add('song-like')
   nextSong.classList.add('next-song');
+  nextSong.id = "next-song";
+  preSong.id = "pre-song";
   repeatSong.classList.add('next-song');
   preSong.classList.add('next-song');
   mixSong.classList.add('next-song');
