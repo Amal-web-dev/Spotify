@@ -11,32 +11,31 @@ let aside = document.querySelector('.aside')
 headerMain(main)
 asideLoyal(aside)
 
-
-let login_a = document.querySelector('.login-a')
 let mediate_song_block = document.querySelector('.mediate_song_block')
 let welcomeBlock = document.querySelector('.welcome-block')
 let welcome_h1 = document.querySelector('.welcome_h1')
 let all_cont =  document.querySelector('.all_cont')
-let log_out = document.querySelector('.log-out')
 
 let currentTime = new Date().getHours();
 let allTitle =  ['Твои плейлисты']
-const myId = localStorage.getItem("myId");
 let token = location.href.split('access_token=').at(-1)
-
+let playingSong = []
+if(playingSong) {
+  playingSong = JSON.parse(localStorage.getItem('playingSong'))
+}
 
 if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http://localhost:5173/pages/unAuth/') {
   localStorage.setItem("myId", token);
 } 
 let playlist = []
 
-getSong("/me/player/recently-played")
-.then(res => {
-  console.log(res);
-  for (let track of res.data.items) {
-    if (track.track.preview_url) playlist.push(track.track)
-}
-})
+// getSong("/me/player/recently-played")
+// .then(res => {
+//   console.log(res);
+//   for (let track of res.data.items) {
+//     if (track.track.preview_url) playlist.push(track.track)
+// }
+// })
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
   welcome_h1.innerHTML = 'Доброе утро';
@@ -46,6 +45,21 @@ if (currentTime >= 5 && currentTime < 12) {
   welcome_h1.innerHTML = 'Добрый вечер';
 }
 // пишет добрый день
+
+// функционал audio
+
+getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
+.then(res => {
+  if(playingSong) {
+    audioLoyal(document.body, playingSong)
+    audioFunc()
+  } else {
+    audioLoyal(document.body, res.data)
+    audioFunc()
+  }
+})
+// функционал audio конец
+
 
 // появление песен
 getSong("/me")
@@ -64,24 +78,16 @@ createSongCont(allTitle, all_cont, res.data.items)
 
 // появление песен конец
 
-// функционал audio
 
-getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
-.then(res => {
-  audioLoyal(document.body, res.data)
-  audioFunc()
-})
-// функционал audio конец
 
 // все песни в контейнере
-getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
+getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA'")
 .then(res => {
   try {
     createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks)
     getSong("/me")
   .then(resTwo => {
     createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.tracks)
-  
   })
   } catch (error) {
     console.log(error);

@@ -1,4 +1,5 @@
 import { getSong } from "../modules/http.request.js";
+import { formatMillisecondsToTime } from "../modules/function.js" 
 
 let userBul = false
 let main = document.querySelector('main')
@@ -9,7 +10,6 @@ if(!localStorage.getItem('mediateka') == null) {
 if(localStorage.getItem('bigMed') == null) {
   localStorage.setItem('bigMed', false)
 }
-
 let med = localStorage.getItem('mediateka')
 let big = localStorage.getItem('bigMed')
 
@@ -328,7 +328,6 @@ export function audioLoyal(place, arr) {
   let volumeDynamicDiv = document.createElement('div');
   let volumeBtnDiv = document.createElement('div');
 
-
   audioCont.classList.add('audio-cont')
   leftAudio.classList.add('left_audio')
   centerAudio.classList.add('center-audio')
@@ -368,9 +367,10 @@ export function audioLoyal(place, arr) {
   songArt.innerHTML = arr.artists[0].name
   likeIcon.src = '/public/icons/favorite-icon.svg'
   currentTimeSpan.textContent = '0:00';
-  audio.src = '/public/img/Automotivo Infernal 1.0.mp3'
+  audio.src = arr.preview_url
   volumeIcon.src = '/public/icons/volume-up.svg';
-  songPoster.style.backgroundImage = `url(${arr.album.images[0].url})`
+  songPoster.style.backgroundImage = arr.album ? `url(${arr.album.images[0].url})` : `url(/public/img/no_img.jpg)`
+  durationSpan.innerHTML = formatMillisecondsToTime(arr.duration_ms)
 
   audioCont.append(leftAudio, centerAudio, rightAudio);
 
@@ -401,8 +401,6 @@ export function audioLoyal(place, arr) {
 
   place.append(audioCont);
 
-
-
   songLike.onclick = () => {
     if (!favTru) {
       likeIcon.src = '/public/icons/favorite-full.svg'
@@ -411,6 +409,14 @@ export function audioLoyal(place, arr) {
       likeIcon.src = '/public/icons/favorite-icon.svg'
       favTru = false
     }
+  }
+
+  aName.onclick = () => {
+    location.assign(`/pages/${arr.type}/?id=${arr.id}`)
+  }
+
+  songArt.onclick = () => {
+    location.assign(`/pages/${arr.artists[0].type}/?id=${arr.artists[0].id}`)
   }
 }
 

@@ -68,23 +68,23 @@ export const subscribeToArtist = async (artistId) => {
       console.error('Произошла ошибка при выполнении запроса:', error.message);
       console.log(error);
     }
-    // try {
-    //   const res = await axios.put(
-    //     `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
-    //     {}, 
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${myToken}`,
-    //         "Content-Type": "application/json"
-    //       },
-    //     }
-    //   );
+    try {
+      const res = await axios.put(
+        `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
+        {}, 
+        {
+          headers: {
+            Authorization: `Bearer ${myToken}`,
+            "Content-Type": "application/json"
+          },
+        }
+      );
   
-    //     console.log(`Вы успешно подписались на артиста с ID ${artistId}`);
-    //     return res
-    // } catch (error) {
-    //   console.error('Произошла ошибка:', error);
-    // }
+        console.log(`Вы успешно подписались на артиста с ID ${artistId}`);
+        return res
+    } catch (error) {
+      console.error('Произошла ошибка:', error);
+    }
   };
 
 

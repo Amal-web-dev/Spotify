@@ -1,3 +1,4 @@
+import { Logger } from "sass";
 import { getSong, putSong } from "../modules/http.request.js";
 let favB = false
 let hidB = true
@@ -5,8 +6,11 @@ let n = 1
 let artistSpans = []
 let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 let cancel = false
-
-
+let playingSong = JSON.parse(localStorage.getItem('playingSong'));
+let nextS = 1
+let preS = nextS - 1
+let isPlay = true
+let currentSong = null
 
 export function ReloadMediatekaSong(arr, place) {
     place.innerHTML = ''
@@ -81,6 +85,12 @@ export function welcomeSong(arr, place) {
         welcome_song_block.onclick = () => {
             location.assign(`/pages/${song.type}/?id=${song.id}`)
         }
+
+
+        song_button.onclick = () => {
+            event.stopPropagation();
+            audioPlayFunc(song, buttonImg)
+        }
     }
 
 
@@ -147,7 +157,7 @@ export function createSongCont(arr, place, info) {
     }
 }
 
-function formatMillisecondsToTime(duration_ms) {
+export function formatMillisecondsToTime(duration_ms) {
     const minutes = Math.floor(duration_ms / 60000); 
     const seconds = ((duration_ms % 60000) / 1000).toFixed(0); 
 
@@ -155,6 +165,7 @@ function formatMillisecondsToTime(duration_ms) {
 }
 
 function audioSongNames(song) {
+    localStorage.setItem('playingSong', JSON.stringify(song));
     let audio = document.querySelector('#audio-1')
     let playImg = document.querySelector('.play-button img')
     let songName = document.querySelector('.song-name a')
@@ -178,7 +189,200 @@ function audioSongNames(song) {
     }
 }
 
+function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
+    let nextSong = document.querySelector('#next-song img')
+    let preSong = document.querySelector('#pre-song img')
+    let audio = document.querySelector('#audio-1')
+    let playButtonIcon = document.querySelector('.play-button img');
+
+    event.stopPropagation();
+    if(isPlay || currentSong !== song) {
+        if(currentSong !== song) {
+            currentSong = song;
+            hiddenIconImg.src = '/public/icons/pause-audio.svg'
+            playButtonIcon.src = '/public/icons/pause-audio.svg'
+            pSongName.style.color = '#1ED760';
+            if(song.preview_url) {
+                audioSongNames(song)
+                preSong.style.opacity = '0.5'
+                nextSong.style.opacity = '0.5'
+            } else if(song.type == 'artist') {
+                getSong(`/artists/${song.id}/albums`)
+                .then(res => {
+                    getSong(`/albums/${res.data.items[0].id}/tracks`)
+                    .then(res2 => {
+                        audioSongsMany(res2.data.items)
+                    })
+                })
+            } else if (song.type == 'playlist') {
+                getSong(`/playlists/${song.id}/tracks`)
+                .then(res => {
+                    audioSongsMany(res.data.items)
+                })
+            } else if (song.type == 'album') {
+                getSong(`/albums/${song.id}/tracks`)
+                .then(res => {
+                    audioSongsMany(res.data.items)
+                })
+            }
+        } else {
+            audio.play()
+            hiddenIconImg.src = '/public/icons/pause-audio.svg'
+            playButtonIcon.src = '/public/icons/pause-audio.svg'
+            pSongName.style.color = '#1ED760';
+        }
+      
+
+        isPlay = false
+    } else {
+        audio.pause()
+        hiddenIconImg.src = '/public/icons/start-audio.svg'
+        playButtonIcon.src = '/public/icons/start-audio.svg'
+        isPlay = true
+    }
+}
+
+function preSongFunc(song) {
+    let preSong = document.querySelector('#pre-song img')
+    let nextSong = document.querySelector('#next-song img')
+    preSong.onclick = () => {
+        if(nextS > 1) {
+            nextS--
+            preS = nextS - 1
+            preSong.style.opacity = '1'
+            nextSong.style.opacity = '1'
+            if(song[0].track) {
+                localStorage.setItem('playingSong', JSON.stringify(song[preS].track));
+            } else {
+                localStorage.setItem('playingSong', JSON.stringify(song[preS]));
+            }
+            if (song[0].track) {
+                while (preS >= 0 && song[preS].track.preview_url === null) {
+                    nextS--
+                    preS = nextS - 1
+                }
+            } else {
+                while (preS >= 0 && song[preS].preview_url === null) {
+                    nextS--
+                    preS = nextS - 1
+                }
+            }
+            if(nextS < song.length ) {
+                if(song[nextS].track) {
+                    audioSongNames(song[preS].track)
+                } else {
+                    audioSongNames(song[preS])
+                }
+            } 
+        } else {
+            preSong.style.opacity = '0.5'
+        }
+    }
+}
+
+function nextSongFunc(song) {
+    let preSong = document.querySelector('#pre-song img')
+    let nextSong = document.querySelector('#next-song img')
+    nextSong.onclick = () => {
+        if(song[0].type == 'track') {
+            while ((nextS < song.length && song[nextS].preview_url === null)) {
+                nextS++;
+            }
+        } else {
+            while ((nextS < song.length && song[nextS].track.preview_url === null)) {
+                nextS++;
+            }
+        }
+
+        if(song[nextS].track && nextS < song.length) {
+            localStorage.setItem('playingSong', JSON.stringify(song[nextS].track));
+        } else {
+            localStorage.setItem('playingSong', JSON.stringify(song[nextS]));
+        }
+        
+        if(nextS < song.length) {
+            if(song[nextS].track) {
+                audioSongNames(song[nextS].track)
+            } else  {
+                audioSongNames(song[nextS])
+            }
+            preSong.style.opacity = '1'
+            nextSong.style.opacity = '1'
+            nextS++
+            preS = nextS - 1
+        } else {
+           nextSong.style.opacity = '0.5'
+        }
+    }
+}
+
+function audioPlayFunc(song, buttonImg) {
+    event.stopPropagation();
+    let nextSong = document.querySelector('#next-song img')
+    let preSong = document.querySelector('#pre-song img')
+    let audio = document.querySelector('#audio-1')
+    let playButtonIcon = document.querySelector('.play-button img');  
+
+    let allButtonImg = document.querySelectorAll('#play_img_all')
+    let allSongName = document.querySelectorAll('#all_song_name')
+
+    allButtonImg.forEach(icon => {
+        icon.src = '/public/icons/start-audio.svg'
+    })
+
+    allSongName.forEach(p => {
+        p.style.color = 'white'
+    })
+    if(isPlay || currentSong !== song) {
+        if(currentSong !== song) {
+            currentSong = song
+            buttonImg.src = '/public/icons/pause-audio.svg'
+            playButtonIcon.src = '/public/icons/pause-audio.svg'
+            if(song.preview_url) {
+                audioSongNames(song)
+                preSong.style.opacity = '0.5'
+                nextSong.style.opacity = '0.5'
+            } else if(song.type == 'artist') {
+                getSong(`/artists/${song.id}/albums`)
+                .then(res => {
+                    getSong(`/albums/${res.data.items[0].id}/tracks`)
+                    .then(res2 => {
+                        audioSongsMany(res2.data.items)
+                    })
+                })
+            } else if (song.type == 'playlist') {
+                getSong(`/playlists/${song.id}/tracks`)
+                .then(res => {
+                    audioSongsMany(res.data.items)
+                })
+            } else if (song.type == 'album') {
+                getSong(`/albums/${song.id}/tracks`)
+                .then(res => {
+                    audioSongsMany(res.data.items)
+                })
+            }
+        } else {
+            audio.play()
+            buttonImg.src = '/public/icons/pause-audio.svg'
+            playButtonIcon.src = '/public/icons/pause-audio.svg'
+        }
+      
+
+        isPlay = false
+    } else {
+        audio.pause()
+        buttonImg.src = '/public/icons/start-audio.svg'
+        playButtonIcon.src = '/public/icons/start-audio.svg'
+        isPlay = true
+    }
+}
+
 function audioSongsMany(song) {
+    if(song[0].track) {
+        localStorage.setItem('playingSong', JSON.stringify(song[0].track));
+    } else {
+        localStorage.setItem('playingSong', JSON.stringify(song[0]));
+    }
     let audio = document.querySelector('#audio-1')
     let playImg = document.querySelector('.play-button img')
     let songName = document.querySelector('.song-name a')
@@ -187,12 +391,14 @@ function audioSongsMany(song) {
     let songPost = document.querySelector('.song-poster')
     let nextSong = document.querySelector('#next-song img')
     let preSong = document.querySelector('#pre-song img')
-    let nextS = 1
-    let preS = nextS - 1
     preSong.style.opacity = '1'
     nextSong.style.opacity = '1'
 
-    audio.src = song[0].preview_url ? song[0].preview_url : song[0].track.preview_url
+    if(song[0].preview_url || song[0].track.preview_url) {
+        audio.src = song[0].preview_url ? song[0].preview_url : song[0].track.preview_url
+    } else {
+        return
+    }
     playImg.src = '/public/icons/pause-audio.svg'
     audio.play()
     songName.innerHTML = (song[0].track ? song[0].track.name : song[0].name).slice(0, 10);
@@ -207,63 +413,9 @@ function audioSongsMany(song) {
         })
     }
 
-    nextSong.onclick = () => {
-        if(song[0].type == 'track') {
-            while ((nextS < song.length && song[nextS].preview_url === null)) {
-                nextS++;
-            }
-        } else {
-            while ((nextS < song.length && song[nextS].track.preview_url === null)) {
-                nextS++;
-            }
-        }
-        
-        if(nextS < song.length) {
-            if(song[nextS].track) {
-                if(song[nextS].track.preview_url == null) {
-                    nextS++
-                }
-                audioSongNames(song[nextS].track)
-            } else  {
-                audioSongNames(song[nextS])
-            }
-            preSong.style.opacity = '1'
-            nextS++
-            preS = nextS - 1
-        } else {
-           nextSong.style.opacity = '0.5'
-        }
-    }
+    nextSongFunc(song)
 
-    preSong.onclick = () => {
-        console.log(song);
-        if (song[0].type == 'track') {
-            while (preS >= 0 && song[preS].preview_url === null) {
-                nextS--
-            }
-        } else {
-            while (preS >= 0 && song[preS].track.preview_url === null) {
-                nextS--
-            }
-        }
-
-
-        if(nextS > 1) {
-            nextS--
-            preS = nextS - 1
-            preSong.style.opacity = '1'
-            nextSong.style.opacity = '1'
-            if(nextS < song.length ) {
-                if(song[nextS].track) {
-                    audioSongNames(song[preS].track)
-                } else {
-                    audioSongNames(song[preS])
-                }
-            } 
-        } else {
-            preSong.style.opacity = '0.5'
-        }
-    }
+    preSongFunc(song)
 }
 
 export function createSongs(arr, place) {
@@ -285,6 +437,8 @@ export function createSongs(arr, place) {
         song_block.classList.add('song_block')
         song_poster.classList.add('song_poster')
         song_description.classList.add('song_description')
+        button.classList.add('btn-play-audio')
+        buttonImg.id = 'play_img_all'
 
         if (song.name.length >= 15) {
             pNameSong.innerHTML = song.name.slice(0, 14) + '...'
@@ -363,31 +517,9 @@ export function createSongs(arr, place) {
                 updateSearchHistory(song);
               });
           }
-          
 
           button.onclick = () => {
-            event.stopPropagation();
-
-            if(song.preview_url) {
-                audioSongNames(song)
-            } else if(song.type == 'artist') {
-                getSong(`/artists/${song.id}/albums`)
-                .then(res => {
-                    getSong(`/albums/${res.data.items[0].id}/tracks`)
-                    .then(res2 => {
-                        audioSongsMany(res2.data.items)
-                    })
-                })
-            } else if (song.type == 'playlist') {
-                console.log(song);
-                getSong(`/playlists/${song.id}/tracks`)
-                .then(res => {
-                    audioSongsMany(res.data.items)
-                })
-            }
-
-
-
+            audioPlayFunc(song, buttonImg)
           }
 
     }
@@ -459,6 +591,7 @@ export function bestResult(arr, place) {
     artistBlock.classList.add('artist_block');
     type.classList.add('type');
     playButton.classList.add('play_btn');
+    playButtonImage.id = 'play_img_all'
 
     heading.innerHTML = 'Лучший результат';
     resultTitle.innerHTML = arr.name
@@ -483,6 +616,11 @@ export function bestResult(arr, place) {
         location.assign(`/pages/${arr.type}/?id=${arr.id}`)
     }
 
+    playButton.onclick = () => {
+        event.stopPropagation();
+        audioPlayFunc(arr, playButtonImage)
+    }
+
 }
 
 export function trackResult(arr, place) {
@@ -505,6 +643,8 @@ export function trackResult(arr, place) {
         trackPoster.classList.add('track_poster');
         timeTrack.classList.add('time_track');
         nameTrack.classList.add('name_track');
+        trackPosterImage.id = 'play_img_all'
+        trackName1.id = 'all_song_name'
 
         function millisecondsToMinutesAndSeconds(duration_ms) {
             let minutes = Math.floor(duration_ms / 60000);
@@ -535,6 +675,32 @@ export function trackResult(arr, place) {
                 let lastArtistSpan = artistSpans[artistSpans.length - 1];
                 lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
             }
+
+            trackPoster.onclick = () => {
+                let hidden_icon_all = document.querySelectorAll('.track_poster img')
+                let pSongNameAll = document.querySelectorAll('.name_track p')
+                let pSongName = trackPoster.nextElementSibling.firstChild
+    
+                hidden_icon_all.forEach(icon => {
+                    icon.src = '/public/icons/start-audio.svg'
+                })
+    
+                pSongNameAll.forEach(p => {
+                    p.style.color = 'white'
+                })
+                
+                if (hidB) {
+                    trackPosterImage.src = '/public/icons/pause-audio.svg'
+                    hidB = false
+                    pSongName.style.color = '#1ED760';
+                } else {
+                    trackPosterImage.src = '/public/icons/start-audio.svg'
+                    hidB = true
+                    pSongName.style.color = 'white';
+                }
+    
+                audioPlayPlaylistsFunc(track, trackPosterImage, pSongName)
+            }
         } 
 
         trackResult.append(aboutTrack, timeTrack);
@@ -564,7 +730,6 @@ export function tracks(arr, place) {
         let trackNumber = document.createElement('span');
         let trackName = document.createElement('div');
         let trackNameText = document.createElement('p');
-        // let trackNameSpan = document.createElement('span');
         let rightTrackSide = document.createElement('div');
         let favoriteIcon = document.createElement('img');
         let timeDur = document.createElement('p');
@@ -578,12 +743,13 @@ export function tracks(arr, place) {
         favoriteIcon.classList.add('favorite-icon');
         rightTrackSide.classList.add('right_track_side');
         dotsIcon.classList.add('dots_icon');
+        hiddenIconImg.id = 'play_img_all'
 
         trackNumber.id = 'track_number';
         hiddenIconImg.src = '/public/icons/start-audio.svg';
-        hiddenIconImg.id = 'hidden_icon_img'
         trackNameText.innerHTML = track.name;
         timeDur.id = 'time_dur';
+        trackNameText.id = 'all_song_name'
 
         let durationMs = track.duration_ms;
         let totalSeconds = Math.floor(durationMs / 1000);
@@ -611,10 +777,6 @@ export function tracks(arr, place) {
 
         place.append(trackBlock);
 
-        let allhiddenIconImg = document.querySelectorAll('#hidden_icon_img')
-        let track_name = document.querySelectorAll('.track_name')
-
-
         for (let artist of track.artists) {
             let artistSpan = document.createElement('span');
             artistSpan.innerHTML = artist.name + ', ';
@@ -632,27 +794,32 @@ export function tracks(arr, place) {
             lastArtistSpan.innerHTML = lastArtistSpan.innerHTML.replace(', ', '');
         }
 
+        hiddenIconImg.onclick = () => {
+            let hidden_icon_all = document.querySelectorAll('#play_img_all')
+            let pSongNameAll = document.querySelectorAll('.track_name p')
+            let pSongName = hiddenIconImg.parentElement.nextElementSibling.nextElementSibling.firstChild
 
-        allhiddenIconImg.forEach((hiddenIconImg, index) => {
-            hiddenIconImg.onclick = () => {
-                allhiddenIconImg.forEach(icon => {
-                    icon.src = '/public/icons/start-audio.svg';
-                });
-                track_name.forEach(p => {
-                    p.style.color = 'white';
-                });
+            hidden_icon_all.forEach(icon => {
+                icon.src = '/public/icons/start-audio.svg'
+            })
 
-                if (hidB) {
-                    hiddenIconImg.src = '/public/icons/pause-audio.svg';
-                    track_name[index].style.color = '#1ED760';
-                    hidB = false;
-                } else {
-                    hiddenIconImg.src = '/public/icons/start-audio.svg';
-                    track_name[index].style.color = 'white';
-                    hidB = true;
-                }
+            pSongNameAll.forEach(p => {
+                p.style.color = 'white'
+            })
+            
+            if (hidB) {
+                hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                hidB = false
+                pSongName.style.color = '#1ED760';
+            } else {
+                hiddenIconImg.src = '/public/icons/start-audio.svg'
+                hidB = true
+                pSongName.style.color = 'white';
             }
-        });
+
+            audioPlayPlaylistsFunc(track, hiddenIconImg, pSongName)
+        }
+
 
         const allTrackBlocks = document.querySelectorAll('.track_block');
 
@@ -784,8 +951,20 @@ export function tracksPlaylist(arr, place) {
 
         place.append(trackBlock);
         n++
-
+        
         hiddenIconImg.onclick = () => {
+            let hidden_icon_all = document.querySelectorAll('#play_img_all')
+            let pSongNameAll = document.querySelectorAll('.track_name p')
+            let pSongName = hiddenIconImg.parentElement.nextElementSibling.nextElementSibling.firstChild
+
+            hidden_icon_all.forEach(icon => {
+                icon.src = '/public/icons/start-audio.svg'
+            })
+
+            pSongNameAll.forEach(p => {
+                p.style.color = 'white'
+            })
+            
 
             if (hidB) {
                 hiddenIconImg.src = '/public/icons/pause-audio.svg'
@@ -794,10 +973,12 @@ export function tracksPlaylist(arr, place) {
                 hiddenIconImg.src = '/public/icons/start-audio.svg'
                 hidB = true
             }
+            let song = track.track
+
+            audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName)
         }
 
         favoriteIcon.onclick = () => {
-
             if (!favB) {
                 favoriteIcon.src = '/public/icons/favorite-full.svg'
                 favB = true
@@ -806,14 +987,13 @@ export function tracksPlaylist(arr, place) {
                 favB = false
             }
 
-            // putSong(`/me/tracks?ids=${track.id}`)
+            // putSong(`/me/tracks?ids=${track.track.id}`)
 
         }
 
         trackNameText.onclick = () => {
             location.assign(`/pages/${track.track.type}/?id=${track.track.id}`)
         }
-
 
         albumP.onclick = () => {
             location.assign(`/pages/${track.track.album.type}/?id=${track.track.album.id}`)
@@ -826,17 +1006,17 @@ export function artist(arr, place) {
     place.innerHTML = ''
 
     for (const artist of arr) {
-        const artistBlock = document.createElement('div');
-        const artistImg = document.createElement('div');
-        const artistDescr = document.createElement('div');
-        const artistName = document.createElement('h3');
-        const artistParagraph = document.createElement('p');
+        let artistBlock = document.createElement('div');
+        let artistImg = document.createElement('div');
+        let artistDescr = document.createElement('div');
+        let artistName = document.createElement('h3');
+        let artistParagraph = document.createElement('p');
 
         artistBlock.classList.add('artist_block');
         artistImg.classList.add('artist_img');
         artistDescr.classList.add('artist_desrc');
-        artistName.textContent = 'Исполнитель';
-        artistParagraph.textContent = artist.name;
+        artistName.innerHTML = 'Исполнитель';
+        artistParagraph.innerHTML = artist.name;
         getSong(`/artists/${artist.id}`)
             .then(res => {
                 if(res.data.images[0]) {
@@ -846,12 +1026,10 @@ export function artist(arr, place) {
                 }
             })
 
-        artistDescr.appendChild(artistName);
-        artistDescr.appendChild(artistParagraph);
-        artistBlock.appendChild(artistImg);
-        artistBlock.appendChild(artistDescr);
+        artistDescr.append(artistName, artistParagraph);
+        artistBlock.append(artistImg, artistDescr);
 
-        place.appendChild(artistBlock);
+        place.append(artistBlock);
 
         artistBlock.onclick = () => {
             location.assign(`/pages/${artist.type}/?id=${artist.id}`)

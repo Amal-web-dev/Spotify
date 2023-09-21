@@ -19,14 +19,6 @@ let volumeBtn = document.querySelector('.volume-btn');
 let volumeButton = document.querySelector('.volume-button'); 
 let volumeDinamic = document.querySelector('.volume-dinamic'); 
 
-setTimeout(() => {
-  if(audio.duration) {
-    durationDisplay.innerHTML = formatTime(audio.duration)
-  } else {
-    durationDisplay.innerHTML = '?:??'
-  }
-
-}, 100);
     function formatTime(seconds) {
       let minutes = Math.floor(seconds / 60);
       let remainingSeconds = Math.floor(seconds % 60);

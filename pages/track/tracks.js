@@ -28,57 +28,10 @@ let from_album_name = document.querySelector('#from_album_name')
 let from_album_block = document.querySelector('.from_album_block')
 let from_album_tracks = document.querySelector('.from_album_tracks')
 let play_btn = document.querySelector('.play_btn')
-const myId = localStorage.getItem("myId");
-
-// getSong(`/playlists/${songId}`)
-// .then(res  => {
-//   console.log(res);
-// })
-
-// Инициализация Spotify Web Playback SDK
-window.onSpotifyWebPlaybackSDKReady = () => {
-  const player = new Spotify.Player({
-      name: 'Your App Name',
-      getOAuthToken: callback => {
-          const token = myId;
-          callback(token);
-      },
-      volume: 0.5
-  });
-
-  player.connect().then(success => {
-      if (success) {
-          console.log('Connected to Spotify Web Playback SDK');
-      }
-  });
-
-  // Добавляем обработчики событий для элементов управления
-  // document.getElementById('login').addEventListener('click', () => {
-  //     // Ваш код для аутентификации пользователя
-  // });
-  const audio = document.querySelector('#audio-1');
-  console.log(audio);
-
-  audio.addEventListener('click', () => {
-      audio.play();
-      console.log('Started playback');
-  });
-
-  // document.getElementById('pause').addEventListener('click', () => {
-  //     // Ваш код для паузы музыки
-  //     const audio = document.getElementById('yourAudioElementId');
-  //     audio.pause();
-  //     console.log('Paused playback');
-  // });
-
-  // document.getElementById('next').addEventListener('click', () => {
-  //     // Ваш код для переключения на следующий трек
-  // });
-
-  // document.getElementById('prev').addEventListener('click', () => {
-  //     // Ваш код для переключения на предыдущий трек
-  // });
-};
+const myId = localStorage.getItem("myId");let playingSong = []
+if(playingSong) {
+  playingSong = JSON.parse(localStorage.getItem('playingSong'))
+}
 
 getSong(`/tracks/${songId}`)
   .then(res => {
@@ -122,23 +75,13 @@ getSong(`/tracks/${songId}`)
       tracks(albTrack.data.tracks.items, from_album_tracks)
     })
 
-    
-
     let durationMs = res.data.duration_ms;
     let totalSeconds = Math.floor(durationMs / 1000);
     let minutes = Math.floor(totalSeconds / 60);
     let seconds = totalSeconds % 60;
     duration.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-    getSong(`/albums/${res.data.album.id}`)
-      .then(album => {
-        // console.log(album);
-      })
     localStorage.setItem("songName", res.data.name);
-    // getSong(`/audio-analysis/${songId}`)
-    // .then(res  =>  {
-    //   console.log(res);
-    // })
   })
 
 getSong("/me")
@@ -155,18 +98,13 @@ getSong("/me")
 
 getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
   .then(res => {
-    audioLoyal(document.body, res.data)
-    audioFunc()
-  })
-
-  getSong(`/audio-features/${songId}`) 
-  .then(res => {
-    console.log(res.data);
-
-    getSong(`/audio-analysis/${songId}`)
-    .then(analysis => {
-      console.log(analysis.data);
-    })
+    if(playingSong) {
+      audioLoyal(document.body, playingSong)
+      audioFunc()
+    } else {
+      audioLoyal(document.body, res.data)
+      audioFunc()
+    }
   })
 
   setTimeout(() => {

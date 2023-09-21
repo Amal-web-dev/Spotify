@@ -28,33 +28,25 @@ let noFind = document.querySelector('.no_find')
 let profiles = document.querySelector('.profiles')
 let searchHistoryString = localStorage.getItem('searchHistory');
 let history_cont = document.querySelector('.history_cont')
-
-if (searchHistoryString) {
-  let searchHistory = JSON.parse(searchHistoryString);
-  createSongCont(['История поиска'], history_cont, searchHistory)
-
-} else {
-  let searchHistory = [];
+let playingSong = []
+if(playingSong) {
+  playingSong = JSON.parse(localStorage.getItem('playingSong'))
 }
 
+if (searchHistoryString) {
+  setTimeout(() => {
+  let searchHistory = JSON.parse(searchHistoryString);
+  createSongCont(['История поиска'], history_cont, searchHistory)
+  }, 200);
+} else {
+ searchHistory = [];
+}
 
 getSong('/browse/categories')
   .then(res => {
-    // console.log(res.data.categories.items);
-
     categoriesFunc(res.data.categories.items, all_categories)
-
-    getSong(`/recommendations/available-genre-seeds`)
-      .then(categ => {
-        // console.log(categ.data.genres);
-      })
-
   })
 
-// search focus   
-
-
-// search focus
 
 // loyal
 let name_search = document.querySelector('.name_search')
@@ -163,8 +155,13 @@ getSong("/me")
 
 getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
   .then(res => {
-    audioLoyal(document.body, res.data)
-    audioFunc()
+    if(playingSong) {
+      audioLoyal(document.body, playingSong)
+      audioFunc()
+    } else {
+      audioLoyal(document.body, res.data)
+      audioFunc()
+    }
   })
 
 // footer(searchCont)
