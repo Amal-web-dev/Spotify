@@ -1,8 +1,7 @@
-
 import { asideLoyal, audioLoyal, headerMain, footer } from "../../modules/loyal";
 import { audioFunc } from "../../modules/audio";
 import { getSong } from "../../modules/http.request.js";
-import { ReloadMediatekaSong, createSongCont, tracks } from "../../modules/function";
+import { ReloadMediatekaSong, createSongCont, tracks } from "../../modules/function.js";
 
 let aside = document.querySelector('aside')
 let main = document.querySelector('main')
@@ -22,6 +21,10 @@ let type_name = document.querySelector('#type_name')
 let all_tracks_cont =  document.querySelector('.all_tracks_cont')
 let type = document.querySelector('#type')
 let other_album =  document.querySelector('.other_album')
+let playingSong = []
+if(playingSong) {
+  playingSong = JSON.parse(localStorage.getItem('playingSong'))
+}
 
 
 getSong(`/albums/${songId}`)
@@ -79,9 +82,6 @@ let seconds = Math.floor(totalSeconds % 60);
   .then(res => {
     artist_poster.style.backgroundImage = `url(${res.data.images[0].url})`
   })
-
-  
-
 })
 
 getSong("/me")
@@ -98,8 +98,13 @@ ReloadMediatekaSong(res.data.items, mediate_song_block)
 
 getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 .then(res => {
-  audioLoyal(document.body, res.data)
-  audioFunc()
+  if(playingSong) {
+    audioLoyal(document.body, playingSong)
+    audioFunc()
+  } else {
+    audioLoyal(document.body, res.data)
+    audioFunc()
+  }
 })
 
 setTimeout(() => {

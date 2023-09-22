@@ -172,8 +172,18 @@ function audioSongNames(song) {
     let artistName = document.querySelector('.song-name p')
     let songDur = document.querySelector('.duration')
     let songPost = document.querySelector('.song-poster')
+    const noTrackCont = document.querySelector('.no_track_cont');
 
-    audio.src = song.preview_url
+    if(song.preview_url !== null) {
+        audio.src = song.preview_url
+        noTrackCont.style.animation = 'none'
+    } else {
+    noTrackCont.style.animation = 'fadeInOut 2s infinite'
+    setTimeout(() => {
+        noTrackCont.style.animation = 'none'
+    }, 2000);
+        return
+    }
     playImg.src = '/public/icons/pause-audio.svg'
     audio.play()
     songName.innerHTML = song.name.slice(0, 10)
@@ -194,41 +204,114 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
     let preSong = document.querySelector('#pre-song img')
     let audio = document.querySelector('#audio-1')
     let playButtonIcon = document.querySelector('.play-button img');
+    let main_play_img = document.querySelector('.main_play_img')
+    let headerImgPlay = document.querySelector('.btn_play img')
+    let songName = document.querySelector('#songName')
+
+    let allButtonImg = document.querySelectorAll('#play_img_all')
+
 
     event.stopPropagation();
     if(isPlay || currentSong !== song) {
         if(currentSong !== song) {
             currentSong = song;
-            hiddenIconImg.src = '/public/icons/pause-audio.svg'
-            playButtonIcon.src = '/public/icons/pause-audio.svg'
             pSongName.style.color = '#1ED760';
-            if(song.preview_url) {
+            if(song.type == 'track') {
                 audioSongNames(song)
-                preSong.style.opacity = '0.5'
-                nextSong.style.opacity = '0.5'
+                if(song.preview_url) {
+                    allButtonImg.forEach(icon => {
+                        icon.src = '/public/icons/start-audio.svg'
+                    })
+                
+                    preSong.style.opacity = '0.5'
+                    nextSong.style.opacity = '0.5'
+                    hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                    playButtonIcon.src = '/public/icons/pause-audio.svg'
+                    songName.innerHTML = song.name
+                    if(main_play_img) {
+                        main_play_img.src = '/public/icons/pause-audio.svg'
+                    }
+                    if(headerImgPlay) {
+                        headerImgPlay.src = '/public/icons/pause-audio.svg'
+                    }
+                } 
             } else if(song.type == 'artist') {
                 getSong(`/artists/${song.id}/albums`)
                 .then(res => {
                     getSong(`/albums/${res.data.items[0].id}/tracks`)
                     .then(res2 => {
                         audioSongsMany(res2.data.items)
+                        if(res2.data.items[0].preview_url) {
+                            allButtonImg.forEach(icon => {
+                                icon.src = '/public/icons/start-audio.svg'
+                            })
+                        
+                            preSong.style.opacity = '0.5'
+                            nextSong.style.opacity = '0.5'
+                            hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                            playButtonIcon.src = '/public/icons/pause-audio.svg'
+                            if(main_play_img) {
+                                main_play_img.src = '/public/icons/pause-audio.svg'
+                            }
+                            if(headerImgPlay) {
+                                headerImgPlay.src = '/public/icons/pause-audio.svg'
+                            }
+                        } 
                     })
                 })
             } else if (song.type == 'playlist') {
                 getSong(`/playlists/${song.id}/tracks`)
                 .then(res => {
                     audioSongsMany(res.data.items)
+                    if(res.data.items[0].track.preview_url) {
+                        allButtonImg.forEach(icon => {
+                            icon.src = '/public/icons/start-audio.svg'
+                        })
+                    
+                        preSong.style.opacity = '0.5'
+                        nextSong.style.opacity = '0.5'
+                        hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                        playButtonIcon.src = '/public/icons/pause-audio.svg'
+                        if(main_play_img) {
+                            main_play_img.src = '/public/icons/pause-audio.svg'
+                        }
+                        if(headerImgPlay) {
+                            headerImgPlay.src = '/public/icons/pause-audio.svg'
+                        }
+                    } 
                 })
             } else if (song.type == 'album') {
                 getSong(`/albums/${song.id}/tracks`)
                 .then(res => {
                     audioSongsMany(res.data.items)
+                    if(res.data.items[0].preview_url) {
+                        allButtonImg.forEach(icon => {
+                            icon.src = '/public/icons/start-audio.svg'
+                        })
+                    
+                        preSong.style.opacity = '0.5'
+                        nextSong.style.opacity = '0.5'
+                        hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                        playButtonIcon.src = '/public/icons/pause-audio.svg'
+                        if(main_play_img) {
+                            main_play_img.src = '/public/icons/pause-audio.svg'
+                        }
+                        if(headerImgPlay) {
+                            headerImgPlay.src = '/public/icons/pause-audio.svg'
+                        }
+                    } 
                 })
             }
         } else {
             audio.play()
             hiddenIconImg.src = '/public/icons/pause-audio.svg'
             playButtonIcon.src = '/public/icons/pause-audio.svg'
+            if(main_play_img) {
+                main_play_img.src = '/public/icons/pause-audio.svg'
+            }
+            if(headerImgPlay) {
+                headerImgPlay.src = '/public/icons/pause-audio.svg'
+            }
             pSongName.style.color = '#1ED760';
         }
       
@@ -238,6 +321,12 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
         audio.pause()
         hiddenIconImg.src = '/public/icons/start-audio.svg'
         playButtonIcon.src = '/public/icons/start-audio.svg'
+        if(main_play_img) {
+            main_play_img.src = '/public/icons/start-audio.svg'
+        }
+        if(headerImgPlay) {
+            headerImgPlay.src = '/public/icons/start-audio.svg'
+        }
         isPlay = true
     }
 }
@@ -322,49 +411,127 @@ function audioPlayFunc(song, buttonImg) {
     let preSong = document.querySelector('#pre-song img')
     let audio = document.querySelector('#audio-1')
     let playButtonIcon = document.querySelector('.play-button img');  
+    let main_play_img = document.querySelector('.main_play_img')
+    let headerImgPlay = document.querySelector('.btn_play img')
 
     let allButtonImg = document.querySelectorAll('#play_img_all')
     let allSongName = document.querySelectorAll('#all_song_name')
 
-    allButtonImg.forEach(icon => {
-        icon.src = '/public/icons/start-audio.svg'
-    })
-
-    allSongName.forEach(p => {
-        p.style.color = 'white'
-    })
+   
     if(isPlay || currentSong !== song) {
         if(currentSong !== song) {
             currentSong = song
-            buttonImg.src = '/public/icons/pause-audio.svg'
-            playButtonIcon.src = '/public/icons/pause-audio.svg'
-            if(song.preview_url) {
+            if(song.type == 'track') {
                 audioSongNames(song)
-                preSong.style.opacity = '0.5'
-                nextSong.style.opacity = '0.5'
+                if(song.preview_url) {
+                    allButtonImg.forEach(icon => {
+                        icon.src = '/public/icons/start-audio.svg'
+                    })
+                
+                    allSongName.forEach(p => {
+                        p.style.color = 'white'
+                    })
+
+                    preSong.style.opacity = '0.5'
+                    nextSong.style.opacity = '0.5'
+                    buttonImg.src = '/public/icons/pause-audio.svg'
+                    playButtonIcon.src = '/public/icons/pause-audio.svg'
+                    if(main_play_img) {
+                        main_play_img.src = '/public/icons/pause-audio.svg'
+                    }
+                    if(headerImgPlay) {
+                        headerImgPlay.src = '/public/icons/pause-audio.svg'
+                    }
+                } 
             } else if(song.type == 'artist') {
                 getSong(`/artists/${song.id}/albums`)
                 .then(res => {
                     getSong(`/albums/${res.data.items[0].id}/tracks`)
                     .then(res2 => {
                         audioSongsMany(res2.data.items)
+                        if(res2.data.items[0].preview_url) {
+                            allButtonImg.forEach(icon => {
+                                icon.src = '/public/icons/start-audio.svg'
+                            })
+                        
+                            allSongName.forEach(p => {
+                                p.style.color = 'white'
+                            })
+        
+                            preSong.style.opacity = '0.5'
+                            nextSong.style.opacity = '0.5'
+                            buttonImg.src = '/public/icons/pause-audio.svg'
+                            playButtonIcon.src = '/public/icons/pause-audio.svg'
+                            if(main_play_img) {
+                                main_play_img.src = '/public/icons/pause-audio.svg'
+                            }
+                            if(headerImgPlay) {
+                                headerImgPlay.src = '/public/icons/pause-audio.svg'
+                            }
+                        }
                     })
                 })
             } else if (song.type == 'playlist') {
                 getSong(`/playlists/${song.id}/tracks`)
                 .then(res => {
                     audioSongsMany(res.data.items)
+                    if(res.data.items[0].track.preview_url) {
+                        allButtonImg.forEach(icon => {
+                            icon.src = '/public/icons/start-audio.svg'
+                        })
+                    
+                        allSongName.forEach(p => {
+                            p.style.color = 'white'
+                        })
+    
+                        preSong.style.opacity = '0.5'
+                        nextSong.style.opacity = '0.5'
+                        buttonImg.src = '/public/icons/pause-audio.svg'
+                        playButtonIcon.src = '/public/icons/pause-audio.svg'
+                        if(main_play_img) {
+                            main_play_img.src = '/public/icons/pause-audio.svg'
+                        }
+                        if(headerImgPlay) {
+                            headerImgPlay.src = '/public/icons/pause-audio.svg'
+                        }
+                    }
                 })
             } else if (song.type == 'album') {
                 getSong(`/albums/${song.id}/tracks`)
                 .then(res => {
                     audioSongsMany(res.data.items)
+                    if(res.data.items[0].preview_url) {
+                        allButtonImg.forEach(icon => {
+                            icon.src = '/public/icons/start-audio.svg'
+                        })
+                    
+                        allSongName.forEach(p => {
+                            p.style.color = 'white'
+                        })
+    
+                        preSong.style.opacity = '0.5'
+                        nextSong.style.opacity = '0.5'
+                        buttonImg.src = '/public/icons/pause-audio.svg'
+                        playButtonIcon.src = '/public/icons/pause-audio.svg'
+                        if(main_play_img) {
+                            main_play_img.src = '/public/icons/pause-audio.svg'
+                        }
+                        if(headerImgPlay) {
+                            headerImgPlay.src = '/public/icons/pause-audio.svg'
+                        }
+                    }
                 })
             }
         } else {
             audio.play()
             buttonImg.src = '/public/icons/pause-audio.svg'
             playButtonIcon.src = '/public/icons/pause-audio.svg'
+            if(main_play_img) {
+                main_play_img.src = '/public/icons/pause-audio.svg'
+            }
+            if(headerImgPlay) {
+                headerImgPlay.src = '/public/icons/pause-audio.svg'
+            }
         }
       
 
@@ -373,33 +540,50 @@ function audioPlayFunc(song, buttonImg) {
         audio.pause()
         buttonImg.src = '/public/icons/start-audio.svg'
         playButtonIcon.src = '/public/icons/start-audio.svg'
+        if(main_play_img) {
+            main_play_img.src = '/public/icons/start-audio.svg'
+        }
+        if(headerImgPlay) {
+            headerImgPlay.src = '/public/icons/start-audio.svg'
+        }
         isPlay = true
     }
 }
 
 function audioSongsMany(song) {
-    if(song[0].track) {
-        localStorage.setItem('playingSong', JSON.stringify(song[0].track));
-    } else {
-        localStorage.setItem('playingSong', JSON.stringify(song[0]));
-    }
+    
     let audio = document.querySelector('#audio-1')
     let playImg = document.querySelector('.play-button img')
+    let headerImg = document.querySelector('.btn_play img')
     let songName = document.querySelector('.song-name a')
     let artistName = document.querySelector('.song-name p')
     let songDur = document.querySelector('.duration')
     let songPost = document.querySelector('.song-poster')
     let nextSong = document.querySelector('#next-song img')
+    const noTrackCont = document.querySelector('.no_track_cont');
     let preSong = document.querySelector('#pre-song img')
-    preSong.style.opacity = '1'
-    nextSong.style.opacity = '1'
 
-    if(song[0].preview_url || song[0].track.preview_url) {
+    if(song[0].preview_url !== null || (song[0].track && song[0].track.preview_url)) {
         audio.src = song[0].preview_url ? song[0].preview_url : song[0].track.preview_url
+        noTrackCont.style.animation = 'none'
     } else {
+    noTrackCont.style.animation = 'fadeInOut 2s infinite'
+    setTimeout(() => {
+        noTrackCont.style.animation = 'none'
+    }, 2000);
         return
     }
+    preSong.style.opacity = '1'
+    nextSong.style.opacity = '1'
+    if(song[0].track) {
+        localStorage.setItem('playingSong', JSON.stringify(song[0].track));
+    } else {
+        localStorage.setItem('playingSong', JSON.stringify(song[0]));
+    }
     playImg.src = '/public/icons/pause-audio.svg'
+    if(headerImg) {
+        headerImg.src = '/public/icons/pause-audio.svg'
+    }
     audio.play()
     songName.innerHTML = (song[0].track ? song[0].track.name : song[0].name).slice(0, 10);
     artistName.innerHTML = (song[0].artists ? song[0].artists[0].name : song[0].track.artists[0].name);
@@ -907,6 +1091,7 @@ export function tracksPlaylist(arr, place) {
         albumP.innerHTML = track.track.album.name
         lastAddP.innerHTML = formatDate(track.added_at.slice(0, 10))
         timeDur.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        hiddenIconImg.id = 'play_img_all'
 
         trackNumber.innerHTML = n;
         if (track.track_number > 9) {

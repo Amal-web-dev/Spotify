@@ -14,6 +14,10 @@ let songId = location.search.split('=').at(-1)
 let songs = JSON.parse(localStorage.getItem('seeAll'))
 let title = JSON.parse(localStorage.getItem('title'))
 let all_tracks = document.querySelector('.all_tracks')
+let playingSong = []
+if(playingSong) {
+  playingSong = JSON.parse(localStorage.getItem('playingSong'))
+}
 
 
 createSongCont([`${title}`], all_tracks, songs)
@@ -34,8 +38,13 @@ ReloadMediatekaSong(res.data.items, mediate_song_block)
 
 getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 .then(res => {
-  audioLoyal(document.body, res.data)
-  audioFunc()
+  if(playingSong) {
+    audioLoyal(document.body, playingSong)
+    audioFunc()
+  } else {
+    audioLoyal(document.body, res.data)
+    audioFunc()
+  }
 })
 
 setTimeout(() => {

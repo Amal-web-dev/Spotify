@@ -32,8 +32,8 @@
             <div class="playlist_descript_cont">
 
                 <p id="type">Плейлист</p>
-                <h1 id="type_name">Yamakasi</h1>
-                <p class="playlist_descr">Best new Anime tracks for all Anime fans! 最新アニメシーンの話題曲をまとめてお届け！</p>
+                <h1 id="type_name"></h1>
+                <p class="playlist_descr"></p>
                 <div class="playlist_artist_cont">
                     <div class="artist_poster"></div>
                     <p><span id="artist_name">Miyagi</span> • <span id="like_info">2020</span> • <span id="track_count">9 tracks</span>, <span id="duration"></span></p>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="play_cont">
-            <button class="play_btn"><img src="/public/icons/start-audio.svg"></button>
+            <button class="play_btn"><img src="/public/icons/start-audio.svg" class="main_play_img"></button>
             <img src="/public/icons/favorite-icon.svg" class="like_icon">
             <img src="/public/icons/dots_icon.svg">
         </div>
@@ -83,7 +83,9 @@
         </div>
     </main>
 
-
+    <div class="no_track_cont">
+        <p>Этот трек недоступен</p>
+      </div>
     <script src="./playlist.js" type="module"></script>
 </body>
 </html>

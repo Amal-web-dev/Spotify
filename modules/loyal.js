@@ -369,7 +369,14 @@ export function audioLoyal(place, arr) {
   currentTimeSpan.textContent = '0:00';
   audio.src = arr.preview_url
   volumeIcon.src = '/public/icons/volume-up.svg';
-  songPoster.style.backgroundImage = arr.album ? `url(${arr.album.images[0].url})` : `url(/public/img/no_img.jpg)`
+    getSong(`/artists/${arr.artists[0].id}`)
+    .then(res => {
+      if(res.data.images[0]) {
+        songPoster.style.backgroundImage = `url(${res.data.images[0].url})`
+      } else {
+        songPoster.style.backgroundImage = `url(/public/img/no_img.jpg)`
+      }
+    })
   durationSpan.innerHTML = formatMillisecondsToTime(arr.duration_ms)
 
   audioCont.append(leftAudio, centerAudio, rightAudio);
@@ -609,6 +616,7 @@ export function headerMain(place) {
     btnImg.src = '/public/icons/start-audio.svg'
 
     btnPlay.classList.add('btn_play')
+    btnImg.id = 'play_img_all'
 
     headerLeft.append(btnPlay, h3Name)
     btnPlay.append(btnImg)

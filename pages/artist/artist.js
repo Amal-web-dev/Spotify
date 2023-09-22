@@ -22,6 +22,10 @@ let album_cat = document.querySelector('.album_cat')
 let art_friend = document.querySelector('.art_friend')
 let submit = document.querySelector('.submit')
 let song = document.querySelector('.song')
+let playingSong = []
+if(playingSong) {
+  playingSong = JSON.parse(localStorage.getItem('playingSong'))
+}
 
 submit.onclick = () => {
  subscribeToArtist(artistId)
@@ -33,6 +37,17 @@ btnCat.forEach(button => {
     button.classList.add('active');
   });
 });
+
+getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
+.then(res => {
+  if(playingSong) {
+    audioLoyal(document.body, playingSong)
+    audioFunc()
+  } else {
+    audioLoyal(document.body, res.data)
+    audioFunc()
+  }
+})
 
 popular_tracks.onclick = () => {
   getSong(`/artists/${artistId}/albums`)
@@ -97,29 +112,9 @@ getSong(`/artists/${artistId}/albums`)
     createSongCont([`Альбомы исполнителя`], fan_like, alb.data.items)
   }
 })
-
-// getSong(`/artists/${artistId}/top-tracks`)
-// .then(alb => {
-//     console.log(alb);
-// })
-
 })
 
 
-// getSong(`/playlists/${artistId}`)
-// .then(res  => {
-//   console.log(res);
-// })
-
-// getSong(`/tracks/${artistId}`)
-// .then(res => {
-//   console.log(res);
-
-//   getSong(`/audio-analysis/${artistId}`)
-//   .then(res  =>  {
-//     console.log(res);
-//   })
-// })
 
 getSong("/me")
 .then(res => {
@@ -133,11 +128,7 @@ ReloadMediatekaSong(res.data.items, mediate_song_block)
 })
 })
 
-getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
-.then(res => {
-  audioLoyal(document.body, res.data)
-  audioFunc()
-})
+
 
 setTimeout(() => {
     footer(main)

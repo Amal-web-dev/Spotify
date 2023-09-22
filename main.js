@@ -81,7 +81,7 @@ createSongCont(allTitle, all_cont, res.data.items)
 
 
 // все песни в контейнере
-getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA'")
+getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
 .then(res => {
   try {
     createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks)

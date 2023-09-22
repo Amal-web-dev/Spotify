@@ -21,12 +21,20 @@ let like_info = document.querySelector('#like_info')
 let track_count = document.querySelector('#track_count')
 let duration = document.querySelector('#duration')
 let h3Name = document.querySelector('#songName')
-
+let playingSong = []
+if(playingSong) {
+  playingSong = JSON.parse(localStorage.getItem('playingSong'))
+}
 
 getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 .then(res => {
-  audioLoyal(document.body, res.data)
-  audioFunc()
+  if(playingSong) {
+    audioLoyal(document.body, playingSong)
+    audioFunc()
+  } else {
+    audioLoyal(document.body, res.data)
+    audioFunc()
+  }
 })
 
 getSong(`/playlists/${songId}`)

@@ -45,7 +45,6 @@ getSong(`/tracks/${songId}`)
     artist_name.innerHTML = res.data.artists[0].name
     release_date.innerHTML = res.data.album.release_date.slice(0, 4)
     artist(res.data.artists, artists_cont)
-    // tracks(res.data, from_album_tracks)
 
     from_album_block.onclick = () => {
       location.assign(`/pages/${res.data.album.type}/?id=${res.data.album.id}`)

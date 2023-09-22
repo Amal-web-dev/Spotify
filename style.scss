@@ -343,3 +343,33 @@ button {
     display: none;
     opacity: 1;
   }
+
+  .no_track_cont  {
+    padding: 10px 15px;
+    background-color: #202020;
+    color: #1ED760;
+    position: absolute;
+    bottom: 10%;
+    right: 50%;
+    translate: 50% 50%;
+    border-radius: 5px;
+    // animation: fadeInOut 2s ease-in-out;
+    opacity: 0;
+  }
+
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0; 
+      bottom: 10%;
+    }
+    50% {
+      opacity: 1; 
+      bottom: 20%;
+    }
+    100% {
+      opacity: 0; 
+      bottom: 15%;
+    }
+  }
+  
