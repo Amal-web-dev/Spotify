@@ -33,6 +33,16 @@ if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
 }
 
+getSong("/me/tracks")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
+
+getSong("/me/albums")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
+
 if (searchHistoryString) {
   setTimeout(() => {
   let searchHistory = JSON.parse(searchHistoryString);

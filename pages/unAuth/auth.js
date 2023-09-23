@@ -11,7 +11,7 @@ let main = document.querySelector('main')
     localStorage.setItem("myId", token);
 footer(main)
 
-login_a.href = `${import.meta.env.VITE_AUTH_ENDPOINT}?client_id=${import.meta.env.VITE_client_id}&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}&response_type=${import.meta.env.VITE_RESPONSE_TYPE}&score=user-library-read`
+login_a.href = `${import.meta.env.VITE_AUTH_ENDPOINT}?client_id=${import.meta.env.VITE_client_id}&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}&response_type=${import.meta.env.VITE_RESPONSE_TYPE}&scope=user-library-read%20user-read-recently-played%20user-read-private%20user-read-email%20user-follow-modify%20user-follow-read%20user-library-modify%20playlist-modify-public%20playlist-modify-private%20playlist-read-private%20user-top-read`
 
 // axios.get("https://api.spotify.com/v1/browse/featured-playlists", {
 //     headers: {

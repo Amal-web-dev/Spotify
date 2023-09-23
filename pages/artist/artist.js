@@ -1,7 +1,7 @@
 
 import { asideLoyal, audioLoyal, headerMain, footer } from "../../modules/loyal";
 import { audioFunc } from "../../modules/audio";
-import { getSong, subscribeToArtist } from "../../modules/http.request.js";
+import { getSong, subscribeToArtist, unsubscribeFromArtist } from "../../modules/http.request.js";
 import { ReloadMediatekaSong, createSongCont } from "../../modules/function";
 
 let aside = document.querySelector('aside')
@@ -22,13 +22,34 @@ let album_cat = document.querySelector('.album_cat')
 let art_friend = document.querySelector('.art_friend')
 let submit = document.querySelector('.submit')
 let song = document.querySelector('.song')
+let isSub = false
 let playingSong = []
 if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
 }
 
+
+getSong(`/me/following/contains?type=artist&ids=${artistId}`)
+.then(res => {
+  if(res.data[0]) {
+    submit.innerHTML = 'Подписка'
+    isSub = true
+  } else {
+    submit.innerHTML = 'Подписаться'
+    isSub = false
+  }
+})
+
 submit.onclick = () => {
- subscribeToArtist(artistId)
+  if(!isSub) {
+    subscribeToArtist(artistId)
+    submit.innerHTML = 'Подписка'
+    isSub = true
+  } else {
+    unsubscribeFromArtist(artistId)
+    submit.innerHTML = 'Подписаться'
+    isSub = false
+  }
 }
 
 btnCat.forEach(button => {
@@ -47,6 +68,17 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
     audioLoyal(document.body, res.data)
     audioFunc()
   }
+})
+
+
+getSong("/me/tracks")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
+
+getSong("/me/albums")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
 })
 
 popular_tracks.onclick = () => {

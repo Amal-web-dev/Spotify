@@ -22,6 +22,15 @@ if(playingSong) {
 
 createSongCont([`${title}`], all_tracks, songs)
 
+getSong("/me/tracks")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
+
+getSong("/me/albums")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
 
 getSong("/me")
 .then(res => {

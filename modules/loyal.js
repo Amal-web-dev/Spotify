@@ -1,9 +1,8 @@
-import { getSong } from "../modules/http.request.js";
-import { formatMillisecondsToTime } from "../modules/function.js" 
+import { getSong, likeSong, unLikeSong } from "../modules/http.request.js";
+import { formatMillisecondsToTime, ReloadMediatekaSong } from "../modules/function.js" 
 
 let userBul = false
 let main = document.querySelector('main')
-let favTru = false
 if(!localStorage.getItem('mediateka') == null) {
   localStorage.setItem('mediateka', false)
 }
@@ -12,6 +11,7 @@ if(localStorage.getItem('bigMed') == null) {
 }
 let med = localStorage.getItem('mediateka')
 let big = localStorage.getItem('bigMed')
+let mediate_song_block = document.querySelector('.mediate_song_block')
 
 export function asideLoyal(place) {
   let asideTop = document.createElement('div')
@@ -98,7 +98,7 @@ export function asideLoyal(place) {
   homeSpan.innerHTML = 'Главная'
   searchSpan.innerHTML = 'Поиск'
   playListBtn.innerHTML = 'Playlists'
-  artistsBtn.innerHTML = 'Artists'
+  artistsBtn.innerHTML = 'Track'
   albumsBtn.innerHTML = 'Albums'
   searchMediaIcon.src = '/public/icons/search-icon.svg'
   recentSpan.innerHTML = 'Recents'
@@ -158,23 +158,6 @@ export function asideLoyal(place) {
     location.assign('/pages/search/');
   }
 
-  //   getSong("/me")
-  // .then(res => {
-
-  //   // getSong(`/users/${res.data.id}`)
-  //   getSong(`/users/${res.data.id}/following?type=artist`)
-  // .then(res => {
-  //   try {
-  //     console.log(res);
-  // // ReloadMediatekaSong(res.data.items, mediate_song_block)
-  // // createSongCont(allTitle, all_cont, res.data.items.slice(0, 9))
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // })
-  // })
-
-
   artistsBtn.onclick = () => {
     playListBtn.style.display = 'none'
     albumsBtn.style.display = 'none'
@@ -182,6 +165,11 @@ export function asideLoyal(place) {
     albumsBtn.classList.remove('btn_active')
     artistsBtn.classList.add('btn_active')
     cancelBlock.style.display = 'flex'
+    getSong("/me/tracks")
+.then(res => {
+  mediate_song_block.innerHTML = ''
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
   }
 
   playListBtn.onclick = () => {
@@ -191,6 +179,11 @@ export function asideLoyal(place) {
     albumsBtn.classList.remove('btn_active')
     playListBtn.classList.add('btn_active')
     cancelBlock.style.display = 'flex'
+    getSong("/me/playlists")
+.then(res => {
+  mediate_song_block.innerHTML = ''
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
   }
 
   albumsBtn.onclick = () => {
@@ -200,6 +193,11 @@ export function asideLoyal(place) {
     playListBtn.classList.remove('btn_active')
     albumsBtn.classList.add('btn_active')
     cancelBlock.style.display = 'flex'
+    getSong("/me/albums")
+.then(res => {
+  mediate_song_block.innerHTML = ''
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
   }
 
   cancelBlock.onclick = () => {
@@ -210,6 +208,19 @@ export function asideLoyal(place) {
     artistsBtn.classList.remove('btn_active')
     playListBtn.classList.remove('btn_active')
     albumsBtn.classList.remove('btn_active')
+    mediate_song_block.innerHTML = ''
+    getSong("/me/albums")
+    .then(res => {
+      ReloadMediatekaSong(res.data.items, mediate_song_block)
+    })
+    getSong("/me/tracks")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
+getSong("/me/playlists")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
   }
 
   leftMedia.onclick = () => {
@@ -225,6 +236,7 @@ export function asideLoyal(place) {
       med = false
     }
   }
+
   if(med == 'false') {
     place.classList.remove('mini_aside')
     main.classList.remove('mini')
@@ -408,15 +420,38 @@ export function audioLoyal(place, arr) {
 
   place.append(audioCont);
 
-  songLike.onclick = () => {
-    if (!favTru) {
-      likeIcon.src = '/public/icons/favorite-full.svg'
-      favTru = true
-    } else {
-      likeIcon.src = '/public/icons/favorite-icon.svg'
-      favTru = false
-    }
-  }
+    getSong(`/me/tracks/contains?ids=${arr.id}`)
+    .then(res => {
+      let isLike = false
+      if(res.data[0]) {
+        likeIcon.src = '/public/icons/favorite-full.svg'
+        isLike = true
+      } else {
+        likeIcon.src = '/public/icons/favorite-icon.svg'
+        isLike = false
+      }
+
+      if(!isLike) {
+        likeIcon.src = '/public/icons/favorite-icon.svg'
+      } else {
+        likeIcon.src = '/public/icons/favorite-full.svg'
+      }
+
+      likeIcon.onclick = () => {
+        if(!isLike) {
+          likeSong(arr.id, 'tracks')
+          likeIcon.src = '/public/icons/favorite-full.svg'
+          isLike = true
+        } else {
+          unLikeSong(arr.id, 'tracks')
+          likeIcon.src = '/public/icons/favorite-icon.svg'
+          isLike = false
+        }
+      }
+    })
+    
+   
+    
 
   aName.onclick = () => {
     location.assign(`/pages/${arr.type}/?id=${arr.id}`)

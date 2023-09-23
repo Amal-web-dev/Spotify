@@ -2,25 +2,6 @@ import axios from 'axios'
 
 let baseURL = import.meta.env.VITE_API
 let myToken = localStorage.getItem('myId')
-// let win = false
-
-// export let getSong = async (path) => {
-//     try {
-//         const res = await axios.get(baseURL + path, {
-//             headers: {
-//                 Authorization: `Bearer ${myToken}`
-//             }
-//         })
-//         win = false
-
-//         return res
-//     } catch (e) {
-//         // window.location.reload();
-//         console.log(res);
-//     }
-// }
-
-let win = false;
 let errorCount = parseInt(localStorage.getItem('errorCount')) || 0;
 
 export let getSong = async (path) => {
@@ -33,17 +14,17 @@ export let getSong = async (path) => {
 
         return res;
     } catch (e) {
-        if (errorCount <= 4) {
-            errorCount++;
-            localStorage.setItem('errorCount', errorCount.toString());
-            window.location.reload();
-        } else {
-            if(e.message.includes('401')) {
-           location.assign('/pages/unAuth/');
-            }
-            errorCount = 0;
-            localStorage.removeItem('errorCount');
-        }
+        // if (errorCount <= 4) {
+        //     errorCount++;
+        //     localStorage.setItem('errorCount', errorCount.toString());
+        //     window.location.reload();
+        // } else {
+        //     if(e.message.includes('401')) {
+        //    location.assign('/pages/unAuth/');
+        //     }
+        //     errorCount = 0;
+        //     localStorage.removeItem('errorCount');
+        // }
 
         console.log(e);
     }
@@ -61,31 +42,65 @@ export const subscribeToArtist = async (artistId) => {
     try {
       const response = await axios.put(url, null, { headers });
         console.log('Подписка успешно оформлена на исполнителя!');
-        console.error(response.data);
     } catch (error) {
       console.error('Произошла ошибка при выполнении запроса:', error.message);
       console.log(error);
     }
-    try {
-      const res = await axios.put(
-        `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
-        {}, 
-        {
-          headers: {
-            Authorization: `Bearer ${myToken}`,
-            "Content-Type": "application/json"
-          },
-        }
-      );
-  
-        console.log(`Вы успешно подписались на артиста с ID ${artistId}`);
-        return res
-    } catch (error) {
-      console.error('Произошла ошибка:', error);
-    }
   };
 
+  export const unsubscribeFromArtist = async (artistId) => {
+    const url = `${BASE_URL}/me/following?type=artist&ids=${artistId}`;
+  
+    const headers = {
+      'Authorization': `Bearer ${myToken}`,
+      'Content-Type': 'application/json',
+    };
+  
+    try {
+      const response = await axios.delete(url, { headers });
+      console.log(`Вы успешно отписались от артиста`);
+      return response;
+    } catch (error) {
+      console.error('Произошла ошибка при выполнении запроса:', error.message);
+      console.log(error);
+    }
+};
 
+
+  export const likeSong = async (typeId, type) => {
+    const url = `${BASE_URL}/me/${type}?ids=${typeId}`;
+  
+    const headers = {
+      'Authorization': `Bearer ${myToken}`,
+      'Content-Type': 'application/json',
+    };
+  
+    try {
+        const response = await axios.put(url, {}, { headers });
+        console.log(`Вы успешно поставили лайк песне`);
+        return response;
+      } catch (error) {
+        console.error('Произошла ошибка при выполнении запроса:', error.message);
+        console.log(error);
+      }
+  };
+
+  export const unLikeSong = async (typeId, type) => {
+    const url = `${BASE_URL}/me/${type}?ids=${typeId}`;
+  
+    const headers = {
+      'Authorization': `Bearer ${myToken}`,
+      'Content-Type': 'application/json',
+    };
+  
+    try {
+      const response = await axios.delete(url, { headers });
+      return response;
+    } catch (error) {
+      console.error('Произошла ошибка при выполнении запроса:', error.message);
+      console.log(error);
+    }
+};
 
 
 export async function putSong(path, data) {

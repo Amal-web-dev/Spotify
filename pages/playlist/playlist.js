@@ -1,7 +1,7 @@
 
 import { asideLoyal, audioLoyal, headerMain, footer } from "../../modules/loyal";
 import { audioFunc } from "../../modules/audio";
-import { getSong } from "../../modules/http.request.js";
+import { getSong, subscribeToArtist, unLikeSong } from "../../modules/http.request.js";
 import { ReloadMediatekaSong, createSongCont, tracksPlaylist } from "../../modules/function";
 
 let aside = document.querySelector('aside')
@@ -21,10 +21,39 @@ let like_info = document.querySelector('#like_info')
 let track_count = document.querySelector('#track_count')
 let duration = document.querySelector('#duration')
 let h3Name = document.querySelector('#songName')
+let likeAlbum = document.querySelector('.like_icon') 
+let isLike = false
 let playingSong = []
 if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
 }
+
+// getSong(`/me/playlists/contains?ids=${songId}`)
+// .then(res => {
+//   if(res.data[0]) {
+//     likeAlbum.src = '/public/icons/favorite-full.svg'
+//     likeAlbum.style.filter = 'invert(0)'
+//     isLike = true
+//   } else {
+//     likeAlbum.src = '/public/icons/favorite-icon.svg'
+//     isLike = false
+//   }
+// })
+
+// likeAlbum.onclick = () => {
+//   if(!isLike) {
+//     subscribeToArtist(songId, 'playlists')
+//     likeAlbum.src = '/public/icons/favorite-full.svg'
+//     likeAlbum.style.filter = 'invert(0)'
+//     isLike = true
+//   } else {
+//     unLikeSong(songId, 'playlists')
+//     likeAlbum.src = '/public/icons/favorite-icon.svg'
+//     likeAlbum.style.filter = 'invert(50%)'
+//     isLike = false
+//   }
+// }
+
 
 getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 .then(res => {
@@ -35,6 +64,16 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
     audioLoyal(document.body, res.data)
     audioFunc()
   }
+})
+
+getSong("/me/tracks")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
+
+getSong("/me/albums")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
 })
 
 getSong(`/playlists/${songId}`)

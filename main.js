@@ -29,13 +29,22 @@ if(!token && token !== 'http://localhost:5173/pages/unAuth/#' ||  user == 'http:
 } 
 let playlist = []
 
-// getSong("/me/player/recently-played")
-// .then(res => {
-//   console.log(res);
-//   for (let track of res.data.items) {
-//     if (track.track.preview_url) playlist.push(track.track)
-// }
-// })
+getSong("/me/player/recently-played")
+    .then(res => {
+      welcomeSong(res.data.items.slice(0, 6), welcomeBlock)
+      createSongCont([`Недавно прослушенные`], all_cont, res.data.items)
+    })
+       
+
+getSong("/me/tracks")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
+
+getSong("/me/albums")
+.then(res => {
+  ReloadMediatekaSong(res.data.items, mediate_song_block)
+})
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
   welcome_h1.innerHTML = 'Доброе утро';
@@ -62,10 +71,7 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 
 
 // появление песен
-getSong("/me")
-.then(res => {
-
-  getSong(`/users/${res.data.id}/playlists`)
+  getSong(`/me/playlists`)
 .then(res => {
   try {
 ReloadMediatekaSong(res.data.items, mediate_song_block)
@@ -74,41 +80,41 @@ createSongCont(allTitle, all_cont, res.data.items)
     console.log(error);
   }
 })
-})
 
 // появление песен конец
-
-
 
 // все песни в контейнере
 getSong("/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA")
 .then(res => {
   try {
     createSongCont(['Рекомендованные треки'], all_cont, res.data.tracks)
-    getSong("/me")
-  .then(resTwo => {
-    createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.tracks)
-  })
+    
   } catch (error) {
     console.log(error);
   }
- 
 })
+
+getSong('/me/top/tracks')
+.then(res => {
+  getSong("/me")
+  .then(resTwo => {
+    createSongCont([`Только для тебя, ${resTwo.data.display_name}`], all_cont, res.data.items)
+  })
+  })
 
 getSong('/browse/featured-playlists') 
 .then(res => {
   try {
     createSongCont([`Рекомендованные плейлисты`], all_cont, res.data.playlists.items)
-    welcomeSong(res.data.playlists.items.slice(0, 6), welcomeBlock)
   } catch (error) {
     console.log(error);
   }
 })
 
-getSong('/artists/0TnOYISbd1XYRBk9myaseg/related-artists')
+getSong('/me/top/artists')
 .then(res => {
   try {
-  createSongCont([`Популярные исполнители`], all_cont, res.data.artists)
+  createSongCont([`Популярные исполнители`], all_cont, res.data.items)
   } catch (error) {
     console.log(error);
   }
