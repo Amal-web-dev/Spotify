@@ -511,6 +511,19 @@ export function headerMain(place) {
   btnLeft.classList.add('btn_left')
   btnRight.classList.add('btn_right')
 
+  getSong('/me')
+  .then(res => {
+    console.log(res.data);
+    if(res.data.images[0]) {
+      userIcon.style.display = 'none'
+      userBtn.style.backgroundImage = `url(${res.data.images.at(-1).url})`
+      userIcon.style.width = '20px'
+    } else {
+      userIcon.style.width = '100px'
+      userIcon.style.display = 'block'
+      userIcon.src = '/public/icons/user.svg'
+    }
+  })
 
   btnPremium.innerHTML = 'Узнать больше о Premium'
   aPremium.href = 'https://www.spotify.com/uz/premium/?utm_source=app&utm_medium=desktop&utm_campaign=upgrade&ref=web_loggedin_upgrade_button'
@@ -519,7 +532,6 @@ export function headerMain(place) {
   iconRight.src = '/public/icons/arrow-right.svg'
   iconDownload.src = '/public/icons/download-icon.svg'
   btnDownload.innerHTML = 'Установить приложение'
-  userIcon.src = '/public/icons/user.svg'
   aAcc.href = 'https://www.spotify.com/uz/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account'
   aPremiumUpgrade.href = 'https://www.spotify.com/uz/premium/?ref=web_loggedin_upgrade_menu'
   accP.innerHTML = 'Аккаунт'
@@ -683,17 +695,26 @@ export function headerMain(place) {
     if (!userBul) {
       userSetting.classList.add('user-setting-active')
       userBul = true
-      userIcon.src = '/public/icons/user-full.svg'
+      if (userIcon.src === window.location.origin + '/public/icons/user.svg') {
+        console.log('sd');
+        userIcon.src = window.location.origin + '/public/icons/user-full.svg';
+      }
     } else {
       userSetting.classList.remove('user-setting-active')
       userBul = false
-      userIcon.src = '/public/icons/user.svg'
+      if(userIcon.src == window.location.origin + '/public/icons/user-full.svg') {
+        userIcon.src = window.location.origin + '/public/icons/user.svg'
+      }
     }
   }
 
   log_out.onclick = () => {
     localStorage.setItem("myId", '');
     location.assign('/pages/unAuth/')
+  }
+
+  profile.onclick = () => {
+    location.assign('/pages/profile/')
   }
 
   btnLeft.onclick = () => {

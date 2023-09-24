@@ -59,7 +59,7 @@ aside {
 }
 
 .aside-bottom {
-    height: 100%;
+    height: calc(100% - 85px);
     width: 100%;
     background-color: #121212;
     border-radius: 5px;
@@ -253,7 +253,7 @@ aside {
         flex-direction: column;
         gap: 5px;
         overflow-y: scroll;
-        height: 73%;
+        height: calc(100% - 100px);
         overflow-x: hidden;
 
         .mediateka_song {

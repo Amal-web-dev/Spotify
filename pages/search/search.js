@@ -22,7 +22,6 @@ let best_track_result = document.querySelector('.best_track_result')
 let albums = document.querySelector('.albums')
 let artist = document.querySelector('.artist')
 let playlists = document.querySelector('.playlists')
-let show = document.querySelector('.show')
 let findCont = document.querySelector('.find-cont')
 let noFind = document.querySelector('.no_find')
 let profiles = document.querySelector('.profiles')
@@ -119,17 +118,6 @@ input_search.onkeyup = () => {
         }
       })
 
-    getSong(`/search?q=remaster%2520track%3ADoxy%2520artist%3A${input_search.value}&type=show`)
-      .then(res => {
-        show.innerHTML = ''
-        try {
-          if (res.data.shows.items.length > 2) {
-            createSongCont(['Показы'], show, res.data.shows.items)
-          }
-        } catch (error) {
-          console.log('no');
-        }
-      })
   } else {
     searchCont.style.display = 'block'
     findCont.style.display = 'none'

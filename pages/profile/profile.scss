@@ -1,0 +1,47 @@
+     #main::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 400px;
+    position: absolute;
+    top: 0px;
+    z-index: -1;
+    background:  var(--boxAfterBackColor, linear-gradient(#999292 5%, transparent)) !important;
+  }
+
+
+  main {
+    color: white;
+    .user-cont {
+        margin: 50px 0 0 20px;
+        display: flex;
+        gap: 20px;
+        
+        .user_avatar {
+            height: 170px;
+            width: 170px;
+            box-shadow: 0 0 20px 10px black;
+            background-color: #999292;
+            border-radius: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-image: url(/public/icons/user.svg);
+        }
+
+        .user_descr {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 40px;
+            
+            p {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 50px;
+            }
+        }
+    }
+  }

@@ -18,6 +18,7 @@ import {
              artist: resolve(__dirname, 'pages/artist/index.html'),
              album: resolve(__dirname, 'pages/album/index.html'),
              allSong: resolve(__dirname, 'pages/allSong/index.html'),
+             profile: resolve(__dirname, 'pages/profile/index.html'),
           },
        },
     },

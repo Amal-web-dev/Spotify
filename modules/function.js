@@ -100,7 +100,6 @@ export function welcomeSong(arr, place) {
             location.assign(`/pages/${song.type}/?id=${song.id}`)
         }
 
-
         song_button.onclick = () => {
             event.stopPropagation();
             audioPlayFunc(song, buttonImg)

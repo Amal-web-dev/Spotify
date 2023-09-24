@@ -31,19 +31,31 @@ let playlist = []
 
 getSong("/me/player/recently-played")
     .then(res => {
-      welcomeSong(res.data.items.slice(0, 6), welcomeBlock)
-      createSongCont([`Недавно прослушенные`], all_cont, res.data.items)
+      try {
+        welcomeSong(res.data.items.slice(0, 6), welcomeBlock)
+        createSongCont([`Недавно прослушенные`], all_cont, res.data.items)
+      } catch (error) {
+        console.log(error);
+      }
     })
        
 
 getSong("/me/tracks")
 .then(res => {
+  try {
   ReloadMediatekaSong(res.data.items, mediate_song_block)
+  } catch (error) {
+    console.log(error);
+  }
 })
 
 getSong("/me/albums")
 .then(res => {
+  try {
   ReloadMediatekaSong(res.data.items, mediate_song_block)
+  } catch (error) {
+    console.log(error);
+  }
 })
 // пишет добрый день
 if (currentTime >= 5 && currentTime < 12) {
