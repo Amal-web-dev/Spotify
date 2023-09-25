@@ -375,7 +375,7 @@ export function audioLoyal(place, arr) {
   audioPlayer.classList.add('audio-player')
   audioInfo.classList.add('audio-info')
 
-  aName.innerHTML = arr.name.slice(0, 10)
+  aName.innerHTML = arr.name
   songArt.innerHTML = arr.artists[0].name
   likeIcon.src = '/public/icons/favorite-icon.svg'
   currentTimeSpan.textContent = '0:00';
@@ -799,7 +799,22 @@ export function headerMainSearch(place) {
   log_out.classList.add('log-out')
   inputSearch.classList.add('input_search')
   inputBlock.classList.add('input-block')
+  btnLeft.classList.add('btn_left')
+  btnRight.classList.add('btn_right')
 
+  getSong('/me')
+  .then(res => {
+    console.log(res.data);
+    if(res.data.images[0]) {
+      userIcon.style.display = 'none'
+      userBtn.style.backgroundImage = `url(${res.data.images.at(-1).url})`
+      userIcon.style.width = '20px'
+    } else {
+      userIcon.style.width = '100px'
+      userIcon.style.display = 'block'
+      userIcon.src = '/public/icons/user.svg'
+    }
+  })
 
   searchIcon.src = '/public/icons/search-icon.svg'
   iconLeft.src = '/public/icons/arrow-left.svg'
@@ -859,7 +874,9 @@ export function headerMainSearch(place) {
     location.assign('/pages/unAuth/')
   }
 
-
+  profile.onclick = () => {
+    location.assign('/pages/profile/')
+  }
 
   document.addEventListener('click', (event) => {
     if (!event.target.classList.contains('search_active')) {

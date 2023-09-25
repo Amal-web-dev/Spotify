@@ -185,6 +185,7 @@ function audioSongNames(song) {
     let artistName = document.querySelector('.song-name p')
     let songDur = document.querySelector('.duration')
     let songPost = document.querySelector('.song-poster')
+    let likeIcon = document.querySelector('.song-like img')
     const noTrackCont = document.querySelector('.no_track_cont');
 
     if (song.preview_url !== null) {
@@ -197,9 +198,17 @@ function audioSongNames(song) {
         }, 2000);
         return
     }
+    getSong(`/me/tracks/contains?ids=${song.id}`)
+    .then(res => {
+      if(res.data[0]) {
+        likeIcon.src = '/public/icons/favorite-full.svg'
+      } else {
+        likeIcon.src = '/public/icons/favorite-icon.svg'
+      }
+})
     playImg.src = '/public/icons/pause-audio.svg'
     audio.play()
-    songName.innerHTML = song.name.slice(0, 10)
+    songName.innerHTML = song.name
     artistName.innerHTML = song.artists[0].name
     songDur.innerHTML = formatMillisecondsToTime(song.duration_ms)
     if (song.album) {
@@ -219,6 +228,7 @@ function audioSongsMany(song) {
     let headerImg = document.querySelector('.btn_play img')
     let songName = document.querySelector('.song-name a')
     let artistName = document.querySelector('.song-name p')
+    let likeIcon = document.querySelector('.song-like img')
     let songDur = document.querySelector('.duration')
     let songPost = document.querySelector('.song-poster')
     let nextSong = document.querySelector('#next-song img')
@@ -247,7 +257,16 @@ function audioSongsMany(song) {
         headerImg.src = '/public/icons/pause-audio.svg'
     }
     audio.play()
-    songName.innerHTML = (song[0].track ? song[0].track.name : song[0].name).slice(0, 10);
+
+    getSong(`/me/tracks/contains?ids=${song.id}`)
+    .then(res => {
+      if(res.data[0]) {
+        likeIcon.src = '/public/icons/favorite-full.svg'
+      } else {
+        likeIcon.src = '/public/icons/favorite-icon.svg'
+      }
+})
+    songName.innerHTML = (song[0].track ? song[0].track.name : song[0].name);
     artistName.innerHTML = (song[0].artists ? song[0].artists[0].name : song[0].track.artists[0].name);
     songDur.innerHTML = song[0].track ? formatMillisecondsToTime(song[0].track.duration_ms) : formatMillisecondsToTime(song[0].duration_ms);
     if ((song[0].track && song[0].track.album) || (song.album && song.album.images)) {

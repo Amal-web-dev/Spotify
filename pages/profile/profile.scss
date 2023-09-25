@@ -9,9 +9,99 @@
     background:  var(--boxAfterBackColor, linear-gradient(#999292 5%, transparent)) !important;
   }
 
+  .spawn {
+    display: block !important;
+  }
+
+  .change_cont {
+    height: 200px;
+    width: 350px;
+    border-radius: 10px;
+    background-color: #282828;
+    position: absolute;
+    top: 10%;
+    right: 50%;
+    translate: 50% 50%;
+    padding: 15px 10px;
+    color: white;
+    z-index: 11;
+    display: none;
+
+    .change_center {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+
+        .user_mini_ava {
+            background-color: #999292;
+            border-radius: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-image: url(/public/icons/user.svg);
+            box-shadow: 0 0 20px 1px black;
+            height: 100px;
+            width: 100px;
+            min-width: 100px;
+        }
+
+        .change_name_block {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+
+            input {
+                background-color: #3E3E3E;
+                border-radius: 2px;
+                padding: 5px;
+                border: none;
+                outline: none;
+                color: white;
+            }
+
+            button {
+                margin-top: 5px;
+                padding: 7px 15px;
+                color: black;
+                background-color: white;
+                border-radius: 20px;
+                border: none;
+                font-weight: 600;
+            }
+
+            button:hover {
+                scale: 1.05;
+            }
+        }
+    }
+
+    .change_top {
+        display: flex;
+        justify-content: space-between;
+
+        img {
+            cursor: pointer;
+        }
+    }
+  }
+
+  .back_black {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    background-color: rgba(10, 10, 10, 0.8);
+    z-index: 10;
+    display: none;
+  }
 
   main {
     color: white;
+
+    .user_cont {
+        margin: 100px 0 0 30px;
+    }
     .user-cont {
         margin: 50px 0 0 20px;
         display: flex;
@@ -20,6 +110,7 @@
         .user_avatar {
             height: 170px;
             width: 170px;
+            min-width: 170px;
             box-shadow: 0 0 20px 10px black;
             background-color: #999292;
             border-radius: 100%;
@@ -27,6 +118,36 @@
             background-size: cover;
             background-position: center;
             background-image: url(/public/icons/user.svg);
+            position: relative;
+
+            .change_hidden {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                background-color: rgba(10, 10, 10, 0.7);
+                z-index: 2;
+                border-radius: 100%;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                img {
+                    width: 50px;
+                }
+
+                p {
+                    cursor: default;
+                }
+            }
+        }
+
+        .user_avatar:hover {
+            .change_hidden {
+                display: flex;
+            }
         }
 
         .user_descr {
@@ -41,6 +162,10 @@
 
             h1 {
                 font-size: 50px;
+                cursor: pointer;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;
             }
         }
     }

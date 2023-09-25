@@ -27,6 +27,12 @@ main {
             margin-top: 50px;
             position: relative;
 
+            h1 {
+        text-overflow: ellipsis; 
+        white-space: nowrap; 
+        overflow: hidden;
+            }
+
             p {
                 font-size: 12px;
             }

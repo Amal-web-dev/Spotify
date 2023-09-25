@@ -142,6 +142,16 @@
 
   @media (max-width: 940px) {
      main {
+
+        .header-main {
+            .header-left {
+                .input-block {
+                    .input_search {
+                        width: 210px;
+                    }
+                }
+            }
+        }
         .about_song_cont {
             .poster_cont {
                 margin-top: 40px;
@@ -177,6 +187,11 @@
     main {
        .about_song_cont {
         gap: 5px;
+        .descript_cont {
+            h1 {
+                font-size: 20px;
+            }
+        }
            .poster_cont {
                margin-top: 90px;
                .song_poster {
@@ -262,6 +277,21 @@
                     display: none;
                 }
             }
+
+            .header-left {
+                .input-block {
+                    .input_search {
+                        padding: 7px 7px 7px 25px;
+                        font-size: 10px;
+                        width: 175px;
+                    }
+
+                    img {
+                        top: 5px;
+                        left: 5px;
+                    }
+                }
+            }
         }
 
         .song_cont {
@@ -327,6 +357,37 @@
             img {
                 cursor: pointer;
                 width: 15px;
+            }
+        }
+    }
+  }
+
+  
+  @media (max-width: 850px) {
+    main {
+        .header-main {
+
+            
+            .header-right {
+
+                .download-app {
+                    display: none;
+                }
+            }
+
+            .header-left {
+                .input-block {
+                    .input_search {
+                        padding: 7px 7px 7px 25px;
+                        font-size: 10px;
+                        width: 175px;
+                    }
+
+                    img {
+                        top: 5px;
+                        left: 5px;
+                    }
+                }
             }
         }
     }
@@ -946,6 +1007,22 @@
             .header-right {
                 margin-left: -80px;
               }
+
+              .header-left {
+                .input-block {
+                    .input_search {
+                        padding: 5px 5px 5px 20px;
+                        font-size: 8px;
+                        width: 130px;
+                    }
+
+                    img {
+                        top: 7px;
+                        left: 5px;
+                        width: 12px;
+                    }
+                }
+            }
             }
         
 
@@ -1023,6 +1100,8 @@
                     width: 80px;
                     height: 130px;
 
+                    
+
                     .song_description {
 
                         p {
@@ -1037,6 +1116,15 @@
                     .song_poster {
                         height: 60px;
                         width: 60px;
+
+                        .btn-play-audio {
+                            padding: 3px;
+                            right: 3px;
+    
+                            img {
+                                width: 15px;
+                            }
+                        }
                     }
                 }
             }
@@ -1127,6 +1215,15 @@
                 .song_block {
                     width: 70px;
                     height: 100px;
+
+                    .btn-play-audio {
+                        padding: 3px;
+                        right: 3px;
+
+                        img {
+                            width: 10px;
+                        }
+                    }
 
                     .song_description {
 

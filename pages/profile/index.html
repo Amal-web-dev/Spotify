@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/styles/audio.scss">
     <link rel="stylesheet" href="/styles/header.scss">
     <link rel="stylesheet" href="/styles/footer.scss">
-    <link rel="stylesheet" href="./album.scss">
     <link rel="stylesheet" href="/styles/tracks.scss">
     <link rel="stylesheet" href="/styles/media.scss">
     <link rel="stylesheet" href="./profile.scss">
@@ -26,15 +25,45 @@
 
     <main id="main">
         <div class="user-cont">
-            <div class="user_avatar"></div>
+            <div class="user_avatar">
+                <div class="change_hidden">
+                    <img src="/public/icons/pencil.svg">
+                    <p>Выбрать фото</p>
+                </div>
+            </div>
             <div class="user_descr">
                 <p>Профиль</p>
                 <h1 id="user_name">AmalSpoty</h1>
                 <p><span id="open_playlists">6</span> • <span id="follow_artist">3</span> • <span id="liked_albums"></span></p>
             </div>
         </div>
+
+
+        <div class="user_cont">
+
+        </div>
     </main>
 
+
+    <div class="change_cont">
+        <div class="change_top">
+            <h3>Данные профиля</h3>
+             <img src="/public/icons/close_icon.svg" id="close_modul_icon">
+        </div>
+        <div class="change_center">
+            <div class="user_mini_ava"></div>
+            <div class="change_name_block">
+                <input type="text" id="change_name_input">
+                <button>Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="back_black"></div>
+
+    <div class="no_track_cont">
+        <p>Этот трек недоступен</p>
+      </div>
     <script src="./profile.js" type="module"></script>
 </body>
 </html>
