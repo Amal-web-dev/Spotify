@@ -1,5 +1,5 @@
 import { Logger } from "sass";
-import { getSong, likeSong, unLikeSong } from "../modules/http.request.js";
+import { getSong, likeSong, unLikeSong, playNextTrack } from "../modules/http.request.js";
 let favB = false
 let hidB = true
 let n = 1
@@ -43,9 +43,9 @@ export function ReloadMediatekaSong(arr, place) {
         } else {
             span.innerHTML = media.type + " • " + media.owner.display_name
         }
-        if (media.images) {
+        if (media.images && media.images[0]) {
             song_poster.style.backgroundImage = `url(${media.images[0].url})`
-        } else if (media.album.images) {
+        } else if (media.album && media.album.images) {
             song_poster.style.backgroundImage = `url(${media.album.images[0].url})`
         } else {
             song_poster.style.backgroundImage = `url(/public/img/no_img.jpg)`;
@@ -258,6 +258,7 @@ function audioSongsMany(song) {
     }
     audio.play()
 
+    if(location.href.includes('playlist') || location.href.includes('track') ||location.href.includes('album'))
     getSong(`/me/tracks/contains?ids=${song.id}`)
     .then(res => {
       if(res.data[0]) {
@@ -291,8 +292,7 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
     let main_play_img = document.querySelector('.main_play_img')
     let headerImgPlay = document.querySelector('.btn_play img')
     let songName = document.querySelector('#songName')
-
-    let allButtonImg = document.querySelectorAll('#play_img_all')
+    let track_number = document.querySelectorAll('#track_number')
 
 
     event.stopPropagation();
@@ -469,11 +469,11 @@ function nextSongFunc(song) {
             }
         }
 
-        if (song[nextS].track && nextS < song.length) {
+
+        if (nextS < song.length && song[nextS].track) {
             localStorage.setItem('playingSong', JSON.stringify(song[nextS].track));
-        } else {
-            localStorage.setItem('playingSong', JSON.stringify(song[nextS]));
         }
+
 
         if (nextS < song.length) {
             if (song[nextS].track) {
@@ -688,7 +688,7 @@ export function createSongs(arr, place) {
             song_poster.style.backgroundImage = `url(${song.images[0].url})`;
         } else if (song && song.album && song.album.images && song.album.images.length !== 0) {
             song_poster.style.backgroundImage = `url(${song.album.images[0].url})`;
-        } else if (song.type == artist || song.external_urls) {
+        } else if (song.type == artist) {
             getSong(`/artists/${song.id}`)
                 .then(art => {
                     if (art.data.images[0]) {

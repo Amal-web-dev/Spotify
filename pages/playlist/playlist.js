@@ -28,32 +28,6 @@ if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
 }
 
-// getSong(`/me/playlists/contains?ids=${songId}`)
-// .then(res => {
-//   if(res.data[0]) {
-//     likeAlbum.src = '/public/icons/favorite-full.svg'
-//     likeAlbum.style.filter = 'invert(0)'
-//     isLike = true
-//   } else {
-//     likeAlbum.src = '/public/icons/favorite-icon.svg'
-//     isLike = false
-//   }
-// })
-
-// likeAlbum.onclick = () => {
-//   if(!isLike) {
-//     subscribeToArtist(songId, 'playlists')
-//     likeAlbum.src = '/public/icons/favorite-full.svg'
-//     likeAlbum.style.filter = 'invert(0)'
-//     isLike = true
-//   } else {
-//     unLikeSong(songId, 'playlists')
-//     likeAlbum.src = '/public/icons/favorite-icon.svg'
-//     likeAlbum.style.filter = 'invert(50%)'
-//     isLike = false
-//   }
-// }
-
 
 getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 .then(res => {
@@ -81,7 +55,11 @@ getSong(`/playlists/${songId}`)
   console.log(res.data);
   tracksPlaylist(res.data.tracks.items, all_tracks_cont)
   title.innerHTML = res.data.name + ' • ' + res.data.type
-  back.style.backgroundImage = `url(${res.data.images[0].url})`
+  if(res.data.images[0]) {
+    back.style.backgroundImage = `url(${res.data.images[0].url})`
+  } else {
+    back.style.backgroundImage = `url(/public/img/no_img.jpg)`
+  }
   h3Name.innerHTML = res.data.name
   type_name.innerHTML = res.data.name
   artist_name.innerHTML = res.data.owner.display_name

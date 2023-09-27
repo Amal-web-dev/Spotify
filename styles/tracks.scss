@@ -20,6 +20,10 @@
 
     .left_track_side {
 
+        .gif_img {
+            display: none;
+        }
+
         .track_name {
 
             span {
@@ -89,6 +93,18 @@
         gap: 20px;
         align-items: center;
         position: relative;
+
+        
+        .gif_img {
+            width: 15px;
+            height: 15px;
+            left: 0px;
+            top: 10px;
+            display: none;
+            position: absolute;
+            z-index: 10;
+            cursor: default;
+        }
 
         .hidden_icon {
         all: unset;

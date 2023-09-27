@@ -5,7 +5,7 @@ let previousVolume = 1.0;
 export function audioFunc() {
 let audio = document.getElementById(`audio-1`);
 
-    let playButton = document.querySelector('.play-button');
+let playButton = document.querySelector('.play-button');
 let playButtonIcon = document.querySelector('.play-button img');
 let progressBar = document.querySelector('.progress-bar .progress');
 let progressBarOne = document.querySelector('.progress-bar');
@@ -36,12 +36,16 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
     }
   
     function togglePlay() {
+      let play_img_all = document.querySelectorAll('#play_img_all')
       if (audio.paused) {
         audio.play();
         playButtonIcon.src = '/public/icons/pause-audio.svg';
       } else {
         audio.pause();
         playButtonIcon.src = '/public/icons/start-audio.svg';
+        play_img_all.forEach(icon => {
+          icon.src = '/public/icons/start-audio.svg';
+        })
       }
     }
     
