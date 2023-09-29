@@ -99,7 +99,7 @@ getSong("/me/top/artists")
 getSong("/me/albums")
 .then(res => {
   try {
-    liked_albums.innerHTML = res.data.items.length + ' альбома'
+    liked_albums.innerHTML = ' • ' + res.data.items.length + ' альбома'
   ReloadMediatekaSong(res.data.items, mediate_song_block)
   } catch (error) {
     console.log(error);
