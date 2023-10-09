@@ -27,6 +27,7 @@ let noFind = document.querySelector('.no_find')
 let profiles = document.querySelector('.profiles')
 let searchHistoryString = localStorage.getItem('searchHistory');
 let history_cont = document.querySelector('.history_cont')
+let searchHistory
 let playingSong = []
 if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
@@ -42,9 +43,11 @@ getSong("/me/albums")
   ReloadMediatekaSong(res.data.items, mediate_song_block)
 })
 
-if (searchHistoryString) {
+
+if (searchHistoryString && JSON.parse(searchHistoryString).length > 0) {
+  console.log(searchHistoryString);
   setTimeout(() => {
-  let searchHistory = JSON.parse(searchHistoryString);
+  searchHistory = JSON.parse(searchHistoryString);
   createSongCont(['История поиска'], history_cont, searchHistory)
   }, 200);
 } else {

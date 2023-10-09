@@ -33,6 +33,13 @@ getSong("/me/player/recently-played")
     .then(res => {
       try {
         welcomeSong(res.data.items.slice(0, 6), welcomeBlock)
+        if(playingSong) {
+          audioLoyal(document.body, playingSong)
+          audioFunc()
+        } else {
+          audioLoyal(document.body, res.data.items[0].track)
+          audioFunc()
+        }
         createSongCont([`Недавно прослушенные`], all_cont, res.data.items)
       } catch (error) {
         console.log(error);
@@ -71,20 +78,6 @@ if (currentTime >= 5 && currentTime < 12) {
   welcome_h1.innerHTML = 'Добрый вечер';
 }
 // пишет добрый день
-
-// функционал audio
-
-getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
-.then(res => {
-  if(playingSong) {
-    audioLoyal(document.body, playingSong)
-    audioFunc()
-  } else {
-    audioLoyal(document.body, res.data)
-    audioFunc()
-  }
-})
-// функционал audio конец
 
 
 // появление песен
@@ -151,6 +144,6 @@ getSong('/browse/new-releases')
 
 // footer
 setTimeout(() => {
-  footer(all_cont)
-  }, 2500);
+  footer(all_cont);
+}, 2000);
   // footer

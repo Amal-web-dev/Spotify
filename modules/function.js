@@ -781,10 +781,19 @@ function updateSearchHistory(query) {
 
 function removeSearchHistoryItem(id) {
     const filteredHistory = searchHistory.filter(item => item.id !== id);
+    let song_cont = document.querySelector('.song_cont')
 
     localStorage.setItem('searchHistory', JSON.stringify(filteredHistory));
 
-    window.location.reload();
+    console.log('da');
+    song_cont.remove()
+    if(searchHistory) {
+        console.log('da');
+    } else {
+        console.log('net');
+        song_cont.remove()
+    }
+    // window.location.reload();
 }
 
 export function bestResult(arr, place) {

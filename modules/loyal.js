@@ -374,7 +374,7 @@ export function audioLoyal(place, arr) {
   playPause.classList.add('play-pause')
   audioPlayer.classList.add('audio-player')
   audioInfo.classList.add('audio-info')
-
+console.log(arr);
   aName.innerHTML = arr.name
   songArt.innerHTML = arr.artists[0].name
   likeIcon.src = '/public/icons/favorite-icon.svg'

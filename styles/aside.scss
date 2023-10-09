@@ -312,6 +312,8 @@ aside {
 .mini {
     left: calc(70px) !important;
     width: calc(100% - 70px)  !important;
+
+    
 }
 
 .big {
@@ -348,6 +350,7 @@ aside {
     
 .aside-bottom {
     padding: 0;
+    height: calc(100% - 30px)  !important;
     padding-left: 5px;
 
     .rightmedia-teka {
