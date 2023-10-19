@@ -293,6 +293,7 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
     let headerImgPlay = document.querySelector('.btn_play img')
     let songName = document.querySelector('#songName')
     let track_number = document.querySelectorAll('#track_number')
+    let allButtonImg = document.querySelectorAll('#play_img_all')
 
 
     event.stopPropagation();
@@ -303,13 +304,18 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
             if (song.type == 'track') {
                 audioSongNames(song)
                 if (song.preview_url) {
-                    allButtonImg.forEach(icon => {
-                        icon.src = '/public/icons/start-audio.svg'
-                    })
+                    if(allButtonImg) {
+                        allButtonImg.forEach(icon => {
+                            icon.src = '/public/icons/start-audio.svg'
+                            icon.classList.remove('1')
+                        })
+                    }
+                   
 
                     preSong.style.opacity = '0.5'
                     nextSong.style.opacity = '0.5'
                     hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                    hiddenIconImg.classList.add('1')
                     playButtonIcon.src = '/public/icons/pause-audio.svg'
                     if(songName) {
                         songName.innerHTML = song.name
@@ -330,11 +336,13 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
                                 if (res2.data.items[0].preview_url) {
                                     allButtonImg.forEach(icon => {
                                         icon.src = '/public/icons/start-audio.svg'
+                                        icon.classList.remove('1')
                                     })
 
                                     preSong.style.opacity = '0.5'
                                     nextSong.style.opacity = '0.5'
                                     hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                                    hiddenIconImg.classList.add('1')
                                     playButtonIcon.src = '/public/icons/pause-audio.svg'
                                     if (main_play_img) {
                                         main_play_img.src = '/public/icons/pause-audio.svg'
@@ -352,11 +360,13 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
                         if (res.data.items[0].track.preview_url) {
                             allButtonImg.forEach(icon => {
                                 icon.src = '/public/icons/start-audio.svg'
+                                icon.classList.remove('1')
                             })
 
                             preSong.style.opacity = '0.5'
                             nextSong.style.opacity = '0.5'
                             hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                            hiddenIconImg.classList.add('1')
                             playButtonIcon.src = '/public/icons/pause-audio.svg'
                             if (main_play_img) {
                                 main_play_img.src = '/public/icons/pause-audio.svg'
@@ -373,11 +383,13 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
                         if (res.data.items[0].preview_url) {
                             allButtonImg.forEach(icon => {
                                 icon.src = '/public/icons/start-audio.svg'
+                                icon.classList.remove('1')
                             })
 
                             preSong.style.opacity = '0.5'
                             nextSong.style.opacity = '0.5'
                             hiddenIconImg.src = '/public/icons/pause-audio.svg'
+                            hiddenIconImg.classList.add('1')
                             playButtonIcon.src = '/public/icons/pause-audio.svg'
                             if (main_play_img) {
                                 main_play_img.src = '/public/icons/pause-audio.svg'
@@ -391,6 +403,7 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
         } else {
             audio.play()
             hiddenIconImg.src = '/public/icons/pause-audio.svg'
+            hiddenIconImg.classList.add('1')
             playButtonIcon.src = '/public/icons/pause-audio.svg'
             if (main_play_img) {
                 main_play_img.src = '/public/icons/pause-audio.svg'
@@ -406,6 +419,7 @@ function audioPlayPlaylistsFunc(song, hiddenIconImg, pSongName) {
     } else {
         audio.pause()
         hiddenIconImg.src = '/public/icons/start-audio.svg'
+        hiddenIconImg.classList.remove('1')
         playButtonIcon.src = '/public/icons/start-audio.svg'
         if (main_play_img) {
             main_play_img.src = '/public/icons/start-audio.svg'
@@ -785,15 +799,11 @@ function removeSearchHistoryItem(id) {
 
     localStorage.setItem('searchHistory', JSON.stringify(filteredHistory));
 
-    console.log('da');
-    song_cont.remove()
-    if(searchHistory) {
-        console.log('da');
-    } else {
-        console.log('net');
+    if(!searchHistory) {
         song_cont.remove()
     }
-    // window.location.reload();
+
+    window.location.reload();
 }
 
 export function bestResult(arr, place) {

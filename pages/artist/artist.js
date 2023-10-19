@@ -115,7 +115,7 @@ getSong(`/artists/${artistId}`)
 .then(res => {
     title.innerHTML = res.data.name
     type_name.innerHTML = res.data.name
-    users.innerHTML = (res.data.followers.total.toLocaleString('ru-RU')) + ' слушателей за месяц'
+    users.innerHTML = (res.data.followers.total.toLocaleString('ru-RU')) + ' фанатов'
     if(res.data.images[0]) {
       back.style.backgroundImage = `url(${res.data.images[0].url})` 
     } else {

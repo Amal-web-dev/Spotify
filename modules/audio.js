@@ -40,6 +40,13 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
       if (audio.paused) {
         audio.play();
         playButtonIcon.src = '/public/icons/pause-audio.svg';
+        play_img_all.forEach(icon => {
+          if (icon.classList.contains('1') ||  icon.classList.contains('main_play_img')) {
+            icon.src = '/public/icons/pause-audio.svg';
+        }
+
+       
+        })
       } else {
         audio.pause();
         playButtonIcon.src = '/public/icons/start-audio.svg';

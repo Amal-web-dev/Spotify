@@ -45,7 +45,6 @@ getSong("/me/albums")
 
 
 if (searchHistoryString && JSON.parse(searchHistoryString).length > 0) {
-  console.log(searchHistoryString);
   setTimeout(() => {
   searchHistory = JSON.parse(searchHistoryString);
   createSongCont(['История поиска'], history_cont, searchHistory)

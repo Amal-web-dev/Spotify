@@ -15,6 +15,7 @@ let mediate_song_block = document.querySelector('.mediate_song_block')
 let welcomeBlock = document.querySelector('.welcome-block')
 let welcome_h1 = document.querySelector('.welcome_h1')
 let all_cont =  document.querySelector('.all_cont')
+let footer_cont = document.querySelector('.footer')
 
 let currentTime = new Date().getHours();
 let allTitle =  ['Твои плейлисты']
@@ -77,6 +78,7 @@ if (currentTime >= 5 && currentTime < 12) {
 } else {
   welcome_h1.innerHTML = 'Добрый вечер';
 }
+
 // пишет добрый день
 
 
@@ -143,7 +145,5 @@ getSong('/browse/new-releases')
 // все песни в контейнере
 
 // footer
-setTimeout(() => {
-  footer(all_cont);
-}, 2000);
+  footer(footer_cont);
   // footer

@@ -22,6 +22,7 @@ let track_count = document.querySelector('#track_count')
 let duration = document.querySelector('#duration')
 let h3Name = document.querySelector('#songName')
 let likeAlbum = document.querySelector('.like_icon') 
+let footer_playlist = document.querySelector('.footer-playlist')
 let isLike = false
 let playingSong = []
 if(playingSong) {
@@ -105,14 +106,6 @@ let seconds = Math.floor(totalSeconds % 60);
   }
 })
 
-// getSong(`/tracks/${songId}`)
-// .then(res => {
-
-// //   getSong(`/audio-analysis/${songId}`)
-// //   .then(res  =>  {
-// //     console.log(res);
-// //   })
-// })
 
 getSong("/me")
 .then(res => {
@@ -126,12 +119,4 @@ ReloadMediatekaSong(res.data.items, mediate_song_block)
 })
 })
 
-// getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
-// .then(res => {
-//   audioLoyal(document.body, res.data)
-//   audioFunc()
-// })
-
-setTimeout(() => {
-  footer(main)
-  }, 500);
+  footer(footer_playlist)

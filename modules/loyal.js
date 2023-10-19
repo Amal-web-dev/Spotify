@@ -567,9 +567,7 @@ export function headerMain(place) {
   log_out.append(log_outP)
 
   if (location.href.includes('album') || location.href.includes('playlist') || location.href.includes('track') || location.href.includes('artist')) {
-    let btnPlay = document.createElement('button')
     let h3Name = document.createElement('h3')
-    let btnImg = document.createElement('img')
 
 
     if(!location.href.includes('track') || !location.href.includes('artist')) {
@@ -612,10 +610,8 @@ export function headerMain(place) {
        
 
         if (main.scrollTop >= 365) {
-          btnPlay.style.opacity = '1'
           h3Name.style.opacity = '1'
         } else {
-          btnPlay.style.opacity = '0'
           h3Name.style.opacity = '0'
         }
       } else {
@@ -632,10 +628,8 @@ export function headerMain(place) {
 
 
         if (main.scrollTop >= 310) {
-          btnPlay.style.opacity = '1'
           h3Name.style.opacity = '1'
         } else {
-          btnPlay.style.opacity = '0'
           h3Name.style.opacity = '0'
         }
       }
@@ -655,32 +649,17 @@ export function headerMain(place) {
     } 
 
     let btnPlayFalse = false
-    btnPlay.style.opacity = '0'
     h3Name.style.opacity = '0'
 
     h3Name.innerHTML = name
     h3Name.id = 'songName'
-    btnImg.src = '/public/icons/start-audio.svg'
 
-    btnPlay.classList.add('btn_play')
-    btnImg.id = 'play_img_all'
 
-    headerLeft.append(btnPlay, h3Name)
-    btnPlay.append(btnImg)
+    headerLeft.append(h3Name)
 
     
     if(location.href.includes('track')) {
       headerMain.style.backgroundColor = '#121212';
-    }
-    btnPlay.onclick = () => {
-
-      if (!btnPlayFalse) {
-        btnImg.src = '/public/icons/pause-audio.svg'
-        btnPlayFalse = true
-      } else {
-        btnImg.src = '/public/icons/start-audio.svg'
-        btnPlayFalse = false
-      }
     }
   }
   main.addEventListener('scroll', () => {
