@@ -2,7 +2,7 @@ import axios from 'axios'
 import { ReloadMediatekaSong, welcomeSong, createSongCont } from "./modules/function";
 import { asideLoyal, audioLoyal, headerMain, footer } from "./modules/loyal";
 import { audioFunc } from "./modules/audio";
-import { getSong, playNextTrack } from "./modules/http.request.js";
+import { getSong } from "./modules/http.request.js";
 import SpotifyWebApi from "spotify-web-api-js";
 
 
@@ -47,10 +47,6 @@ getSong("/me/player/recently-played")
       }
     })
 
-    playNextTrack()
-    .then(res => {
-        console.log(res.data);
-    })
        
 
 getSong("/me/tracks")

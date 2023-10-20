@@ -22,6 +22,7 @@ let back_black = document.querySelector('.back_black')
 let change_hidden = document.querySelector('.change_hidden')
 let change_name_input = document.querySelector('#change_name_input')
 let close_modul_icon = document.querySelector('#close_modul_icon')
+let footer_user = document.querySelector('.footer_user')
 let playingSong = []
 if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
@@ -133,6 +134,4 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 })
 // функционал audio конец
 
-setTimeout(() => {
-  footer(main)
-  }, 1500);
+  footer(footer_user)

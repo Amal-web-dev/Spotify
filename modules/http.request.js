@@ -120,24 +120,6 @@ export async function putSong(path, data) {
 }
 
 
-export async function playNextTrack() {
-  const url = 'https://api.spotify.com/v1/me/player/next';
-
-  const headers = {
-    'Authorization': `Bearer ${myToken}`
-  };
-
-  return axios.post(url, {}, { headers })
-    .then(response => {
-      console.log('Запрос выполнен успешно:', response.data);
-      return response.data;
-    })
-    .catch(error => {
-      console.error('Произошла ошибка:', error);
-      throw error; 
-    });
-}
-
 
 export let getDetails = async (path) => {
     try {

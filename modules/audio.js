@@ -18,6 +18,7 @@ let volumeIcon = document.querySelector('.volume-icon')
 let volumeBtn = document.querySelector('.volume-btn'); 
 let volumeButton = document.querySelector('.volume-button'); 
 let volumeDinamic = document.querySelector('.volume-dinamic'); 
+let play_img_all = document.querySelectorAll('#play_img_all')
 
     function formatTime(seconds) {
       let minutes = Math.floor(seconds / 60);
@@ -32,6 +33,9 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
   
       if (audio.currentTime >= audio.duration) {
         playButtonIcon.src = '/public/icons/start-audio.svg';
+        play_img_all.forEach(icon => {
+          icon.src = '/public/icons/start-audio.svg'
+        })
       }
     }
   
@@ -117,6 +121,7 @@ let volumeDinamic = document.querySelector('.volume-dinamic');
         } else {
             volumeIcon.src = '/public/icons/volume-up.svg';
         }
+
     }
     secBtn5Plus.addEventListener('click', () => forward(5));
     secBtn5Minus.addEventListener('click', () => rewind(5));

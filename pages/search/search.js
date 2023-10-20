@@ -27,6 +27,7 @@ let noFind = document.querySelector('.no_find')
 let profiles = document.querySelector('.profiles')
 let searchHistoryString = localStorage.getItem('searchHistory');
 let history_cont = document.querySelector('.history_cont')
+let footer_search = document.querySelector('.footer_search')
 let searchHistory
 let playingSong = []
 if(playingSong) {
@@ -170,5 +171,5 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
 
 
 // footer
-footer(main);
+footer(footer_search);
 // footer

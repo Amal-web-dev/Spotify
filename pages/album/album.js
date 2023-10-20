@@ -22,6 +22,7 @@ let all_tracks_cont =  document.querySelector('.all_tracks_cont')
 let type = document.querySelector('#type')
 let other_album =  document.querySelector('.other_album')
 let likeAlbum = document.querySelector('.like_icon') 
+let footer_album = document.querySelector('.footer_album')
 let isLike = false
 let playingSong = []
 if(playingSong) {
@@ -145,6 +146,4 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
   }
 })
 
-setTimeout(() => {
-  footer(main)
-  }, 1500);
+  footer(footer_album)

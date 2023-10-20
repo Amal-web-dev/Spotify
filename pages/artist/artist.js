@@ -21,6 +21,7 @@ let popular_tracks = document.querySelector('.popular_tracks')
 let album_cat = document.querySelector('.album_cat')
 let art_friend = document.querySelector('.art_friend')
 let submit = document.querySelector('.submit')
+let footer_artist = document.querySelector('.footer_artist')
 let song = document.querySelector('.song')
 let isSub = false
 let playingSong = []
@@ -96,7 +97,7 @@ art_friend.onclick = () => {
   .then(alb => {
     all_song_cont.innerHTML = ''
   if(alb.data.artists.length > 1) {
-    createSongCont([``], all_song_cont, alb.data.artists.slice(10, 19))
+    createSongCont([``], all_song_cont, alb.data.artists.slice(0, 9))
   }
   })
 }
@@ -104,9 +105,10 @@ art_friend.onclick = () => {
 album_cat.onclick = () => {
   getSong(`/artists/${artistId}/albums`)
 .then(alb => {
+  console.log(alb.data.items.length);
   all_song_cont.innerHTML = ''
   if(alb.data.items.length > 1)  {
-    createSongCont([''], all_song_cont, alb.data.items.slice(10, 19))
+    createSongCont([''], all_song_cont, alb.data.items.slice(0, 9))
   }
 })
 }
@@ -162,6 +164,4 @@ ReloadMediatekaSong(res.data.items, mediate_song_block)
 
 
 
-setTimeout(() => {
-    footer(main)
-}, 500);
+    footer(footer_artist)

@@ -14,6 +14,7 @@ let songId = location.search.split('=').at(-1)
 let songs = JSON.parse(localStorage.getItem('seeAll'))
 let title = JSON.parse(localStorage.getItem('title'))
 let all_tracks = document.querySelector('.all_tracks')
+let footer_all = document.querySelector('.footer_all')
 let playingSong = []
 if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
@@ -56,6 +57,4 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
   }
 })
 
-setTimeout(() => {
-    footer(main)
-}, 500);
+    footer(footer_all)

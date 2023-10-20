@@ -1,8 +1,7 @@
-
 import { asideLoyal, audioLoyal, headerMain, footer } from "../../modules/loyal";
 import { audioFunc } from "../../modules/audio";
 import { getSong, likeSong, unLikeSong } from "../../modules/http.request.js";
-import { ReloadMediatekaSong, createSongCont, artist, tracks } from "../../modules/function";
+import { ReloadMediatekaSong, createSongCont, artist, tracks, audioSongNames, audioPlayFunc } from "../../modules/function";
 import { Logger } from "sass";
 
 let aside = document.querySelector('aside')
@@ -29,11 +28,16 @@ let from_album_block = document.querySelector('.from_album_block')
 let from_album_tracks = document.querySelector('.from_album_tracks')
 let play_btn = document.querySelector('.play_btn')
 let likeAlbum = document.querySelector('.like_icon') 
+let footer_track = document.querySelector('.footer_track')
+let play_img_all = document.querySelector('#play_img_all')
 let isLike = false
-const myId = localStorage.getItem("myId");let playingSong = []
+const myId = localStorage.getItem("myId");
+let playingSong = []
 if(playingSong) {
   playingSong = JSON.parse(localStorage.getItem('playingSong'))
 }
+
+
 
 getSong(`/me/tracks/contains?ids=${songId}`)
 .then(res => {
@@ -61,7 +65,6 @@ likeAlbum.onclick = () => {
   }
 }
 
-
 getSong("/me/tracks")
 .then(res => {
   ReloadMediatekaSong(res.data.items, mediate_song_block)
@@ -88,6 +91,12 @@ getSong(`/tracks/${songId}`)
     from_album_block.onclick = () => {
       location.assign(`/pages/${res.data.album.type}/?id=${res.data.album.id}`)
     }
+
+    play_btn.onclick = () => {
+      audioPlayFunc(res.data, play_img_all)
+    }
+
+    console.log(res.data);
     
     getSong(`/artists/${res.data.artists[0].id}`)
     .then(res => {
@@ -145,6 +154,4 @@ getSong("/tracks/11dFghVXANMlKmJXsNCbNl")
     }
   })
 
-  setTimeout(() => {
-    footer(main)
-    }, 500);
+    footer(footer_track)

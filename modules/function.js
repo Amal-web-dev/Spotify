@@ -1,5 +1,5 @@
 import { Logger } from "sass";
-import { getSong, likeSong, unLikeSong, playNextTrack } from "../modules/http.request.js";
+import { getSong, likeSong, unLikeSong } from "../modules/http.request.js";
 let favB = false
 let hidB = true
 let n = 1
@@ -177,7 +177,7 @@ export function formatMillisecondsToTime(duration_ms) {
     return `${minutes}:${(seconds < 10 ? '0' : '')}${seconds}`;
 }
 
-function audioSongNames(song) {
+export function audioSongNames(song) {
     localStorage.setItem('playingSong', JSON.stringify(song));
     let audio = document.querySelector('#audio-1')
     let playImg = document.querySelector('.play-button img')
@@ -505,7 +505,7 @@ function nextSongFunc(song) {
     }
 }
 
-function audioPlayFunc(song, buttonImg) {
+export function audioPlayFunc(song, buttonImg) {
     event.stopPropagation();
     let nextSong = document.querySelector('#next-song img')
     let preSong = document.querySelector('#pre-song img')
